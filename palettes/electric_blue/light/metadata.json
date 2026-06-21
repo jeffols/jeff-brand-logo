@@ -1,0 +1,19 @@
+{
+  "palette": "electric_blue",
+  "mode": "light",
+  "background": "#F6FBFF",
+  "glyph": "#005A9C",
+  "sizes": [
+    16,
+    32,
+    48,
+    64,
+    128,
+    180,
+    192,
+    256,
+    512
+  ],
+  "svg": "signature-electric_blue-light.svg",
+  "svg_compatibility": "inline fill colors; no CSS variables"
+}

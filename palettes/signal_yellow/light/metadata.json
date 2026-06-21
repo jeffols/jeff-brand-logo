@@ -1,0 +1,19 @@
+{
+  "palette": "signal_yellow",
+  "mode": "light",
+  "background": "#FFF7E0",
+  "glyph": "#111827",
+  "sizes": [
+    16,
+    32,
+    48,
+    64,
+    128,
+    180,
+    192,
+    256,
+    512
+  ],
+  "svg": "signature-signal_yellow-light.svg",
+  "svg_compatibility": "inline fill colors; no CSS variables"
+}

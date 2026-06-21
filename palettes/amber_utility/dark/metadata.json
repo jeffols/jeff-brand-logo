@@ -1,0 +1,19 @@
+{
+  "palette": "amber_utility",
+  "mode": "dark",
+  "background": "#1F1B16",
+  "glyph": "#FFB000",
+  "sizes": [
+    16,
+    32,
+    48,
+    64,
+    128,
+    180,
+    192,
+    256,
+    512
+  ],
+  "svg": "signature-amber_utility-dark.svg",
+  "svg_compatibility": "inline fill colors; no CSS variables"
+}

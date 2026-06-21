@@ -1,0 +1,19 @@
+{
+  "palette": "terminal_lime",
+  "mode": "dark",
+  "background": "#151515",
+  "glyph": "#B6FF4D",
+  "sizes": [
+    16,
+    32,
+    48,
+    64,
+    128,
+    180,
+    192,
+    256,
+    512
+  ],
+  "svg": "signature-terminal_lime-dark.svg",
+  "svg_compatibility": "inline fill colors; no CSS variables"
+}

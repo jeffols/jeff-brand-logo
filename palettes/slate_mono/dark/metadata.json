@@ -1,0 +1,19 @@
+{
+  "palette": "slate_mono",
+  "mode": "dark",
+  "background": "#0F172A",
+  "glyph": "#F8FAFC",
+  "sizes": [
+    16,
+    32,
+    48,
+    64,
+    128,
+    180,
+    192,
+    256,
+    512
+  ],
+  "svg": "signature-slate_mono-dark.svg",
+  "svg_compatibility": "inline fill colors; no CSS variables"
+}
