@@ -78,7 +78,6 @@ python generate_favicon_assets.py --list-palettes
 ```
 generate_favicon_assets.py   # Asset generator (Pillow only, no source image needed)
 watermark.css                # Drop-in page watermark
-source_icon.png              # Legacy raster source (v1-v3 design)
 palettes/
   <palette>/
     dark/                    # Dark mode assets + metadata
