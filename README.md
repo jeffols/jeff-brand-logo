@@ -11,13 +11,13 @@ The signature mark is a stylized abstract glyph — a vertical stroke with a not
 
 ## Color Palettes
 
-| Palette | Dark BG | Dark Glyph | Light BG | Light Glyph |
-|---|---|---|---|---|
-| **Signal Yellow** (default) | `#111827` | `#FFD60A` | `#FFF7E0` | `#B8960A` |
-| **Electric Blue** | `#0B1020` | `#7DD3FC` | `#F6FBFF` | `#005A9C` |
-| **Amber Utility** | `#1F1B16` | `#FFB000` | `#FFF8E1` | `#8B5E00` |
-| **Terminal Lime** | `#151515` | `#B6FF4D` | `#F7FFE8` | `#3D6600` |
-| **Slate Mono** | `#0F172A` | `#F8FAFC` | `#F8FAFC` | `#0F172A` |
+| Palette | Dark | Light | Dark BG | Dark Glyph | Light BG | Light Glyph |
+|---|---|---|---|---|---|---|
+| **Signal Yellow** (default) | ![](palettes/signal_yellow/dark/favicon-64x64.png) | ![](palettes/signal_yellow/light/favicon-64x64.png) | `#111827` | `#FFD60A` | `#FFF7E0` | `#B8960A` |
+| **Electric Blue** | ![](palettes/electric_blue/dark/favicon-64x64.png) | ![](palettes/electric_blue/light/favicon-64x64.png) | `#0B1020` | `#7DD3FC` | `#F6FBFF` | `#005A9C` |
+| **Amber Utility** | ![](palettes/amber_utility/dark/favicon-64x64.png) | ![](palettes/amber_utility/light/favicon-64x64.png) | `#1F1B16` | `#FFB000` | `#FFF8E1` | `#8B5E00` |
+| **Terminal Lime** | ![](palettes/terminal_lime/dark/favicon-64x64.png) | ![](palettes/terminal_lime/light/favicon-64x64.png) | `#151515` | `#B6FF4D` | `#F7FFE8` | `#3D6600` |
+| **Slate Mono** | ![](palettes/slate_mono/dark/favicon-64x64.png) | ![](palettes/slate_mono/light/favicon-64x64.png) | `#0F172A` | `#F8FAFC` | `#F8FAFC` | `#0F172A` |
 
 ## Generated Assets
 
