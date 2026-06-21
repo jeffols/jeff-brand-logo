@@ -1,12 +1,17 @@
-# Signature Favicon & Branding Kit
+# jeffols — Signature Favicon & Branding Kit
 
-Personal signature icon for projects by Jeff Olsen. An abstract glyph on a rounded-square background, available in five color palettes with dark and light modes.
+Personal signature icon for projects by Jeff Olsen. A geometric lowercase **j** split into three offset pieces — the "tectonic" mark. Available in five color palettes with dark and light modes.
 
 ## The Icon
 
-The signature mark is a stylized abstract glyph — a vertical stroke with a notched top-left corner and a circular dot at bottom-left. It reads as a bold, geometric maker's mark.
+The mark is a deconstructed lowercase **j** — three distinct elements slightly offset from each other, like shifted geological plates:
 
-- Source: `source_icon.png` (master raster)
+- **Dot** — circle, shifted left
+- **Stem** — vertical rectangle, centered
+- **Hook** — curved base, shifted right
+
+The offset creates tension and movement. Together the pieces read as *j*; individually they're abstract geometry.
+
 - SVG: `palettes/<palette>/<mode>/signature-<palette>-<mode>.svg` (vector, inline fills, no CSS dependencies)
 
 ## Color Palettes
@@ -50,19 +55,19 @@ A drop-in CSS watermark is included at `watermark.css`. It places the signature 
 ## Usage
 
 ```bash
-pip install pillow opencv-python numpy
+pip install pillow
 
 # Default: Signal Yellow dark mode
-python generate_favicon_assets.py --source source_icon.png --out ./out
+python generate_favicon_assets.py --out ./out
 
 # One palette, both modes
-python generate_favicon_assets.py --source source_icon.png --out ./out --palette electric_blue --mode both
+python generate_favicon_assets.py --out ./out --palette electric_blue --mode both
 
 # All suggested palettes, both modes
-python generate_favicon_assets.py --source source_icon.png --out ./out --palette all --mode both
+python generate_favicon_assets.py --out ./out --palette all --mode both
 
 # Custom colors
-python generate_favicon_assets.py --source source_icon.png --out ./out --background "#111827" --glyph "#FFD60A"
+python generate_favicon_assets.py --out ./out --background "#111827" --glyph "#FFD60A"
 
 # List available palettes
 python generate_favicon_assets.py --list-palettes
@@ -71,9 +76,9 @@ python generate_favicon_assets.py --list-palettes
 ## Repo Structure
 
 ```
-source_icon.png              # Master raster source
-generate_favicon_assets.py   # Asset generator
+generate_favicon_assets.py   # Asset generator (Pillow only, no source image needed)
 watermark.css                # Drop-in page watermark
+source_icon.png              # Legacy raster source (v1-v3 design)
 palettes/
   <palette>/
     dark/                    # Dark mode assets + metadata
