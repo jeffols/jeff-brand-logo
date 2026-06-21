@@ -29,7 +29,7 @@ PALETTES = {
     "signal_yellow": {
         "label": "Signal Yellow",
         "dark":  {"background": "#111827", "glyph": "#FFD60A"},
-        "light": {"background": "#FFF7E0", "glyph": "#111827"},
+        "light": {"background": "#FFF7E0", "glyph": "#B8960A"},
     },
     "electric_blue": {
         "label": "Electric Blue",
@@ -39,12 +39,12 @@ PALETTES = {
     "amber_utility": {
         "label": "Amber Utility",
         "dark":  {"background": "#1F1B16", "glyph": "#FFB000"},
-        "light": {"background": "#FFF8E1", "glyph": "#3A2A00"},
+        "light": {"background": "#FFF8E1", "glyph": "#8B5E00"},
     },
     "terminal_lime": {
         "label": "Terminal Lime",
         "dark":  {"background": "#151515", "glyph": "#B6FF4D"},
-        "light": {"background": "#F7FFE8", "glyph": "#1B2A00"},
+        "light": {"background": "#F7FFE8", "glyph": "#3D6600"},
     },
     "slate_mono": {
         "label": "Slate Mono",

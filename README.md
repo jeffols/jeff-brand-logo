@@ -1,13 +1,54 @@
-# Favicon artifacts
+# Signature Favicon & Branding Kit
 
-Included:
-- `generate_favicon_assets.py`
-- `source_icon.png`
-- `palettes/<palette>/<mode>/`
-- `svg_verification.json`
-- `svg_render_check.png`
+Personal signature icon for projects by Jeff Olsen. An abstract glyph on a rounded-square background, available in five color palettes with dark and light modes.
 
-Usage:
+## The Icon
+
+The signature mark is a stylized abstract glyph — a vertical stroke with a notched top-left corner and a circular dot at bottom-left. It reads as a bold, geometric maker's mark.
+
+- Source: `source_icon.png` (master raster)
+- SVG: `palettes/<palette>/<mode>/signature-<palette>-<mode>.svg` (vector, inline fills, no CSS dependencies)
+
+## Color Palettes
+
+| Palette | Dark BG | Dark Glyph | Light BG | Light Glyph |
+|---|---|---|---|---|
+| **Signal Yellow** (default) | `#111827` | `#FFD60A` | `#FFF7E0` | `#B8960A` |
+| **Electric Blue** | `#0B1020` | `#7DD3FC` | `#F6FBFF` | `#005A9C` |
+| **Amber Utility** | `#1F1B16` | `#FFB000` | `#FFF8E1` | `#8B5E00` |
+| **Terminal Lime** | `#151515` | `#B6FF4D` | `#F7FFE8` | `#3D6600` |
+| **Slate Mono** | `#0F172A` | `#F8FAFC` | `#F8FAFC` | `#0F172A` |
+
+## Generated Assets
+
+Each palette/mode combo produces:
+
+| File | Size | Use |
+|---|---|---|
+| `favicon.ico` | 16/32/48/64 | Browser tab |
+| `favicon-{N}x{N}.png` | 16–512 | General use |
+| `apple-touch-icon.png` | 180 | iOS home screen |
+| `android-chrome-{192,512}.png` | 192, 512 | Android/PWA |
+| `signature-*.svg` | scalable | Vector embed, watermark |
+| `site.webmanifest` | — | PWA manifest |
+| `metadata.json` | — | Palette/color reference |
+
+## HTML Integration
+
+```html
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+```
+
+## Watermark
+
+A drop-in CSS watermark is included at `watermark.css`. It places the signature SVG in the bottom-right corner of the page. See the file for usage and customization.
+
+## Usage
+
 ```bash
 pip install pillow opencv-python numpy
 
@@ -22,4 +63,19 @@ python generate_favicon_assets.py --source source_icon.png --out ./out --palette
 
 # Custom colors
 python generate_favicon_assets.py --source source_icon.png --out ./out --background "#111827" --glyph "#FFD60A"
+
+# List available palettes
+python generate_favicon_assets.py --list-palettes
+```
+
+## Repo Structure
+
+```
+source_icon.png              # Master raster source
+generate_favicon_assets.py   # Asset generator
+watermark.css                # Drop-in page watermark
+palettes/
+  <palette>/
+    dark/                    # Dark mode assets + metadata
+    light/                   # Light mode assets + metadata
 ```
