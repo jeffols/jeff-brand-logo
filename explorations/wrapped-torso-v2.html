@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wrapped torso v2 — lineless</title>
+<style>
+  body { margin:0; background:#0b0e16; color:#e8eaf0;
+    font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; padding:36px; }
+  h1 { font-size:19px; margin:0 0 4px; }
+  p.sub { color:#8b93a7; margin:0 0 28px; max-width:640px; }
+  .grid { display:flex; flex-wrap:wrap; gap:22px; }
+  .card { background:#141924; border-radius:16px; padding:18px; width:250px;
+    display:flex; flex-direction:column; align-items:center; }
+  .card h2 { font-size:14px; margin:0 0 2px; }
+  .card .desc { color:#8b93a7; font-size:12px; text-align:center; margin:0 0 12px; min-height:48px; }
+  .previews { display:flex; gap:8px; align-items:center; margin-top:12px; color:#8b93a7; font-size:11px; }
+  svg { display:block; }
+</style>
+</head>
+<body>
+  <h1>Wrapped torso v2 — no lines</h1>
+  <p class="sub">Expressing "duct tape / bound / patched" through offset pieces, negative space,
+  and material — the grammar the mark already speaks. Silver = duct tape (#AEB6C2).</p>
+  <div class="grid" id="grid"></div>
+<script>
+const BG="#111827", GL="#FFD60A", TAPE="#AEB6C2", TAPED="#7E8794";
+function shell(inner,sz=210){
+  return `<svg width="${sz}" height="${sz}" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1024" height="1024" rx="174" fill="${BG}"/>
+    <rect x="400" y="120" width="140" height="140" rx="70" fill="${GL}"/>
+    ${inner}
+    <path d="M 500 640 H 660 V 720 Q 660 860 520 860 H 370 Q 280 860 280 780 V 750
+      Q 280 710 330 710 H 410 Q 500 710 500 640 Z" fill="${GL}"/>
+  </svg>`;
+}
+const PLAIN = `<rect x="460" y="340" width="160" height="280" rx="6" fill="${GL}"/>`;
+
+// 1. offset tape bands — slabs shifted sideways, gaps = seams
+function bands(fill){
+  const slabs=[[340,64,-16],[412,64,14],[484,64,-10],[556,64,12]];
+  return slabs.map(([y,h,dx])=>
+    `<rect x="${460+dx}" y="${y}" width="160" height="${h}" rx="8" fill="${fill}"/>`).join("");
+}
+// 2. single diagonal repair patch over solid stem
+const patch = `${PLAIN}
+  <g transform="rotate(-18 540 486)">
+    <rect x="404" y="452" width="272" height="70" rx="8" fill="${TAPE}"/>
+    <rect x="404" y="452" width="272" height="10" rx="5" fill="${TAPED}"/>
+  </g>`;
+// 3. material swap — torso all silver, two faint offset seams
+const material = `<rect x="460" y="340" width="160" height="280" rx="6" fill="${TAPE}"/>
+  <rect x="452" y="428" width="176" height="8" fill="${BG}" opacity="0.55"/>
+  <rect x="452" y="520" width="176" height="8" fill="${BG}" opacity="0.55"/>`;
+// bonus: offset bands but in silver (material + offset combined)
+const bandsSilver = bands(TAPE);
+
+const V=[
+  {n:"Reference", d:"Current flat stem — unchanged.", i:PLAIN},
+  {n:"Offset bands (yellow)", d:"Torso as 4 slabs shifted sideways; gaps are the wrap seams. Pure tectonic grammar.", i:bands(GL)},
+  {n:"Offset bands (silver)", d:"Same, but the bands read as duct-tape layers via material color.", i:bandsSilver},
+  {n:"Repair patch", d:"One diagonal strip of tape slapped across — the 'fix anything' read.", i:patch},
+  {n:"Material swap", d:"Whole torso in duct-tape silver = a restrictive material = straightjacket.", i:material},
+];
+const grid=document.getElementById("grid");
+for(const v of V){
+  const el=document.createElement("div"); el.className="card";
+  el.innerHTML=`<h2>${v.n}</h2><div class="desc">${v.d}</div>${shell(v.i)}
+    <div class="previews">favicon: ${shell(v.i,34)} 34px</div>`;
+  grid.appendChild(el);
+}
+</script>
+</body>
+</html>

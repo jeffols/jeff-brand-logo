@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wrapped torso — tectonic j easter egg</title>
+<style>
+  :root { --bg:#0b0e16; --panel:#141924; --ink:#e8eaf0; --muted:#8b93a7; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink);
+    font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; padding:40px; }
+  h1 { font-size:20px; font-weight:600; margin:0 0 4px; }
+  p.sub { color:var(--muted); margin:0 0 32px; max-width:640px; }
+  .grid { display:flex; flex-wrap:wrap; gap:24px; }
+  .card { background:var(--panel); border-radius:16px; padding:20px; width:280px;
+    display:flex; flex-direction:column; align-items:center; }
+  .card h2 { font-size:14px; font-weight:600; margin:0 0 2px; }
+  .card .desc { color:var(--muted); font-size:12px; text-align:center; margin:0 0 16px;
+    min-height:32px; }
+  .big { width:220px; height:220px; }
+  .previews { display:flex; gap:10px; align-items:center; margin-top:16px; }
+  .previews .lbl { color:var(--muted); font-size:11px; }
+  svg { display:block; }
+</style>
+</head>
+<body>
+  <h1>Wrapped torso — a personal easter egg for the tectonic j</h1>
+  <p class="sub">The stem ("torso" of the seated developer) rendered as duct tape wound around
+  a tube — the Rising Leader bead. Duct-tape-of-engineering + straightjacket. Only meant to read
+  at hero size; the small previews show it collapsing back to the clean mark at favicon scale.</p>
+  <div class="grid" id="grid"></div>
+
+<script>
+const PAL = { bg:"#111827", glyph:"#FFD60A", gap:"rgba(0,0,0,0.30)", hi:"rgba(255,255,255,0.16)" };
+
+// ---- fixed pieces of the mark (from build_svg) ----
+function shell(inner){
+  return `<svg class="big" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1024" height="1024" rx="174" fill="${PAL.bg}"/>
+    <rect x="400" y="120" width="140" height="140" rx="70" fill="${PAL.glyph}"/>
+    ${inner}
+    <path d="M 500 640 H 660 V 720 Q 660 860 520 860 H 370 Q 280 860 280 780 V 750
+      Q 280 710 330 710 H 410 Q 500 710 500 640 Z" fill="${PAL.glyph}"/>
+  </svg>`;
+}
+function preview(inner){
+  return `<svg width="34" height="34" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1024" height="1024" rx="174" fill="${PAL.bg}"/>
+    <rect x="400" y="120" width="140" height="140" rx="70" fill="${PAL.glyph}"/>
+    ${inner}
+    <path d="M 500 640 H 660 V 720 Q 660 860 520 860 H 370 Q 280 860 280 780 V 750
+      Q 280 710 330 710 H 410 Q 500 710 500 640 Z" fill="${PAL.glyph}"/>
+  </svg>`;
+}
+
+// plain stem (reference)
+const PLAIN = `<rect x="460" y="340" width="160" height="280" rx="6" fill="${PAL.glyph}"/>`;
+
+// ---- silhouettes ----
+const SIL = {
+  bicone: `M 540 336 Q 632 380 630 484 Q 632 604 540 636 Q 448 604 450 484 Q 448 380 540 336 Z`,
+  // narrow at top, full width + rounded at base (protects the hook join)
+  teardrop: `M 540 334 Q 622 360 622 474 L 622 610 Q 622 632 600 632 L 480 632
+             Q 458 632 458 610 L 458 474 Q 458 360 540 334 Z`,
+  // straight-sided stem for chevrons
+  stem: `M 466 346 L 614 346 Q 620 346 620 352 L 620 614 Q 620 620 614 620 L 466 620
+         Q 460 620 460 614 L 460 352 Q 460 346 466 346 Z`,
+};
+
+// ring y-positions: bunch at both ends
+function biconeYs(n, top=344, bot=628){
+  const c=(top+bot)/2, h=(bot-top)/2, out=[];
+  for(let i=1;i<n;i++){ const t=i/n; out.push(c - h*Math.cos(Math.PI*t)); }
+  return out;
+}
+// dense near top, spreading down
+function teardropYs(n, top=352, bot=616){
+  const out=[];
+  for(let i=1;i<n;i++){ const t=i/n; out.push(top + (bot-top)*Math.pow(t,1.7)); }
+  return out;
+}
+function evenYs(n, top=356, bot=612){
+  const out=[]; for(let i=1;i<n;i++){ out.push(top+(bot-top)*i/n); } return out;
+}
+
+// curved horizontal wrap ring (bows down to imply a cylinder)
+function ring(y, bow=11){
+  return `<path d="M 430 ${y-4} Q 540 ${y-4+bow} 650 ${y-4}" stroke="${PAL.hi}"
+      stroke-width="4" fill="none"/>
+    <path d="M 430 ${y} Q 540 ${y+bow} 650 ${y}" stroke="${PAL.gap}"
+      stroke-width="6" fill="none"/>`;
+}
+// up-pointing chevron stripe (tape wrapping toward the top)
+function chevron(y, rise=22, dip=8){
+  return `<path d="M 430 ${y-4+dip} L 540 ${y-4-rise} L 650 ${y-4+dip}" stroke="${PAL.hi}"
+      stroke-width="4" fill="none"/>
+    <path d="M 430 ${y+dip} L 540 ${y-rise} L 650 ${y+dip}" stroke="${PAL.gap}"
+      stroke-width="6" fill="none"/>`;
+}
+
+function torso(id, silPath, ys, striper){
+  const cid = "clip"+id;
+  const rings = ys.map(y=>striper(y)).join("\n");
+  return `<defs><clipPath id="${cid}"><path d="${silPath}"/></clipPath></defs>
+    <path d="${silPath}" fill="${PAL.glyph}"/>
+    <g clip-path="url(#${cid})">${rings}</g>`;
+}
+
+const VARIANTS = [
+  { name:"Reference", desc:"Current flat geometric stem — unchanged.", inner: PLAIN },
+  { name:"Bicone rings", desc:"Faithful to the bead: fat middle, tapered both ends, rings bunch at the points.",
+    inner: torso("bi", SIL.bicone, biconeYs(24), ring) },
+  { name:"Teardrop rings", desc:"Top-tapered, full rounded base — keeps a solid join to the hook (my rec).",
+    inner: torso("td", SIL.teardrop, teardropYs(22), ring) },
+  { name:"Chevron wrap", desc:"Slanted stripes reading as tape spiralling up toward the head.",
+    inner: torso("cv", SIL.stem, evenYs(16), chevron) },
+];
+
+const grid = document.getElementById("grid");
+for(const v of VARIANTS){
+  const el = document.createElement("div");
+  el.className = "card";
+  el.innerHTML = `<h2>${v.name}</h2><div class="desc">${v.desc}</div>
+    ${shell(v.inner)}
+    <div class="previews"><span class="lbl">favicon:</span>${preview(v.inner)}
+      <span class="lbl">32px</span></div>`;
+  grid.appendChild(el);
+}
+</script>
+</body>
+</html>

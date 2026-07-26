@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Tectonic j — Lighter Solid / Pen Stroke Explorations</title>
+<style>
+  body { background: #0a0a0a; color: #ccc; font-family: system-ui, sans-serif; margin: 2rem; }
+  h1 { color: #FFD60A; font-size: 1.4rem; font-weight: 400; }
+  .intro { max-width: 42em; color: #777; font-size: 0.85rem; line-height: 1.6; margin-bottom: 2rem; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; }
+  .card { background: #151515; border-radius: 12px; padding: 1.5rem; }
+  .card h2 { color: #fff; font-size: 1rem; margin: 0 0 0.25rem; }
+  .card p { font-size: 0.85rem; line-height: 1.5; margin: 0 0 1rem; color: #999; }
+  .tag { display: inline-block; font-size: 0.7rem; padding: 2px 8px; border-radius: 4px; margin-bottom: 0.75rem; }
+  .tag.ref { background: #1a2a3a; color: #6fa8dd; }
+  .tag.thin { background: #1a3a1a; color: #6fdd6f; }
+  .tag.pen { background: #3a2a1a; color: #dda06f; }
+  .tag.char { background: #2a1a3a; color: #a06fdd; }
+  .icons { display: flex; gap: 1.2rem; align-items: center; justify-content: center; padding: 1rem 0; }
+  .label { text-align: center; font-size: 0.7rem; color: #666; margin-top: 0.5rem; }
+  .notes { margin-top: 3rem; padding: 1.5rem; background: #1a1a1a; border-radius: 8px; max-width: 42em; }
+  .notes h3 { color: #fff; font-size: 0.9rem; margin: 0 0 0.5rem; }
+  .notes ul { font-size: 0.82rem; line-height: 1.7; color: #999; padding-left: 1.2em; }
+  .notes strong { color: #ccc; }
+</style>
+</head>
+<body>
+
+<h1>Tectonic j — lighter solids, pen strokes, character shapes</h1>
+<div class="intro">
+  All solid fills — no filters, no masks. Silk-screenable. Three directions: just thinner, calligraphic taper (thin tip → thick middle), and bold character strokes.
+</div>
+
+<div class="grid">
+
+  <!-- CURRENT -->
+  <div class="card">
+    <h2>Current — heavy solid</h2>
+    <span class="tag ref">reference</span>
+    <p>The original. Dot 140px, stem 160px wide, thick hook.</p>
+    <div class="icons">
+      <div>
+        <svg width="160" height="160" viewBox="0 0 1024 1024">
+          <rect width="1024" height="1024" rx="174" fill="#111827"/>
+          <rect x="400" y="120" width="140" height="140" rx="70" fill="#FFD60A"/>
+          <rect x="460" y="340" width="160" height="280" rx="6" fill="#FFD60A"/>
+          <path d="M500 640H660V720Q660 860 520 860H370Q280 860 280 780V750Q280 710 330 710H410Q500 710 500 640Z" fill="#FFD60A"/>
+        </svg>
+        <div class="label">160px</div>
+      </div>
+      <div>
+        <svg width="64" height="64" viewBox="0 0 1024 1024">
+          <rect width="1024" height="1024" rx="174" fill="#111827"/>
+          <rect x="400" y="120" width="140" height="140" rx="70" fill="#FFD60A"/>
+          <rect x="460" y="340" width="160" height="280" rx="6" fill="#FFD60A"/>
+          <path d="M500 640H660V720Q660 860 520 860H370Q280 860 280 780V750Q280 710 330 710H410Q500 710 500 640Z" fill="#FFD60A"/>
+        </svg>
+        <div class="label">64px</div>
+      </div>
+      <div>
+        <svg width="32" height="32" viewBox="0 0 1024 1024">
+          <rect width="1024" height="1024" rx="174" fill="#111827"/>
+          <rect x="400" y="120" width="140" height="140" rx="70" fill="#FFD60A"/>
+          <rect x="460" y="340" width="160" height="280" rx="6" fill="#FFD60A"/>
+          <path d="M500 640H660V720Q660 860 520 860H370Q280 860 280 780V750Q280 710 330 710H410Q500 710 500 640Z" fill="#FFD60A"/>
+        </svg>
+        <div class="label">32px</div>
+      </div>
+      <div>
+        <svg width="16" height="16" viewBox="0 0 1024 1024">
+          <rect width="1024" height="1024" rx="174" fill="#111827"/>
+          <rect x="400" y="120" width="140" height="140" rx="70" fill="#FFD60A"/>
+          <rect x="460" y="340" width="160" height="280" rx="6" fill="#FFD60A"/>
+          <path d="M500 640H660V720Q660 860 520 860H370Q280 860 280 780V750Q280 710 330 710H410Q500 710 500 640Z" fill="#FFD60A"/>
+        </svg>
+        <div class="label">16px</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- A: THIN SOLID — same shapes, just slimmer -->
+  <div class="card">
+    <h2>A — Thin solid</h2>
+    <span class="tag thin">lighter</span>
+    <p>Same geometry, ~35% less mass. Smaller dot, narrower stem, slimmer hook. More negative space between pieces.</p>
+    <div class="icons">
+      <div>
+        <svg width="160" height="160" viewBox="0 0 1024 1024">
+          <rect width="1024" height="1024" rx="174" fill="#111827"/>
+          <rect x="425" y="145" width="95" height="95" rx="48" fill="#FFD60A"/>
+          <rect x="488" y="340" width="100" height="280" rx="4" fill="#FFD60A"/>
+          <path d="M538 640H620V700Q620 820 510 820H400Q325 820 325 765V745Q325 718 358 718H425Q538 718 538 640Z" fill="#FFD60A"/>
+        </svg>
+        <div class="label">160px</div>
+      </div>
+      <div>
+        <svg width="64" height="64" viewBox="0 0 1024 1024">
+          <rect width="1024" height="1024" rx="174" fill="#111827"/>
+          <rect x="425" y="145" width="95" height="95" rx="48" fill="#FFD60A"/>
+          <rect x="488" y="340" width="100" height="280" rx="4" fill="#FFD60A"/>
+          <path d="M538 640H620V700Q620 820 510 820H400Q325 820 325 765V745Q325 718 358 718H425Q538 718 538 640Z" fill="#FFD60A"/>
+        </svg>
+        <div class="label">64px</div>
+      </div>
+      <div>
+        <svg width="32" height="32" viewBox="0 0 1024 1024">
+          <rect width="1024" height="1024" rx="174" fill="#111827"/>
+          <rect x="425" y="145" width="95" height="95" rx="48" fill="#FFD60A"/>
+          <rect x="488" y="340" width="100" height="280" rx="4" fill="#FFD60A"/>
+          <path d="M538 640H620V700Q620 820 510 820H400Q325 820 325 765V745Q325 718 358 718H425Q538 718 538 640Z" fill="#FFD60A"/>
+        </svg>
+        <div class="label">32px</div>
+      </div>
+      <div>
+        <svg width="16" height="16" viewBox="0 0 1024 1024">
+          <rect width="1024" height="1024" rx="174" fill="#111827"/>
+          <rect x="425" y="145" width="95" height="95" rx="48" fill="#FFD60A"/>
+          <rect x="488" y="340" width="100" height="280" rx="4" fill="#FFD60A"/>
+          <path d="M538 640H620V700Q620 820 510 820H400Q325 820 325 765V745Q325 718 358 718H425Q538 718 538 640Z" fill="#FFD60A"/>
+        </svg>
+        <div class="label">16px</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- B: PEN STROKE — subtle taper, thin entry/exit, thick middle -->
+  <div class="card">
+    <h2>B — Pen stroke (subtle)</h2>
+    <span class="tag pen">calligraphic</span>
+    <p>Each piece tapers: thin at the tips, thicker through the middle. Like a felt-tip marker. The dot becomes a press-dot (slightly wider than tall). Stem swells in the middle. Hook thins at the tail.</p>
+    <div class="icons">
+      <div>
+        <svg width="160" height="160" viewBox="0 0 1024 1024">
+          <rect width="1024" height="1024" rx="174" fill="#111827"/>
+          <!-- dot: press-dot, wider than tall -->
+          <ellipse cx="470" cy="188" rx="62" ry="52" fill="#FFD60A"/>
+          <!-- stem: thin top, swells middle, thins bottom -->
+          <path d="M518 340 C500 400 488 460 488 500 C488 540 492 580 500 620 L580 620 C588 580 592 540 592 500 C592 460 580 400 562 340 Z" fill="#FFD60A"/>
+          <!-- hook: thins at tail -->
+          <path d="M538 640H620V700Q620 825 510 825H410Q345 825 330 790 Q318 762 345 742 L425 742 Q538 740 538 640Z" fill="#FFD60A"/>
+        </svg>
+        <div class="label">160px</div>
+      </div>
+      <div>
+        <svg width="64" height="64" viewBox="0 0 1024 1024">
+          <rect width="1024" height="1024" rx="174" fill="#111827"/>
+          <ellipse cx="470" cy="188" rx="62" ry="52" fill="#FFD60A"/>
+          <path d="M518 340 C500 400 488 460 488 500 C488 540 492 580 500 620 L580 620 C588 580 592 540 592 500 C592 460 580 400 562 340 Z" fill="#FFD60A"/>
+          <path d="M538 640H620V700Q620 825 510 825H410Q345 825 330 790 Q318 762 345 742 L425 742 Q538 740 538 640Z" fill="#FFD60A"/>
+        </svg>
+        <div class="label">64px</div>
+      </div>
+      <div>
+        <svg width="32" height="32" viewBox="0 0 1024 1024">
+          <rect width="1024" height="1024" rx="174" fill="#111827"/>
+          <ellipse cx="470" cy="188" rx="62" ry="52" fill="#FFD60A"/>
+          <path d="M518 340 C500 400 488 460 488 500 C488 540 492 580 500 620 L580 620 C588 580 592 540 592 500 C592 460 580 400 562 340 Z" fill="#FFD60A"/>
+          <path d="M538 640H620V700Q620 825 510 825H410Q345 825 330 790 Q318 762 345 742 L425 742 Q538 740 538 640Z" fill="#FFD60A"/>
+        </svg>
+        <div class="label">32px</div>
+      </div>
+      <div>
+        <svg width="16" height="16" viewBox="0 0 1024 1024">
+          <rect width="1024" height="1024" rx="174" fill="#111827"/>
+          <ellipse cx="470" cy="188" rx="62" ry="52" fill="#FFD60A"/>
+          <path d="M518 340 C500 400 488 460 488 500 C488 540 492 580 500 620 L580 620 C588 580 592 540 592 500 C592 460 580 400 562 340 Z" fill="#FFD60A"/>
+          <path d="M538 640H620V700Q620 825 510 825H410Q345 825 330 790 Q318 762 345 742 L425 742 Q538 740 538 640Z" fill="#FFD60A"/>
+        </svg>
+        <div class="label">16px</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- C: PEN STROKE — dramatic taper, ink brush feel -->
+  <div class="card">
+    <h2>C — Ink brush (dramatic)</h2>
+    <span class="tag pen">calligraphic</span>
+    <p>Stronger taper — like a pointed brush or nib pen. Dot is an ink drop. Stem goes from thin entry to fat middle to tapered exit. Hook starts thick and whips thin at the tail. More expressive.</p>
+    <div class="icons">
+      <div>
+        <svg width="160" height="160" viewBox="0 0 1024 1024">
+          <rect width="1024" height="1024" rx="174" fill="#111827"/>
+          <!-- ink drop dot — slightly teardrop, heavier at bottom -->
+          <path d="M470 130 Q510 130 520 170 Q530 210 510 235 Q490 260 460 255 Q430 245 425 210 Q420 170 440 140 Q450 130 470 130Z" fill="#FFD60A"/>
+          <!-- stem: narrow top, wide middle, medium bottom -->
+          <path d="M525 340 C505 380 482 440 478 500 C475 560 485 595 498 620 L588 620 C598 590 605 550 602 500 C598 440 578 380 558 340 Z" fill="#FFD60A"/>
+          <!-- hook: starts wide, thins dramatically at tail -->
+          <path d="M535 640 H625 V695 Q625 810 515 820 L420 825 Q370 825 348 800 Q330 778 350 760 Q370 748 405 750 Q535 755 535 640Z" fill="#FFD60A"/>
+        </svg>
+        <div class="label">160px</div>
+      </div>
+      <div>
+        <svg width="64" height="64" viewBox="0 0 1024 1024">
+          <rect width="1024" height="1024" rx="174" fill="#111827"/>
+          <path d="M470 130 Q510 130 520 170 Q530 210 510 235 Q490 260 460 255 Q430 245 425 210 Q420 170 440 140 Q450 130 470 130Z" fill="#FFD60A"/>
+          <path d="M525 340 C505 380 482 440 478 500 C475 560 485 595 498 620 L588 620 C598 590 605 550 602 500 C598 440 578 380 558 340 Z" fill="#FFD60A"/>
+          <path d="M535 640 H625 V695 Q625 810 515 820 L420 825 Q370 825 348 800 Q330 778 350 760 Q370 748 405 750 Q535 755 535 640Z" fill="#FFD60A"/>
+        </svg>
+        <div class="label">64px</div>
+      </div>
+      <div>
+        <svg width="32" height="32" viewBox="0 0 1024 1024">
+          <rect width="1024" height="1024" rx="174" fill="#111827"/>
+          <path d="M470 130 Q510 130 520 170 Q530 210 510 235 Q490 260 460 255 Q430 245 425 210 Q420 170 440 140 Q450 130 470 130Z" fill="#FFD60A"/>
+          <path d="M525 340 C505 380 482 440 478 500 C475 560 485 595 498 620 L588 620 C598 590 605 550 602 500 C598 440 578 380 558 340 Z" fill="#FFD60A"/>
+          <path d="M535 640 H625 V695 Q625 810 515 820 L420 825 Q370 825 348 800 Q330 778 350 760 Q370 748 405 750 Q535 755 535 640Z" fill="#FFD60A"/>
+        </svg>
+        <div class="label">32px</div>
+      </div>
+      <div>
+        <svg width="16" height="16" viewBox="0 0 1024 1024">
+          <rect width="1024" height="1024" rx="174" fill="#111827"/>
+          <path d="M470 130 Q510 130 520 170 Q530 210 510 235 Q490 260 460 255 Q430 245 425 210 Q420 170 440 140 Q450 130 470 130Z" fill="#FFD60A"/>
+          <path d="M525 340 C505 380 482 440 478 500 C475 560 485 595 498 620 L588 620 C598 590 605 550 602 500 C598 440 578 380 558 340 Z" fill="#FFD60A"/>
+          <path d="M535 640 H625 V695 Q625 810 515 820 L420 825 Q370 825 348 800 Q330 778 350 760 Q370 748 405 750 Q535 755 535 640Z" fill="#FFD60A"/>
+        </svg>
+        <div class="label">16px</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- D: BOLD MONO CHARACTER — shapes echo . | J glyphs -->
+  <div class="card">
+    <h2>D — Bold mono characters</h2>
+    <span class="tag char">character</span>
+    <p>Each piece echoes a typed character. Dot = period/bullet. Stem = pipe/bar. Hook = bottom of a J. Like three bold monospace glyphs stamped at an offset. "Code as letterform."</p>
+    <div class="icons">
+      <div>
+        <svg width="160" height="160" viewBox="0 0 1024 1024">
+          <rect width="1024" height="1024" rx="174" fill="#111827"/>
+          <!-- bullet dot — square with rounded corners, like a monospace period -->
+          <rect x="430" y="155" width="85" height="85" rx="14" fill="#FFD60A"/>
+          <!-- pipe — tall narrow rectangle with slightly rounded ends, like | -->
+          <rect x="492" y="330" width="90" height="300" rx="10" fill="#FFD60A"/>
+          <!-- J bottom — the curve, recognizable as bottom half of J -->
+          <path d="M535 650H615V720Q615 830 505 830H400Q320 830 320 760V730Q320 705 350 705H430Q535 705 535 650Z" fill="#FFD60A"/>
+        </svg>
+        <div class="label">160px</div>
+      </div>
+      <div>
+        <svg width="64" height="64" viewBox="0 0 1024 1024">
+          <rect width="1024" height="1024" rx="174" fill="#111827"/>
+          <rect x="430" y="155" width="85" height="85" rx="14" fill="#FFD60A"/>
+          <rect x="492" y="330" width="90" height="300" rx="10" fill="#FFD60A"/>
+          <path d="M535 650H615V720Q615 830 505 830H400Q320 830 320 760V730Q320 705 350 705H430Q535 705 535 650Z" fill="#FFD60A"/>
+        </svg>
+        <div class="label">64px</div>
+      </div>
+      <div>
+        <svg width="32" height="32" viewBox="0 0 1024 1024">
+          <rect width="1024" height="1024" rx="174" fill="#111827"/>
+          <rect x="430" y="155" width="85" height="85" rx="14" fill="#FFD60A"/>
+          <rect x="492" y="330" width="90" height="300" rx="10" fill="#FFD60A"/>
+          <path d="M535 650H615V720Q615 830 505 830H400Q320 830 320 760V730Q320 705 350 705H430Q535 705 535 650Z" fill="#FFD60A"/>
+        </svg>
+        <div class="label">32px</div>
+      </div>
+      <div>
+        <svg width="16" height="16" viewBox="0 0 1024 1024">
+          <rect width="1024" height="1024" rx="174" fill="#111827"/>
+          <rect x="430" y="155" width="85" height="85" rx="14" fill="#FFD60A"/>
+          <rect x="492" y="330" width="90" height="300" rx="10" fill="#FFD60A"/>
+          <path d="M535 650H615V720Q615 830 505 830H400Q320 830 320 760V730Q320 705 350 705H430Q535 705 535 650Z" fill="#FFD60A"/>
+        </svg>
+        <div class="label">16px</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- E: PEN STROKE on THIN — taper applied to thinner proportions -->
+  <div class="card">
+    <h2>E — Thin pen stroke</h2>
+    <span class="tag pen">calligraphic + light</span>
+    <p>Combines A and B: thin proportions plus taper. The lightest solid option that still has character. Each piece has just enough swell to feel hand-drawn.</p>
+    <div class="icons">
+      <div>
+        <svg width="160" height="160" viewBox="0 0 1024 1024">
+          <rect width="1024" height="1024" rx="174" fill="#111827"/>
+          <!-- small press dot -->
+          <ellipse cx="470" cy="188" rx="48" ry="40" fill="#FFD60A"/>
+          <!-- thin tapered stem -->
+          <path d="M525 340 C512 390 502 450 500 500 C498 550 502 590 510 620 L570 620 C576 590 580 550 578 500 C576 450 568 390 555 340 Z" fill="#FFD60A"/>
+          <!-- thin tapered hook -->
+          <path d="M542 640 H610 V690 Q610 800 508 805 L418 808 Q362 808 350 780 Q340 758 360 745 Q378 738 410 740 Q542 745 542 640Z" fill="#FFD60A"/>
+        </svg>
+        <div class="label">160px</div>
+      </div>
+      <div>
+        <svg width="64" height="64" viewBox="0 0 1024 1024">
+          <rect width="1024" height="1024" rx="174" fill="#111827"/>
+          <ellipse cx="470" cy="188" rx="48" ry="40" fill="#FFD60A"/>
+          <path d="M525 340 C512 390 502 450 500 500 C498 550 502 590 510 620 L570 620 C576 590 580 550 578 500 C576 450 568 390 555 340 Z" fill="#FFD60A"/>
+          <path d="M542 640 H610 V690 Q610 800 508 805 L418 808 Q362 808 350 780 Q340 758 360 745 Q378 738 410 740 Q542 745 542 640Z" fill="#FFD60A"/>
+        </svg>
+        <div class="label">64px</div>
+      </div>
+      <div>
+        <svg width="32" height="32" viewBox="0 0 1024 1024">
+          <rect width="1024" height="1024" rx="174" fill="#111827"/>
+          <ellipse cx="470" cy="188" rx="48" ry="40" fill="#FFD60A"/>
+          <path d="M525 340 C512 390 502 450 500 500 C498 550 502 590 510 620 L570 620 C576 590 580 550 578 500 C576 450 568 390 555 340 Z" fill="#FFD60A"/>
+          <path d="M542 640 H610 V690 Q610 800 508 805 L418 808 Q362 808 350 780 Q340 758 360 745 Q378 738 410 740 Q542 745 542 640Z" fill="#FFD60A"/>
+        </svg>
+        <div class="label">32px</div>
+      </div>
+      <div>
+        <svg width="16" height="16" viewBox="0 0 1024 1024">
+          <rect width="1024" height="1024" rx="174" fill="#111827"/>
+          <ellipse cx="470" cy="188" rx="48" ry="40" fill="#FFD60A"/>
+          <path d="M525 340 C512 390 502 450 500 500 C498 550 502 590 510 620 L570 620 C576 590 580 550 578 500 C576 450 568 390 555 340 Z" fill="#FFD60A"/>
+          <path d="M542 640 H610 V690 Q610 800 508 805 L418 808 Q362 808 350 780 Q340 758 360 745 Q378 738 410 740 Q542 745 542 640Z" fill="#FFD60A"/>
+        </svg>
+        <div class="label">16px</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- F: BOLD MONO + TAPER COMBO — character shapes with pen swell -->
+  <div class="card">
+    <h2>F — Mono + ink swell</h2>
+    <span class="tag char">character + pen</span>
+    <p>Monospace character shapes from D but with pen-stroke swell. The pipe swells slightly in the middle. The J curve thins at the tail. Typed with an ink pen, not a laser printer.</p>
+    <div class="icons">
+      <div>
+        <svg width="160" height="160" viewBox="0 0 1024 1024">
+          <rect width="1024" height="1024" rx="174" fill="#111827"/>
+          <!-- square dot with slight ink swell -->
+          <rect x="428" y="150" width="90" height="90" rx="16" fill="#FFD60A"/>
+          <!-- pipe with swell -->
+          <path d="M520 330 C508 400 498 450 496 500 C494 555 500 600 508 630 L572 630 C580 600 584 555 582 500 C580 450 572 400 560 330 Z" fill="#FFD60A"/>
+          <!-- J bottom with thinning tail -->
+          <path d="M535 650 H615 V715 Q615 825 508 828 L415 830 Q355 830 338 798 Q325 772 348 755 Q368 745 400 748 Q535 752 535 650Z" fill="#FFD60A"/>
+        </svg>
+        <div class="label">160px</div>
+      </div>
+      <div>
+        <svg width="64" height="64" viewBox="0 0 1024 1024">
+          <rect width="1024" height="1024" rx="174" fill="#111827"/>
+          <rect x="428" y="150" width="90" height="90" rx="16" fill="#FFD60A"/>
+          <path d="M520 330 C508 400 498 450 496 500 C494 555 500 600 508 630 L572 630 C580 600 584 555 582 500 C580 450 572 400 560 330 Z" fill="#FFD60A"/>
+          <path d="M535 650 H615 V715 Q615 825 508 828 L415 830 Q355 830 338 798 Q325 772 348 755 Q368 745 400 748 Q535 752 535 650Z" fill="#FFD60A"/>
+        </svg>
+        <div class="label">64px</div>
+      </div>
+      <div>
+        <svg width="32" height="32" viewBox="0 0 1024 1024">
+          <rect width="1024" height="1024" rx="174" fill="#111827"/>
+          <rect x="428" y="150" width="90" height="90" rx="16" fill="#FFD60A"/>
+          <path d="M520 330 C508 400 498 450 496 500 C494 555 500 600 508 630 L572 630 C580 600 584 555 582 500 C580 450 572 400 560 330 Z" fill="#FFD60A"/>
+          <path d="M535 650 H615 V715 Q615 825 508 828 L415 830 Q355 830 338 798 Q325 772 348 755 Q368 745 400 748 Q535 752 535 650Z" fill="#FFD60A"/>
+        </svg>
+        <div class="label">32px</div>
+      </div>
+      <div>
+        <svg width="16" height="16" viewBox="0 0 1024 1024">
+          <rect width="1024" height="1024" rx="174" fill="#111827"/>
+          <rect x="428" y="150" width="90" height="90" rx="16" fill="#FFD60A"/>
+          <path d="M520 330 C508 400 498 450 496 500 C494 555 500 600 508 630 L572 630 C580 600 584 555 582 500 C580 450 572 400 560 330 Z" fill="#FFD60A"/>
+          <path d="M535 650 H615 V715 Q615 825 508 828 L415 830 Q355 830 338 798 Q325 772 348 755 Q368 745 400 748 Q535 752 535 650Z" fill="#FFD60A"/>
+        </svg>
+        <div class="label">16px</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="notes">
+  <h3>Trade-offs</h3>
+  <ul>
+    <li><strong>A (thin solid)</strong> — Safest. Same DNA, less weight. No new design language. Silk-screens perfectly.</li>
+    <li><strong>B (subtle pen)</strong> — The swell gives warmth without going full calligraphy. Each piece still reads as geometry. The ellipse dot feels more natural than a circle.</li>
+    <li><strong>C (dramatic ink)</strong> — Most expressive. The teardrop dot and whip-thin hook tail give real pen energy. Risk: might feel too organic against the geometric background rect.</li>
+    <li><strong>D (bold mono)</strong> — The squared dot and pipe stem say "typed" immediately. Rounded-rect dot vs circle changes the character. Lightest conceptual change — it's still tectonic, just with mono DNA.</li>
+    <li><strong>E (thin pen)</strong> — Lightest version with personality. The taper is subtle enough to feel intentional, not accidental. Best for contexts where the icon is small.</li>
+    <li><strong>F (mono + ink)</strong> — Hybrid: recognizable character shapes that swell like pen strokes. "Hand-written code." The square dot grounds it in mono; the swelling stem and thinning hook tail add humanity.</li>
+  </ul>
+</div>
+
+</body>
+</html>

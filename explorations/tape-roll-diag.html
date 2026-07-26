@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>jeffols tape roll — diagonal forward trail</title>
+<style>
+  body{margin:0;font:15px/1.5 -apple-system,sans-serif;}
+  .sec{padding:28px 32px;}
+  .dark{background:#0b0e16;color:#e8eaf0;}
+  .light{background:#eef0f3;color:#111827;}
+  h2{font-size:13px;letter-spacing:.08em;text-transform:uppercase;opacity:.55;margin:0 0 6px;}
+  .sub{opacity:.6;font-size:13px;margin:0 0 16px;}
+</style></head>
+<body>
+<script>
+const GL="#FFD60A";
+function glyph(fill){return `<rect x="400" y="120" width="140" height="140" rx="70" fill="${fill}"/>
+  <rect x="460" y="340" width="160" height="280" rx="6" fill="${fill}"/>
+  <path d="M 500 640 H 660 V 720 Q 660 860 520 860 H 370 Q 280 860 280 780 V 750
+    Q 280 710 330 710 H 410 Q 500 710 500 640 Z" fill="${fill}"/>`;}
+function defs(id){return `<defs>
+  <radialGradient id="rim${id}" cx="0.4" cy="0.32" r="0.8">
+    <stop offset="0" stop-color="#E6E9ED"/><stop offset="0.7" stop-color="#AEB4BD"/>
+    <stop offset="1" stop-color="#79808A"/></radialGradient>
+  <linearGradient id="strip${id}" x1="0" y1="0" x2="1" y2="0.5">
+    <stop offset="0" stop-color="#B4BAC2"/><stop offset="0.5" stop-color="#CDD2D8"/>
+    <stop offset="1" stop-color="#9AA1AB"/></linearGradient>
+  <pattern id="weave${id}" width="16" height="16" patternUnits="userSpaceOnUse">
+    <path d="M0 0 L16 16 M0 16 L16 0" stroke="#000" stroke-width="0.9" opacity="0.10"/></pattern>
+  <radialGradient id="core${id}" cx="0.42" cy="0.4" r="0.7">
+    <stop offset="0" stop-color="#C8A97A"/><stop offset="1" stop-color="#9A7C4F"/></radialGradient>
+  <filter id="soft${id}" x="-40%" y="-40%" width="180%" height="180%">
+    <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000" flood-opacity="0.40"/></filter>
+  <filter id="blur${id}" x="-50%" y="-50%" width="200%" height="200%">
+    <feGaussianBlur stdDeviation="9"/></filter>
+</defs>`;}
+function sticker(cx,cy,r){return `<circle cx="${cx}" cy="${cy}" r="${r}" fill="#0b0e16"/>
+  <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${GL}" stroke-width="${r*0.06}"/>
+  <svg x="${cx-r*0.72}" y="${cy-r*0.72}" width="${r*1.44}" height="${r*1.44}" viewBox="0 0 1024 1024">
+    <g transform="translate(28,16)">${glyph(GL)}</g></svg>`;}
+function roll(id,cx,cy,R){
+  const band=R*0.42, rIn=R-band; let winds="";
+  for(let i=1;i<10;i++){const rr=rIn+band*i/10;
+    winds+=`<circle cx="${cx}" cy="${cy}" r="${rr}" fill="none" stroke="#000" stroke-width="1.1" opacity="0.09"/>`;}
+  return `<circle cx="${cx}" cy="${cy}" r="${R}" fill="url(#rim${id})"/>
+    <circle cx="${cx}" cy="${cy}" r="${R}" fill="url(#weave${id})"/>${winds}
+    <circle cx="${cx}" cy="${cy}" r="${rIn}" fill="url(#core${id})"/>
+    <circle cx="${cx}" cy="${cy}" r="${rIn}" fill="none" stroke="#000" stroke-width="2" opacity="0.15"/>
+    ${sticker(cx,cy,rIn*0.72)}`;
+}
+
+// vector helpers
+const sub=(a,b)=>[a[0]-b[0],a[1]-b[1]], add=(a,b)=>[a[0]+b[0],a[1]+b[1]];
+const mul=(a,s)=>[a[0]*s,a[1]*s], len=a=>Math.hypot(a[0],a[1]);
+const norm=a=>mul(a,1/len(a));
+const P=a=>`${a[0].toFixed(1)} ${a[1].toFixed(1)}`;
+
+// diagonal forward trail from F (under roll) to N (foreground)
+function diagTrail(id){
+  const F=[430,468], N=[705,648], wf=60, wn=116;
+  const dir=norm(sub(N,F)); const perp=[-dir[1],dir[0]];
+  const at=t=>add(F,mul(sub(N,F),t));
+  const wAt=t=>wf+(wn-wf)*t;
+  const edgeL=t=>add(at(t),mul(perp,wAt(t)));   // perp+ side
+  const edgeR=t=>sub(at(t),mul(perp,wAt(t)));   // perp- side
+  // torn near end: teeth from NearL to NearR, poked outward (toward viewer) along dir
+  const teeth=[]; const segs=10;
+  for(let i=0;i<=segs;i++){const t=i/segs;
+    const base=add(edgeL(1),mul(sub(edgeR(1),edgeL(1)),t));
+    teeth.push(add(base,mul(dir,(i%2)?20:2)));}
+  // CCW quad: FarL -> NearL -> (tear across) -> NearR -> FarR -> close
+  const body=`M ${P(edgeL(0))} L ${P(edgeL(1))} `+
+    teeth.map(p=>`L ${P(p)}`).join(" ")+` L ${P(edgeR(0))} Z`;
+  // ridges across (lying-flat bands)
+  let ridges=""; for(const t of [0.30,0.55,0.80]){
+    ridges+=`<line x1="${edgeL(t)[0].toFixed(1)}" y1="${edgeL(t)[1].toFixed(1)}"
+      x2="${edgeR(t)[0].toFixed(1)}" y2="${edgeR(t)[1].toFixed(1)}"
+      stroke="#000" stroke-width="2" opacity="0.07"/>`;}
+  const cL=add(at(0),mul(perp,wf*0.4)), cLn=add(at(1),mul(perp,wn*0.4));
+  const cR=sub(at(0),mul(perp,wf*0.4)), cRn=sub(at(1),mul(perp,wn*0.4));
+  const sheen=`<path d="M ${P(cL)} L ${P(cR)} L ${P(cRn)} L ${P(cLn)} Z" fill="#fff" opacity="0.12"/>`;
+  // subtle highlight along the upper-left (light-facing) long edge
+  const hiEdge=`<line x1="${edgeL(0)[0].toFixed(1)}" y1="${edgeL(0)[1].toFixed(1)}"
+      x2="${edgeL(1)[0].toFixed(1)}" y2="${edgeL(1)[1].toFixed(1)}" stroke="#fff" stroke-width="3" opacity="0.28"/>`;
+  const shadow=`<path d="${body}" fill="#000" opacity="0.24" transform="translate(12,20)" filter="url(#blur${id})"/>`;
+  const strip=`<clipPath id="tc${id}"><path d="${body}"/></clipPath>
+    <path d="${body}" fill="url(#strip${id})"/>
+    <g clip-path="url(#tc${id})"><rect x="360" y="380" width="460" height="380" fill="url(#weave${id})"/>
+      ${sheen}${ridges}</g>${hiEdge}`;
+  return {shadow, strip};
+}
+function scene(id){
+  const cx=372,cy=300,R=230; const t=diagTrail(id);
+  return `<svg width="560" height="480" viewBox="0 0 900 780" xmlns="http://www.w3.org/2000/svg">
+    ${defs(id)}
+    ${t.shadow}
+    <ellipse cx="${cx}" cy="548" rx="${R*0.9}" ry="30" fill="#000" opacity="0.30"/>
+    ${t.strip}
+    <g filter="url(#soft${id})">${roll(id,cx,cy,R)}</g>
+  </svg>`;
+}
+for(const [bg,label] of [["dark","On dark"],["light","On light"]]){
+  document.write(`<div class="sec ${bg}"><h2>${label}</h2>
+    <div class="sub">Diagonal forward trail — peels lower-right, lays flat on the ground toward you.</div>
+    ${scene(bg)}</div>`);
+}
+</script>
+</body></html>
