@@ -1,0 +1,72 @@
+[
+  {
+    "palette": "signal_yellow",
+    "mode": "dark",
+    "file": "linkedin-signal_yellow-dark.png",
+    "bg": "#111827",
+    "glyph": "#FFD60A"
+  },
+  {
+    "palette": "signal_yellow",
+    "mode": "light",
+    "file": "linkedin-signal_yellow-light.png",
+    "bg": "#FFF7E0",
+    "glyph": "#B8960A"
+  },
+  {
+    "palette": "electric_blue",
+    "mode": "dark",
+    "file": "linkedin-electric_blue-dark.png",
+    "bg": "#0B1020",
+    "glyph": "#7DD3FC"
+  },
+  {
+    "palette": "electric_blue",
+    "mode": "light",
+    "file": "linkedin-electric_blue-light.png",
+    "bg": "#F6FBFF",
+    "glyph": "#005A9C"
+  },
+  {
+    "palette": "amber_utility",
+    "mode": "dark",
+    "file": "linkedin-amber_utility-dark.png",
+    "bg": "#1F1B16",
+    "glyph": "#FFB000"
+  },
+  {
+    "palette": "amber_utility",
+    "mode": "light",
+    "file": "linkedin-amber_utility-light.png",
+    "bg": "#FFF8E1",
+    "glyph": "#8B5E00"
+  },
+  {
+    "palette": "terminal_lime",
+    "mode": "dark",
+    "file": "linkedin-terminal_lime-dark.png",
+    "bg": "#151515",
+    "glyph": "#B6FF4D"
+  },
+  {
+    "palette": "terminal_lime",
+    "mode": "light",
+    "file": "linkedin-terminal_lime-light.png",
+    "bg": "#F7FFE8",
+    "glyph": "#3D6600"
+  },
+  {
+    "palette": "slate_mono",
+    "mode": "dark",
+    "file": "linkedin-slate_mono-dark.png",
+    "bg": "#0F172A",
+    "glyph": "#F8FAFC"
+  },
+  {
+    "palette": "slate_mono",
+    "mode": "light",
+    "file": "linkedin-slate_mono-light.png",
+    "bg": "#F8FAFC",
+    "glyph": "#0F172A"
+  }
+]

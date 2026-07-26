@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8">
+<style>*{margin:0;padding:0;}body{width:1584px;height:396px;overflow:hidden;}</style>
+</head><body>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1584 396" width="1584" height="396">
+  <defs>
+    <!-- on light: soft shadow instead of glow -->
+    <filter id="soft-1" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="18" result="b1"/>
+      <feGaussianBlur in="SourceGraphic" stdDeviation="45" result="b2"/>
+      <feMerge><feMergeNode in="b2"/><feMergeNode in="b1"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="soft-2" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="12" result="b1"/>
+      <feGaussianBlur in="SourceGraphic" stdDeviation="30" result="b2"/>
+      <feMerge><feMergeNode in="b2"/><feMergeNode in="b1"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="soft-3" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="8" result="b1"/>
+      <feGaussianBlur in="SourceGraphic" stdDeviation="18" result="b2"/>
+      <feMerge><feMergeNode in="b2"/><feMergeNode in="b1"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="soft-4" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="b1"/>
+      <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="b2"/>
+      <feMerge><feMergeNode in="b2"/><feMergeNode in="b1"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="mark-shadow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="8"/>
+    </filter>
+
+    <!-- subtle warm gradient to avoid dead-flat -->
+    <linearGradient id="bg-grad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#F8F9FC"/>
+      <stop offset="1" stop-color="#F0F1F5"/>
+    </linearGradient>
+  </defs>
+
+  <!-- warm light base — close to LinkedIn's #F4F2EE but slightly cooler to read as intentional -->
+  <rect width="1584" height="396" fill="url(#bg-grad)"/>
+
+  <!-- faint grid — blueprint feel -->
+  <g opacity="0.04" stroke="#94A3B8" stroke-width="0.5">
+    <line x1="0" y1="99" x2="1584" y2="99"/>
+    <line x1="0" y1="198" x2="1584" y2="198"/>
+    <line x1="0" y1="297" x2="1584" y2="297"/>
+    <line x1="396" y1="0" x2="396" y2="396"/>
+    <line x1="792" y1="0" x2="792" y2="396"/>
+    <line x1="1188" y1="0" x2="1188" y2="396"/>
+  </g>
+
+  <!--
+    ZOOM TRAIL — same ease-out spacing, but strokes are muted blue-gray.
+    On light bg these read as architectural traces / blueprint lines.
+  -->
+
+  <!-- 6. Furthest out -->
+  <g transform="translate(-741, -391) scale(1.15)" opacity="0.06" filter="url(#soft-1)">
+    <circle cx="470" cy="190" r="70" fill="none" stroke="#005A9C" stroke-width="24"/>
+    <rect x="460" y="340" width="160" height="280" rx="6" fill="none" stroke="#005A9C" stroke-width="24"/>
+    <path d="M 500 640 H 660 V 720 Q 660 860 520 860 H 370 Q 280 860 280 780 V 750 Q 280 710 330 710 H 410 Q 500 710 500 640 Z" fill="none" stroke="#005A9C" stroke-width="24"/>
+  </g>
+
+  <!-- 5. -->
+  <g transform="translate(-64, -237) scale(0.85)" opacity="0.07" filter="url(#soft-2)">
+    <circle cx="470" cy="190" r="70" fill="none" stroke="#005A9C" stroke-width="22"/>
+    <rect x="460" y="340" width="160" height="280" rx="6" fill="none" stroke="#005A9C" stroke-width="22"/>
+    <path d="M 500 640 H 660 V 720 Q 660 860 520 860 H 370 Q 280 860 280 780 V 750 Q 280 710 330 710 H 410 Q 500 710 500 640 Z" fill="none" stroke="#005A9C" stroke-width="22"/>
+  </g>
+
+  <!-- 4. -->
+  <g transform="translate(448, -135) scale(0.65)" opacity="0.09" filter="url(#soft-3)">
+    <circle cx="470" cy="190" r="70" fill="none" stroke="#005A9C" stroke-width="18"/>
+    <rect x="460" y="340" width="160" height="280" rx="6" fill="none" stroke="#005A9C" stroke-width="18"/>
+    <path d="M 500 640 H 660 V 720 Q 660 860 520 860 H 370 Q 280 860 280 780 V 750 Q 280 710 330 710 H 410 Q 500 710 500 640 Z" fill="none" stroke="#005A9C" stroke-width="18"/>
+  </g>
+
+  <!-- 3. -->
+  <g transform="translate(817, -58) scale(0.50)" opacity="0.12" filter="url(#soft-4)">
+    <circle cx="470" cy="190" r="70" fill="none" stroke="#005A9C" stroke-width="16"/>
+    <rect x="460" y="340" width="160" height="280" rx="6" fill="none" stroke="#005A9C" stroke-width="16"/>
+    <path d="M 500 640 H 660 V 720 Q 660 860 520 860 H 370 Q 280 860 280 780 V 750 Q 280 710 330 710 H 410 Q 500 710 500 640 Z" fill="none" stroke="#005A9C" stroke-width="16"/>
+  </g>
+
+  <!-- 2. -->
+  <g transform="translate(1042, -7) scale(0.40)" opacity="0.16" filter="url(#soft-4)">
+    <circle cx="470" cy="190" r="70" fill="none" stroke="#005A9C" stroke-width="14"/>
+    <rect x="460" y="340" width="160" height="280" rx="6" fill="none" stroke="#005A9C" stroke-width="14"/>
+    <path d="M 500 640 H 660 V 720 Q 660 860 520 860 H 370 Q 280 860 280 780 V 750 Q 280 710 330 710 H 410 Q 500 710 500 640 Z" fill="none" stroke="#005A9C" stroke-width="14"/>
+  </g>
+
+  <!-- 1. ANCHOR — solid deep blue -->
+  <g transform="translate(1130, 24) scale(0.34)" opacity="0.08" filter="url(#mark-shadow)">
+    <circle cx="470" cy="190" r="70" fill="#005A9C"/>
+    <rect x="460" y="340" width="160" height="280" rx="6" fill="#005A9C"/>
+    <path d="M 500 640 H 660 V 720 Q 660 860 520 860 H 370 Q 280 860 280 780 V 750 Q 280 710 330 710 H 410 Q 500 710 500 640 Z" fill="#005A9C"/>
+  </g>
+  <g transform="translate(1130, 24) scale(0.34)">
+    <circle cx="470" cy="190" r="70" fill="#005A9C"/>
+    <rect x="460" y="340" width="160" height="280" rx="6" fill="#005A9C"/>
+    <path d="M 500 640 H 660 V 720 Q 660 860 520 860 H 370 Q 280 860 280 780 V 750 Q 280 710 330 710 H 410 Q 500 710 500 640 Z" fill="#005A9C"/>
+  </g>
+
+  <!-- edge accents -->
+  <line x1="0" y1="0.5" x2="1584" y2="0.5" stroke="#005A9C" stroke-width="1" opacity="0.06"/>
+  <line x1="0" y1="395.5" x2="1584" y2="395.5" stroke="#005A9C" stroke-width="1" opacity="0.06"/>
+</svg>
+</body></html>
