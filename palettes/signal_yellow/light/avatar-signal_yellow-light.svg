@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-label="jeffols signature icon">
+  <rect width="1024" height="1024" rx="0" fill="#FFF7E0"/>
+  <rect x="400" y="120" width="140" height="140" rx="70" fill="#B8960A"/>
+  <rect x="460" y="340" width="160" height="280" rx="6" fill="#B8960A"/>
+  <path d="M 500 640 H 660 V 720 Q 660 860 520 860 H 370 Q 280 860 280 780 V 750 Q 280 710 330 710 H 410 Q 500 710 500 640 Z" fill="#B8960A"/>
+</svg>

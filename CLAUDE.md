@@ -14,6 +14,15 @@ watermark.css                — drop-in CSS watermark (body::after, data URI)
 palettes/<name>/dark|light/  — pre-generated assets per palette+mode
 ```
 
+## Two forms of the mark
+- **Favicon** (`favicon-*.png`, `apple-touch-icon`, `android-chrome-*`) — rounded-rect
+  plate, transparent outside the radius. Browsers render favicons as-is.
+- **Avatar** (`avatar-512x512.png`, `avatar-1024x1024.png`, `avatar-*.svg`) — full-bleed
+  opaque square, no rounding, no alpha channel. Upload this to Substack, LinkedIn,
+  and GitHub. They apply their own corner mask, so a pre-rounded asset fights it, and
+  leftover transparency gets flattened to whatever the platform assumes (Substack
+  assumes white, which shows as white slivers at the corners).
+
 ## Palettes
 signal_yellow (default), electric_blue, amber_utility, terminal_lime, slate_mono
 

@@ -90,7 +90,18 @@ def hook_polygon(s):
     return [(round(x), round(y)) for x, y in pts]
 
 
-def render_icon(size, background, glyph):
+def render_icon(size, background, glyph, rounded=True):
+    """Render the mark at `size`.
+
+    rounded=True gives the favicon form: a rounded-rect plate on a transparent
+    canvas. Browsers render favicons as-is and want that shape.
+
+    rounded=False gives the avatar form: a full-bleed opaque square with no alpha
+    anywhere. Social platforms (Substack, LinkedIn, GitHub) apply their own corner
+    mask, so a pre-rounded asset fights theirs, and any transparency left in the
+    corners gets flattened to whatever the platform assumes. Substack assumes
+    white, which is why a pre-rounded upload shows white slivers at the corners.
+    """
     render_size = size * SUPERSAMPLE
     s = render_size / DESIGN_SIZE
     bg = hex_to_rgba(background)
@@ -99,8 +110,11 @@ def render_icon(size, background, glyph):
     img = Image.new("RGBA", (render_size, render_size), (0, 0, 0, 0))
     draw = ImageDraw.Draw(img)
 
-    r = max(1, round(174 * s))
-    draw.rounded_rectangle([0, 0, render_size - 1, render_size - 1], radius=r, fill=bg)
+    if rounded:
+        r = max(1, round(174 * s))
+        draw.rounded_rectangle([0, 0, render_size - 1, render_size - 1], radius=r, fill=bg)
+    else:
+        draw.rectangle([0, 0, render_size - 1, render_size - 1], fill=bg)
 
     dx, dy, dw, dh = round(400 * s), round(120 * s), round(140 * s), round(140 * s)
     draw.ellipse([dx, dy, dx + dw, dy + dh], fill=gl)
@@ -111,11 +125,16 @@ def render_icon(size, background, glyph):
 
     draw.polygon(hook_polygon(s), fill=gl)
 
-    return img.resize((size, size), Image.Resampling.LANCZOS)
+    out = img.resize((size, size), Image.Resampling.LANCZOS)
+    if not rounded:
+        # Drop the alpha channel entirely so no platform can flatten it wrongly.
+        out = out.convert("RGB")
+    return out
 
 
-def build_svg(background, glyph, size=1024):
-    rx = round(size * 0.17)
+def build_svg(background, glyph, size=1024, rounded=True):
+    """SVG twin of render_icon. Keep the geometry here in sync with it."""
+    rx = round(size * 0.17) if rounded else 0
     return (
         f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {size} {size}"'
         f' role="img" aria-label="jeffols signature icon">\n'
@@ -139,6 +158,17 @@ def write_assets(out_dir, palette_key, mode, background, glyph, sizes):
 
     svg_name = f"signature-{palette_key}-{mode}.svg"
     (out_dir / svg_name).write_text(build_svg(background, glyph), encoding="utf-8")
+
+    # Avatar form: full-bleed opaque square, no rounding, no alpha. Upload this to
+    # Substack, LinkedIn, GitHub and let each apply its own corner mask.
+    avatar_svg = f"avatar-{palette_key}-{mode}.svg"
+    (out_dir / avatar_svg).write_text(
+        build_svg(background, glyph, rounded=False), encoding="utf-8"
+    )
+    for avatar_size in (512, 1024):
+        render_icon(avatar_size, background, glyph, rounded=False).save(
+            out_dir / f"avatar-{avatar_size}x{avatar_size}.png"
+        )
 
     for size in sizes:
         render_icon(size, background, glyph).save(out_dir / f"favicon-{size}x{size}.png")
