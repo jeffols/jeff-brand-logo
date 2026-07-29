@@ -24,7 +24,7 @@ palettes/<name>/dark|light/  — pre-generated assets per palette+mode
   assumes white, which shows as white slivers at the corners).
 
 ## Palettes
-signal_yellow (default), electric_blue, amber_utility, terminal_lime, slate_mono
+signal_yellow (default), electric_blue, amber_utility, terminal_lime, deep_indigo, slate_mono
 
 ## Run
 ```bash

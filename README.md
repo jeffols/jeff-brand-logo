@@ -1,6 +1,6 @@
 # jeffols — Signature Favicon & Branding Kit
 
-Personal signature icon for projects by Jeff Olsen. A geometric lowercase **j** split into three offset pieces — the "tectonic" mark. Available in five color palettes with dark and light modes.
+Personal signature icon for projects by Jeff Olsen. A geometric lowercase **j** split into three offset pieces — the "tectonic" mark. Available in six color palettes with dark and light modes.
 
 ## The Icon
 
@@ -22,6 +22,7 @@ The offset creates tension and movement. Together the pieces read as *j*; indivi
 | **Electric Blue** | ![](palettes/electric_blue/dark/favicon-64x64.png) | ![](palettes/electric_blue/light/favicon-64x64.png) | `#0B1020` | `#7DD3FC` | `#F6FBFF` | `#005A9C` |
 | **Amber Utility** | ![](palettes/amber_utility/dark/favicon-64x64.png) | ![](palettes/amber_utility/light/favicon-64x64.png) | `#1F1B16` | `#FFB000` | `#FFF8E1` | `#8B5E00` |
 | **Terminal Lime** | ![](palettes/terminal_lime/dark/favicon-64x64.png) | ![](palettes/terminal_lime/light/favicon-64x64.png) | `#151515` | `#B6FF4D` | `#F7FFE8` | `#3D6600` |
+| **Deep Indigo** | ![](palettes/deep_indigo/dark/favicon-64x64.png) | ![](palettes/deep_indigo/light/favicon-64x64.png) | `#190A24` | `#DDB0FF` | `#FBF5FF` | `#4B0082` |
 | **Slate Mono** | ![](palettes/slate_mono/dark/favicon-64x64.png) | ![](palettes/slate_mono/light/favicon-64x64.png) | `#0F172A` | `#F8FAFC` | `#F8FAFC` | `#0F172A` |
 
 ## Generated Assets

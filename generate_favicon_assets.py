@@ -42,6 +42,11 @@ PALETTES = {
         "dark":  {"background": "#151515", "glyph": "#B6FF4D"},
         "light": {"background": "#F7FFE8", "glyph": "#3D6600"},
     },
+    "deep_indigo": {
+        "label": "Deep Indigo",
+        "dark":  {"background": "#190A24", "glyph": "#DDB0FF"},
+        "light": {"background": "#FBF5FF", "glyph": "#4B0082"},
+    },
     "slate_mono": {
         "label": "Slate Mono",
         "dark":  {"background": "#0F172A", "glyph": "#F8FAFC"},
