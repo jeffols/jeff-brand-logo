@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+.DS_Store
+
+# Rotational exploration scratch. lab.html / presets.html / fades.html are the
+# sources for published artifacts and stay on disk; the comparison renders they
+# reference regenerate via --sheet / --preset-sheet.
+explorations/rotational/

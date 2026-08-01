@@ -10,8 +10,12 @@ Personal brand icon/favicon toolkit. Geometric lowercase **j** ("tectonic j") �
 ## Layout
 ```
 generate_favicon_assets.py   — CLI: renders all assets (PNG, ICO, SVG, manifest)
+generate_rotational_logo.py  — CLI: rotational depth-stack variant; imports geometry
+                               from generate_favicon_assets so the two cannot drift
 watermark.css                — drop-in CSS watermark (body::after, data URI)
-palettes/<name>/dark|light/  — pre-generated assets per palette+mode
+palettes/<name>/dark|light/  — pre-generated assets per palette+mode (flat mark)
+palettes-rotational/…        — same layout, rotational mark. Both trees are current;
+                               pick per surface, they are not a migration
 ```
 
 ## Two forms of the mark
@@ -31,7 +35,18 @@ signal_yellow (default), electric_blue, amber_utility, terminal_lime, deep_indig
 pip install pillow
 python generate_favicon_assets.py --out ./out --palette all --mode both
 python generate_favicon_assets.py --list-palettes
+
+# rotational variant — two orthogonal axes: --preset (geometry), --fade (opacity ramp)
+python generate_rotational_logo.py --list-presets
+python generate_rotational_logo.py --preset plates-4 --palette all --mode both --assets
 ```
+
+## Rotational variant
+N copies of the mark rotated `--step` degrees apart, opacity ramping to opaque at the
+front, each layer back shrunk by `--scale-step`. Front layer stays upright at full
+opacity so the mark never stops reading as the mark. Chosen: **`plates-4`** — 4 layers,
+6°, rear 0.08, falloff 3.0, recession 0.06. The rear two layers land at 0.08/0.11 and
+merge into one soft shadow; that is deliberate, not a bug to "fix" by raising the floor.
 
 ## Design reference
 - Canvas: 1024×1024, 4× supersample, LANCZOS downscale

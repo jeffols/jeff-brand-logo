@@ -1,0 +1,33 @@
+{
+  "palette": "signal_yellow",
+  "mode": "light",
+  "background": "#FFF7E0",
+  "glyph": "#B8960A",
+  "sizes": [
+    16,
+    32,
+    48,
+    64,
+    128,
+    180,
+    192,
+    256,
+    512
+  ],
+  "variant": "rotational depth stack",
+  "layers": 4,
+  "step_degrees": 6.0,
+  "min_opacity": 0.08,
+  "gamma": 3.0,
+  "scale_step": 0.06,
+  "pivot": [
+    512.0,
+    512.0
+  ],
+  "layer_opacities": [
+    0.08,
+    0.1141,
+    0.3526,
+    1.0
+  ]
+}
