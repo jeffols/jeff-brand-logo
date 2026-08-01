@@ -21,6 +21,9 @@ from PIL import Image, ImageDraw
 import argparse
 import json
 
+import geometry
+from geometry import DESIGN_SIZE, quad_bezier, svg_document
+
 # Every palette but signal_yellow puts its colour in the glyph and its neutral in
 # the plate. signal_yellow light inverts that (decision 0004): the plate carries
 # the yellow and the glyph is the dark navy. A dark yellow glyph is an olive, and
@@ -61,8 +64,7 @@ PALETTES = {
         "light": {"background": "#F8FAFC", "glyph": "#0F172A"},
     },
 }
-DESIGN_SIZE = 1024
-DEFAULT_SIZES = [16, 32, 48, 64, 128, 180, 192, 256, 512]
+DEFAULT_SIZES = [16, 24, 32, 48, 64, 80, 128, 180, 192, 256, 512]
 SUPERSAMPLE = 4
 MODES = ("dark", "light")
 
@@ -105,30 +107,8 @@ def normalize_hex(value):
     return value.upper()
 
 
-def quad_bezier(p0, p1, p2, steps=16):
-    points = []
-    for i in range(1, steps + 1):
-        t = i / steps
-        x = (1 - t) ** 2 * p0[0] + 2 * (1 - t) * t * p1[0] + t ** 2 * p2[0]
-        y = (1 - t) ** 2 * p0[1] + 2 * (1 - t) * t * p1[1] + t ** 2 * p2[1]
-        points.append((x, y))
-    return points
-
-
-def hook_polygon(s):
-    pts = [(500 * s, 640 * s), (660 * s, 640 * s), (660 * s, 720 * s)]
-    pts += quad_bezier((660 * s, 720 * s), (660 * s, 860 * s), (520 * s, 860 * s))
-    pts.append((370 * s, 860 * s))
-    pts += quad_bezier((370 * s, 860 * s), (280 * s, 860 * s), (280 * s, 780 * s))
-    pts.append((280 * s, 750 * s))
-    pts += quad_bezier((280 * s, 750 * s), (280 * s, 710 * s), (330 * s, 710 * s))
-    pts.append((410 * s, 710 * s))
-    pts += quad_bezier((410 * s, 710 * s), (500 * s, 710 * s), (500 * s, 640 * s))
-    return [(round(x), round(y)) for x, y in pts]
-
-
 def render_icon(size, background, glyph, rounded=True):
-    """Render the mark at `size`.
+    """Render the mark at `size`. Geometry comes from geometry.py.
 
     rounded=True gives the favicon form: a rounded-rect plate on a transparent
     canvas. Browsers render favicons as-is and want that shape.
@@ -138,51 +118,41 @@ def render_icon(size, background, glyph, rounded=True):
     mask, so a pre-rounded asset fights theirs, and any transparency left in the
     corners gets flattened to whatever the platform assumes. Substack assumes
     white, which is why a pre-rounded upload shows white slivers at the corners.
+
+    background=None omits the plate: a bare glyph on transparency.
     """
     render_size = size * SUPERSAMPLE
     s = render_size / DESIGN_SIZE
-    bg = hex_to_rgba(background)
     gl = hex_to_rgba(glyph)
 
     img = Image.new("RGBA", (render_size, render_size), (0, 0, 0, 0))
     draw = ImageDraw.Draw(img)
 
-    if rounded:
-        r = max(1, round(174 * s))
-        draw.rounded_rectangle([0, 0, render_size - 1, render_size - 1], radius=r, fill=bg)
-    else:
-        draw.rectangle([0, 0, render_size - 1, render_size - 1], fill=bg)
+    if background is not None:
+        bg = hex_to_rgba(background)
+        if rounded:
+            draw.rounded_rectangle([0, 0, render_size - 1, render_size - 1],
+                                   radius=max(1, round(geometry.PLATE_RADIUS * s)),
+                                   fill=bg)
+        else:
+            draw.rectangle([0, 0, render_size - 1, render_size - 1], fill=bg)
 
-    dx, dy, dw, dh = round(400 * s), round(120 * s), round(140 * s), round(140 * s)
-    draw.ellipse([dx, dy, dx + dw, dy + dh], fill=gl)
-
-    sx, sy, sw, sh = round(460 * s), round(340 * s), round(160 * s), round(280 * s)
-    sr = max(1, round(6 * s))
-    draw.rounded_rectangle([sx, sy, sx + sw, sy + sh], radius=sr, fill=gl)
-
-    draw.polygon(hook_polygon(s), fill=gl)
+    draw.ellipse(geometry.dot_box(s), fill=gl)
+    box, radius = geometry.stem_box(s)
+    draw.rounded_rectangle(box, radius=radius, fill=gl)
+    draw.polygon(geometry.hook_polygon(s, steps=16, snap=True), fill=gl)
 
     out = img.resize((size, size), Image.Resampling.LANCZOS)
-    if not rounded:
+    if not rounded and background is not None:
         # Drop the alpha channel entirely so no platform can flatten it wrongly.
         out = out.convert("RGB")
     return out
 
 
-def build_svg(background, glyph, size=1024, rounded=True):
-    """SVG twin of render_icon. Keep the geometry here in sync with it."""
-    rx = round(size * 0.17) if rounded else 0
-    return (
-        f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {size} {size}"'
-        f' role="img" aria-label="jeffols signature icon">\n'
-        f'  <rect width="{size}" height="{size}" rx="{rx}" fill="{background}"/>\n'
-        f'  <rect x="400" y="120" width="140" height="140" rx="70" fill="{glyph}"/>\n'
-        f'  <rect x="460" y="340" width="160" height="280" rx="6" fill="{glyph}"/>\n'
-        f'  <path d="M 500 640 H 660 V 720 Q 660 860 520 860 H 370'
-        f' Q 280 860 280 780 V 750 Q 280 710 330 710 H 410'
-        f' Q 500 710 500 640 Z" fill="{glyph}"/>\n'
-        f'</svg>\n'
-    )
+def build_svg(background, glyph, size=DESIGN_SIZE, rounded=True):
+    """SVG twin of render_icon. Both now read the same geometry module, so the
+    two cannot drift. background=None omits the plate."""
+    return svg_document(background, glyph, size=size, rounded=rounded)
 
 
 def parse_sizes(value):

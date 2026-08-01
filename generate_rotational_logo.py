@@ -24,11 +24,12 @@ import argparse
 import json
 import math
 
+import geometry
+from geometry import DESIGN_SIZE, glyph_polygons, plate_radius, svg_shapes
 from generate_favicon_assets import (
-    DEFAULT_SIZES, PALETTES, hex_to_rgba, parse_sizes, quad_bezier, resolve_modes,
+    DEFAULT_SIZES, PALETTES, hex_to_rgba, parse_sizes, resolve_modes,
 )
 
-DESIGN_SIZE = 1024
 SUPERSAMPLE = 4
 PIVOT = (512.0, 512.0)          # rotate about the plate centre, not the glyph bbox
 GLYPH_PIVOT = (470.0, 490.0)    # glyph bounding-box centre, for a tighter sweep
@@ -120,50 +121,14 @@ def ramp(cfg):
 
 
 # --------------------------------------------------------------------------
-# Glyph as pure polygons, so it can be rotated/scaled exactly rather than
-# resampled. Pillow can't rotate an ellipse or a rounded_rectangle in place.
+# The glyph arrives from geometry.py as pure polygons, so it can be rotated and
+# scaled exactly rather than resampled. Pillow cannot rotate an ellipse or a
+# rounded_rectangle in place, which is why this path exists at all.
 # --------------------------------------------------------------------------
-
-def circle_poly(cx, cy, r, steps=72):
-    return [(cx + r * math.cos(2 * math.pi * i / steps),
-             cy + r * math.sin(2 * math.pi * i / steps)) for i in range(steps)]
-
-
-def round_rect_poly(x, y, w, h, r, steps=6):
-    """Rounded rectangle as a polygon, corners CCW from top-left."""
-    pts = []
-    corners = [
-        (x + r,     y + r,     180, 270),
-        (x + w - r, y + r,     270, 360),
-        (x + w - r, y + h - r,   0,  90),
-        (x + r,     y + h - r,  90, 180),
-    ]
-    for cx, cy, a0, a1 in corners:
-        for i in range(steps + 1):
-            a = math.radians(a0 + (a1 - a0) * i / steps)
-            pts.append((cx + r * math.cos(a), cy + r * math.sin(a)))
-    return pts
-
-
-def hook_poly():
-    pts = [(500, 640), (660, 640), (660, 720)]
-    pts += quad_bezier((660, 720), (660, 860), (520, 860), steps=24)
-    pts.append((370, 860))
-    pts += quad_bezier((370, 860), (280, 860), (280, 780), steps=24)
-    pts.append((280, 750))
-    pts += quad_bezier((280, 750), (280, 710), (330, 710), steps=24)
-    pts.append((410, 710))
-    pts += quad_bezier((410, 710), (500, 710), (500, 640), steps=24)
-    return pts
-
 
 def glyph_parts():
     """The three pieces of the mark in 1024x1024 design space."""
-    return [
-        circle_poly(470, 190, 70),                    # dot
-        round_rect_poly(460, 340, 160, 280, 6),       # stem
-        hook_poly(),                                  # hook
-    ]
+    return glyph_polygons()
 
 
 # --------------------------------------------------------------------------
@@ -215,7 +180,7 @@ def render_stack(size, background, glyph, layers=8, step=8.0, min_opacity=0.10,
     draw = ImageDraw.Draw(base)
     if rounded:
         draw.rounded_rectangle([0, 0, render_size - 1, render_size - 1],
-                               radius=max(1, round(174 * s)), fill=bg)
+                               radius=max(1, round(geometry.PLATE_RADIUS * s)), fill=bg)
     else:
         draw.rectangle([0, 0, render_size - 1, render_size - 1], fill=bg)
 
@@ -238,19 +203,13 @@ def render_stack(size, background, glyph, layers=8, step=8.0, min_opacity=0.10,
 # SVG
 # --------------------------------------------------------------------------
 
-SHAPES = (
-    '    <circle cx="470" cy="190" r="70"/>\n'
-    '    <rect x="460" y="340" width="160" height="280" rx="6"/>\n'
-    '    <path d="M 500 640 H 660 V 720 Q 660 860 520 860 H 370'
-    ' Q 280 860 280 780 V 750 Q 280 710 330 710 H 410'
-    ' Q 500 710 500 640 Z"/>\n'
-)
+SHAPES = svg_shapes(indent="    ")
 
 
 def build_svg(background, glyph, layers=8, step=8.0, min_opacity=0.10, gamma=1.8,
               scale_step=0.02, pivot=PIVOT, rounded=True, spin_seconds=None):
     size = DESIGN_SIZE
-    rx = round(size * 0.17) if rounded else 0
+    rx = plate_radius(size) if rounded else 0
     px, py = pivot
     body = []
     for angle, opacity, scale in layer_specs(layers, step, min_opacity, gamma,

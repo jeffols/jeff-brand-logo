@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-label="jeffols signature icon">
   <rect width="1024" height="1024" rx="174" fill="#0B1020"/>
-  <rect x="400" y="120" width="140" height="140" rx="70" fill="#7DD3FC"/>
+  <circle cx="470" cy="190" r="70" fill="#7DD3FC"/>
   <rect x="460" y="340" width="160" height="280" rx="6" fill="#7DD3FC"/>
-  <path d="M 500 640 H 660 V 720 Q 660 860 520 860 H 370 Q 280 860 280 780 V 750 Q 280 710 330 710 H 410 Q 500 710 500 640 Z" fill="#7DD3FC"/>
+  <path d="M 500 640 L 660 640 L 660 720 Q 660 860 520 860 L 370 860 Q 280 860 280 780 L 280 750 Q 280 710 330 710 L 410 710 Q 500 710 500 640 Z" fill="#7DD3FC"/>
 </svg>
