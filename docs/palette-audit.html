@@ -1,0 +1,75 @@
+<!doctype html>
+<meta charset="utf-8"><title>palette audit</title>
+<style>
+:root { color-scheme: dark; }
+body { margin:0; padding:48px; background:#0e0f12; color:#eceef0;
+       font:14px/1.6 ui-monospace,SFMono-Regular,Menlo,monospace; }
+h1 { font-size:19px; margin:0 0 6px; }
+h2 { font-size:13px; font-weight:600; letter-spacing:.14em; text-transform:uppercase;
+     color:#eceef0; margin:0 0 4px; }
+.prev { color:#6b707b; letter-spacing:0; text-transform:none; font-weight:400;
+        margin-left:10px; font-size:12px; }
+p.lede { color:#9ba0aa; max-width:66ch; margin:0 0 10px; }
+section { margin-top:46px; padding-top:26px; border-top:1px solid #22252b; }
+.verdict { color:#9ba0aa; margin:0 0 20px; }
+.row { display:flex; flex-wrap:wrap; gap:26px; margin-bottom:22px; }
+figure { margin:0; position:relative; }
+figure img { display:block; border-radius:22px; }
+.sm { position:absolute; right:-10px; bottom:26px; border-radius:6px;
+      box-shadow:0 0 0 3px #0e0f12; }
+figcaption { margin-top:9px; color:#9ba0aa; font-size:12px; }
+table { border-collapse:collapse; font-size:12px; }
+td, th { padding:4px 16px 4px 0; text-align:left; }
+th { color:#6b707b; font-weight:500; }
+.bad td, b.bad { color:#ff6b6b; }
+.warn td { color:#ffd43b; }
+.ok td, b.ok { color:#8ce99a; }
+.wheel { position:relative; height:118px; margin:22px 0 40px;
+         background:linear-gradient(to right,
+           hsl(0,85%,55%),hsl(60,85%,55%),hsl(120,85%,55%),hsl(180,85%,55%),
+           hsl(240,85%,55%),hsl(300,85%,55%),hsl(360,85%,55%));
+         border-radius:6px; opacity:.95; }
+.pin { position:absolute; top:0; transform:translateX(-50%); text-align:center; }
+.pin .dot { display:block; width:20px; height:20px; border-radius:50%;
+            box-shadow:0 0 0 3px #0e0f12; margin:-6px auto 0; }
+.pin .lbl { display:block; margin-top:52px; font-size:11px; color:#eceef0;
+            background:#0e0f12; padding:3px 5px; border-radius:4px; white-space:nowrap; }
+.pin.neutral .dot { box-shadow:0 0 0 3px #0e0f12, 0 0 0 4px #6b707b; }
+.rule { background:#15171c; border-left:2px solid #FFD60A; padding:16px 20px;
+        margin:24px 0 0; max-width:66ch; color:#c9ced6; }
+</style>
+<h1>Palette audit &mdash; distinctiveness and differentiation</h1>
+<p class="lede">Can two palettes be told apart, and does that survive colour
+blindness? Marks are shown as a viewer with each condition would see them.
+Separation is CIEDE2000 on the dark-mode glyph, where the differentiation
+actually lives &mdash; the plates are near-black and carry almost none of it.</p>
+<div class="rule">&Delta;E under 10 is a collision: two palettes that read as the
+same colour. 10&ndash;20 is close. 20+ is unambiguously different.</div>
+
+<section>
+  <h2>hue distribution</h2>
+  <p class="lede">Where each palette sits on the wheel. Ringed marker is
+  effectively neutral (low saturation).</p>
+  <div class="wheel"><div class="pin" style="left:11.5%"><span class="dot" style="background:#FFB000"></span><span class="lbl" style="margin-top:52px">amber_utility<br>41&deg;</span></div><div class="pin" style="left:13.9%"><span class="dot" style="background:#FFD60A"></span><span class="lbl" style="margin-top:82px">signal_yellow<br>50&deg;</span></div><div class="pin" style="left:23.5%"><span class="dot" style="background:#B6FF4D"></span><span class="lbl" style="margin-top:112px">terminal_lime<br>85&deg;</span></div><div class="pin" style="left:55.4%"><span class="dot" style="background:#7DD3FC"></span><span class="lbl" style="margin-top:52px">electric_blue<br>199&deg;</span></div><div class="pin neutral" style="left:58.3%"><span class="dot" style="background:#F8FAFC"></span><span class="lbl" style="margin-top:82px">slate_mono<br>210&deg;</span></div><div class="pin" style="left:76.2%"><span class="dot" style="background:#DDB0FF"></span><span class="lbl" style="margin-top:52px">deep_indigo<br>274&deg;</span></div></div>
+</section>
+<section>
+  <h2>normal <span class="prev">typical vision</span></h2>
+  <p class="verdict"><b class="ok">no collisions</b> &middot; closest pair 13.1</p>
+  <div class="row"><figure><img src="audit/signal_yellow-normal-128.png" width="128" height="128" alt="signal_yellow"><img class="sm" src="audit/signal_yellow-normal-32.png" width="32" height="32" alt=""><figcaption>signal_yellow</figcaption></figure><figure><img src="audit/electric_blue-normal-128.png" width="128" height="128" alt="electric_blue"><img class="sm" src="audit/electric_blue-normal-32.png" width="32" height="32" alt=""><figcaption>electric_blue</figcaption></figure><figure><img src="audit/amber_utility-normal-128.png" width="128" height="128" alt="amber_utility"><img class="sm" src="audit/amber_utility-normal-32.png" width="32" height="32" alt=""><figcaption>amber_utility</figcaption></figure><figure><img src="audit/terminal_lime-normal-128.png" width="128" height="128" alt="terminal_lime"><img class="sm" src="audit/terminal_lime-normal-32.png" width="32" height="32" alt=""><figcaption>terminal_lime</figcaption></figure><figure><img src="audit/deep_indigo-normal-128.png" width="128" height="128" alt="deep_indigo"><img class="sm" src="audit/deep_indigo-normal-32.png" width="32" height="32" alt=""><figcaption>deep_indigo</figcaption></figure><figure><img src="audit/slate_mono-normal-128.png" width="128" height="128" alt="slate_mono"><img class="sm" src="audit/slate_mono-normal-32.png" width="32" height="32" alt=""><figcaption>slate_mono</figcaption></figure></div>
+  <table><tr><th>closest pairs</th><th>&Delta;E</th><th></th></tr><tr class="warn"><td>signal_yellow / amber_utility</td><td>13.1</td><td>close</td></tr><tr class="ok"><td>electric_blue / slate_mono</td><td>21.7</td><td>distinct</td></tr><tr class="ok"><td>deep_indigo / slate_mono</td><td>23.2</td><td>distinct</td></tr><tr class="ok"><td>signal_yellow / terminal_lime</td><td>23.4</td><td>distinct</td></tr></table>
+</section><section>
+  <h2>protanopia <span class="prev">~2% of men</span></h2>
+  <p class="verdict"><b class="bad">3 colliding pairs</b> &middot; closest pair 6.1</p>
+  <div class="row"><figure><img src="audit/signal_yellow-protanopia-128.png" width="128" height="128" alt="signal_yellow"><img class="sm" src="audit/signal_yellow-protanopia-32.png" width="32" height="32" alt=""><figcaption>signal_yellow</figcaption></figure><figure><img src="audit/electric_blue-protanopia-128.png" width="128" height="128" alt="electric_blue"><img class="sm" src="audit/electric_blue-protanopia-32.png" width="32" height="32" alt=""><figcaption>electric_blue</figcaption></figure><figure><img src="audit/amber_utility-protanopia-128.png" width="128" height="128" alt="amber_utility"><img class="sm" src="audit/amber_utility-protanopia-32.png" width="32" height="32" alt=""><figcaption>amber_utility</figcaption></figure><figure><img src="audit/terminal_lime-protanopia-128.png" width="128" height="128" alt="terminal_lime"><img class="sm" src="audit/terminal_lime-protanopia-32.png" width="32" height="32" alt=""><figcaption>terminal_lime</figcaption></figure><figure><img src="audit/deep_indigo-protanopia-128.png" width="128" height="128" alt="deep_indigo"><img class="sm" src="audit/deep_indigo-protanopia-32.png" width="32" height="32" alt=""><figcaption>deep_indigo</figcaption></figure><figure><img src="audit/slate_mono-protanopia-128.png" width="128" height="128" alt="slate_mono"><img class="sm" src="audit/slate_mono-protanopia-32.png" width="32" height="32" alt=""><figcaption>slate_mono</figcaption></figure></div>
+  <table><tr><th>closest pairs</th><th>&Delta;E</th><th></th></tr><tr class="bad"><td>electric_blue / deep_indigo</td><td>6.1</td><td>collides</td></tr><tr class="bad"><td>signal_yellow / terminal_lime</td><td>6.2</td><td>collides</td></tr><tr class="bad"><td>signal_yellow / amber_utility</td><td>7.9</td><td>collides</td></tr><tr class="warn"><td>amber_utility / terminal_lime</td><td>13.5</td><td>close</td></tr></table>
+</section><section>
+  <h2>deuteranopia <span class="prev">~6% of men</span></h2>
+  <p class="verdict"><b class="bad">4 colliding pairs</b> &middot; closest pair 0.3</p>
+  <div class="row"><figure><img src="audit/signal_yellow-deuteranopia-128.png" width="128" height="128" alt="signal_yellow"><img class="sm" src="audit/signal_yellow-deuteranopia-32.png" width="32" height="32" alt=""><figcaption>signal_yellow</figcaption></figure><figure><img src="audit/electric_blue-deuteranopia-128.png" width="128" height="128" alt="electric_blue"><img class="sm" src="audit/electric_blue-deuteranopia-32.png" width="32" height="32" alt=""><figcaption>electric_blue</figcaption></figure><figure><img src="audit/amber_utility-deuteranopia-128.png" width="128" height="128" alt="amber_utility"><img class="sm" src="audit/amber_utility-deuteranopia-32.png" width="32" height="32" alt=""><figcaption>amber_utility</figcaption></figure><figure><img src="audit/terminal_lime-deuteranopia-128.png" width="128" height="128" alt="terminal_lime"><img class="sm" src="audit/terminal_lime-deuteranopia-32.png" width="32" height="32" alt=""><figcaption>terminal_lime</figcaption></figure><figure><img src="audit/deep_indigo-deuteranopia-128.png" width="128" height="128" alt="deep_indigo"><img class="sm" src="audit/deep_indigo-deuteranopia-32.png" width="32" height="32" alt=""><figcaption>deep_indigo</figcaption></figure><figure><img src="audit/slate_mono-deuteranopia-128.png" width="128" height="128" alt="slate_mono"><img class="sm" src="audit/slate_mono-deuteranopia-32.png" width="32" height="32" alt=""><figcaption>slate_mono</figcaption></figure></div>
+  <table><tr><th>closest pairs</th><th>&Delta;E</th><th></th></tr><tr class="bad"><td>electric_blue / deep_indigo</td><td>0.3</td><td>collides</td></tr><tr class="bad"><td>signal_yellow / terminal_lime</td><td>4.0</td><td>collides</td></tr><tr class="bad"><td>signal_yellow / amber_utility</td><td>5.6</td><td>collides</td></tr><tr class="bad"><td>amber_utility / terminal_lime</td><td>8.0</td><td>collides</td></tr></table>
+</section><section>
+  <h2>tritanopia <span class="prev">rare, under 0.01%</span></h2>
+  <p class="verdict"><b class="ok">no collisions</b> &middot; closest pair 10.4</p>
+  <div class="row"><figure><img src="audit/signal_yellow-tritanopia-128.png" width="128" height="128" alt="signal_yellow"><img class="sm" src="audit/signal_yellow-tritanopia-32.png" width="32" height="32" alt=""><figcaption>signal_yellow</figcaption></figure><figure><img src="audit/electric_blue-tritanopia-128.png" width="128" height="128" alt="electric_blue"><img class="sm" src="audit/electric_blue-tritanopia-32.png" width="32" height="32" alt=""><figcaption>electric_blue</figcaption></figure><figure><img src="audit/amber_utility-tritanopia-128.png" width="128" height="128" alt="amber_utility"><img class="sm" src="audit/amber_utility-tritanopia-32.png" width="32" height="32" alt=""><figcaption>amber_utility</figcaption></figure><figure><img src="audit/terminal_lime-tritanopia-128.png" width="128" height="128" alt="terminal_lime"><img class="sm" src="audit/terminal_lime-tritanopia-32.png" width="32" height="32" alt=""><figcaption>terminal_lime</figcaption></figure><figure><img src="audit/deep_indigo-tritanopia-128.png" width="128" height="128" alt="deep_indigo"><img class="sm" src="audit/deep_indigo-tritanopia-32.png" width="32" height="32" alt=""><figcaption>deep_indigo</figcaption></figure><figure><img src="audit/slate_mono-tritanopia-128.png" width="128" height="128" alt="slate_mono"><img class="sm" src="audit/slate_mono-tritanopia-32.png" width="32" height="32" alt=""><figcaption>slate_mono</figcaption></figure></div>
+  <table><tr><th>closest pairs</th><th>&Delta;E</th><th></th></tr><tr class="warn"><td>signal_yellow / amber_utility</td><td>10.4</td><td>close</td></tr><tr class="warn"><td>signal_yellow / deep_indigo</td><td>14.2</td><td>close</td></tr><tr class="warn"><td>electric_blue / terminal_lime</td><td>15.7</td><td>close</td></tr><tr class="warn"><td>amber_utility / deep_indigo</td><td>17.7</td><td>close</td></tr></table>
+</section>
