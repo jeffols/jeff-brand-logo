@@ -1,0 +1,346 @@
+<title>Plates presets — pick one</title>
+<style>
+  :root {
+    --ground: #FAFAF8; --panel: #FFFFFF; --sunk: #F2F2EE;
+    --line: #E2E2DC; --line-strong: #C9C9C0;
+    --ink: #16171A; --ink-mid: #55575E; --ink-dim: #8A8C93;
+    --accent: #A8850A; --accent-ink: #FFFFFF;
+    --shadow: 0 1px 2px rgba(20,20,16,.05), 0 8px 24px -12px rgba(20,20,16,.18);
+    --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ground: #0E0F12; --panel: #16181D; --sunk: #101216;
+      --line: #24272E; --line-strong: #363A44;
+      --ink: #ECEDF0; --ink-mid: #9BA0AA; --ink-dim: #6B707B;
+      --accent: #FFD60A; --accent-ink: #16171A;
+      --shadow: 0 1px 2px rgba(0,0,0,.4), 0 12px 32px -14px rgba(0,0,0,.7);
+    }
+  }
+  :root[data-theme="light"] {
+    --ground: #FAFAF8; --panel: #FFFFFF; --sunk: #F2F2EE;
+    --line: #E2E2DC; --line-strong: #C9C9C0;
+    --ink: #16171A; --ink-mid: #55575E; --ink-dim: #8A8C93;
+    --accent: #A8850A; --accent-ink: #FFFFFF;
+    --shadow: 0 1px 2px rgba(20,20,16,.05), 0 8px 24px -12px rgba(20,20,16,.18);
+  }
+  :root[data-theme="dark"] {
+    --ground: #0E0F12; --panel: #16181D; --sunk: #101216;
+    --line: #24272E; --line-strong: #363A44;
+    --ink: #ECEDF0; --ink-mid: #9BA0AA; --ink-dim: #6B707B;
+    --accent: #FFD60A; --accent-ink: #16171A;
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 12px 32px -14px rgba(0,0,0,.7);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--ground); color: var(--ink);
+    font: 400 15px/1.6 var(--sans); -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 52px 28px 96px; }
+
+  .mast { border-bottom: 1px solid var(--line-strong); padding-bottom: 22px; margin-bottom: 26px; }
+  .eyebrow {
+    font: 500 11px/1 var(--mono); letter-spacing: .16em; text-transform: uppercase;
+    color: var(--ink-dim); margin: 0 0 13px;
+  }
+  h1 { font: 650 clamp(26px, 4vw, 38px)/1.1 var(--sans); letter-spacing: -.028em; margin: 0 0 11px; text-wrap: balance; }
+  .dek { margin: 0; max-width: 66ch; color: var(--ink-mid); }
+  .dek b { color: var(--ink); font-weight: 600; }
+
+  /* ---- toolbar ---- */
+  .bar {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 22px;
+    padding: 14px 0 20px; margin-bottom: 28px; border-bottom: 1px solid var(--line);
+  }
+  .bar-grp { display: flex; align-items: center; gap: 10px; }
+  .bar-grp > span {
+    font: 500 10px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--ink-dim);
+  }
+  .swatches { display: flex; gap: 6px; }
+  .sw {
+    width: 26px; height: 26px; border-radius: 3px; border: 1px solid var(--line-strong);
+    padding: 0; cursor: pointer; position: relative; overflow: hidden;
+  }
+  .sw::after {
+    content: ""; position: absolute; inset: 24% 24% auto auto;
+    width: 50%; height: 50%; border-radius: 50%; background: var(--dot);
+  }
+  .sw[aria-pressed="true"] { box-shadow: 0 0 0 2px var(--accent); border-color: transparent; }
+  .sw:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  .seg { display: flex; border: 1px solid var(--line-strong); border-radius: 3px; overflow: hidden; }
+  .seg button {
+    padding: 7px 13px; border: 0; background: var(--panel); cursor: pointer;
+    font: 500 10px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase;
+    color: var(--ink-mid); border-right: 1px solid var(--line-strong);
+  }
+  .seg button:last-child { border-right: 0; }
+  .seg button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); }
+  .seg button:focus-visible { outline: 2px solid var(--accent); outline-offset: -3px; }
+
+  /* ---- cards ---- */
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(236px, 1fr)); gap: 22px; margin-bottom: 44px; }
+
+  .card {
+    display: flex; flex-direction: column; gap: 0; text-align: left;
+    background: var(--panel); border: 1px solid var(--line); border-radius: 4px;
+    padding: 0; cursor: pointer; overflow: hidden; color: inherit; font: inherit;
+    box-shadow: var(--shadow); transition: border-color .12s ease;
+  }
+  .card:hover { border-color: var(--line-strong); }
+  .card[aria-pressed="true"] { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent), var(--shadow); }
+  .card:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .card .art { padding: 16px 16px 0; }
+  .card .art svg { width: 100%; height: auto; display: block; border-radius: 12px; }
+
+  .meta { padding: 14px 16px 16px; display: flex; flex-direction: column; gap: 5px; }
+  .meta .key {
+    font: 600 12.5px/1.3 var(--mono); letter-spacing: .01em; color: var(--ink);
+    display: flex; align-items: center; gap: 7px;
+  }
+  .card[aria-pressed="true"] .key { color: var(--accent); }
+  .meta .label { font-size: 13px; color: var(--ink-mid); line-height: 1.45; }
+  .meta .note { font: 400 11.5px/1.5 var(--mono); color: var(--ink-dim); }
+  .ref {
+    font: 500 9px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase;
+    color: var(--ink-dim); border: 1px solid var(--line-strong); border-radius: 2px;
+    padding: 3px 5px;
+  }
+
+  .chips {
+    display: flex; align-items: flex-end; gap: 11px;
+    margin-top: 9px; padding-top: 12px; border-top: 1px solid var(--line);
+  }
+  .chips svg { display: block; border-radius: 3px; }
+  .chips em {
+    font: 500 9.5px/1 var(--mono); letter-spacing: .1em; color: var(--ink-dim);
+    font-style: normal; margin-left: auto;
+  }
+
+  /* ---- picked ---- */
+  .picked {
+    background: var(--sunk); border: 1px solid var(--line); border-radius: 4px;
+    padding: 20px 22px; display: flex; flex-direction: column; gap: 13px;
+  }
+  .picked h2 {
+    font: 500 10px/1 var(--mono); letter-spacing: .16em; text-transform: uppercase;
+    color: var(--ink-dim); margin: 0;
+  }
+  .picked .cmd {
+    font: 400 12.5px/1.7 var(--mono); color: var(--ink-mid);
+    overflow-x: auto; white-space: pre; margin: 0;
+  }
+  .picked .cmd b { color: var(--accent); font-weight: 500; }
+  .picked-row { display: flex; flex-wrap: wrap; gap: 10px; }
+  .btn {
+    padding: 9px 16px; border: 1px solid var(--line-strong); border-radius: 3px;
+    background: var(--panel); color: var(--ink); cursor: pointer;
+    font: 500 11px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase;
+  }
+  .btn:hover { border-color: var(--accent); }
+  .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+</style>
+
+<div class="wrap">
+  <header class="mast">
+    <p class="eyebrow">jeff-brand-logo · rotational · presets</p>
+    <h1>Near-neighbours of <span style="font-family:var(--mono)">plates</span></h1>
+    <p class="dek">Your setting is the reference. Every other card moves <b>exactly one axis</b> away
+      from it, so whatever looks different is the thing named underneath. Pick one and the command to
+      render it is at the bottom.</p>
+  </header>
+
+  <div class="bar">
+    <div class="bar-grp">
+      <span>Palette</span>
+      <div class="swatches" id="swatches"></div>
+    </div>
+    <div class="bar-grp">
+      <span>Mode</span>
+      <div class="seg" id="mode">
+        <button type="button" data-mode="dark" aria-pressed="true">Dark</button>
+        <button type="button" data-mode="light" aria-pressed="false">Light</button>
+      </div>
+    </div>
+    <div class="bar-grp">
+      <span>Plate</span>
+      <div class="seg" id="plate">
+        <button type="button" data-plate="rounded" aria-pressed="true">Favicon</button>
+        <button type="button" data-plate="square" aria-pressed="false">Avatar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid" id="grid"></div>
+
+  <div class="picked">
+    <h2>Selected — <span id="picked-name">plates</span></h2>
+    <p class="cmd" id="picked-cmd"></p>
+    <div class="picked-row">
+      <button type="button" class="btn" id="copy-cmd">Copy command</button>
+      <button type="button" class="btn" id="copy-svg">Copy SVG</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var PALETTES = {
+    signal_yellow: { label: "Signal Yellow", dark: ["#111827", "#FFD60A"], light: ["#FFF7E0", "#B8960A"] },
+    electric_blue: { label: "Electric Blue", dark: ["#0B1020", "#7DD3FC"], light: ["#F6FBFF", "#005A9C"] },
+    amber_utility: { label: "Amber Utility", dark: ["#1F1B16", "#FFB000"], light: ["#FFF8E1", "#8B5E00"] },
+    terminal_lime: { label: "Terminal Lime", dark: ["#151515", "#B6FF4D"], light: ["#F7FFE8", "#3D6600"] },
+    deep_indigo:   { label: "Deep Indigo",   dark: ["#190A24", "#DDB0FF"], light: ["#FBF5FF", "#4B0082"] },
+    slate_mono:    { label: "Slate Mono",    dark: ["#0F172A", "#F8FAFC"], light: ["#F8FAFC", "#0F172A"] }
+  };
+
+  var PRESETS = [
+    { key: "plates", label: "Two faint echoes behind a solid mark", note: "the reference setting",
+      ref: true, layers: 3, step: 6, minop: 0.08, gamma: 3.0, scale: 0.06 },
+    { key: "plates-tight", label: "Narrower fan", note: "step 6 → 4°",
+      layers: 3, step: 4, minop: 0.08, gamma: 3.0, scale: 0.06 },
+    { key: "plates-wide", label: "More separation between plates", note: "step 6 → 9°",
+      layers: 3, step: 9, minop: 0.08, gamma: 3.0, scale: 0.06 },
+    { key: "plates-even", label: "Middle plate reads as its own plate", note: "falloff 3.0 → 0.8",
+      layers: 3, step: 6, minop: 0.08, gamma: 0.8, scale: 0.06 },
+    { key: "plates-flat", label: "Pure rotation, no perspective", note: "recession 0.06 → 0",
+      layers: 3, step: 6, minop: 0.08, gamma: 3.0, scale: 0 },
+    { key: "plates-bloom", label: "Rear plates larger, blooming outward", note: "recession 0.06 → −0.025",
+      layers: 3, step: 6, minop: 0.08, gamma: 3.0, scale: -0.025 },
+    { key: "plates-deep", label: "One more echo in the stack", note: "layers 3 → 4",
+      layers: 4, step: 6, minop: 0.08, gamma: 3.0, scale: 0.06 }
+  ];
+
+  var PIVOT = 512;
+  var SHAPES =
+    '<circle cx="470" cy="190" r="70"/>' +
+    '<rect x="460" y="340" width="160" height="280" rx="6"/>' +
+    '<path d="M 500 640 H 660 V 720 Q 660 860 520 860 H 370 Q 280 860 280 780 ' +
+    'V 750 Q 280 710 330 710 H 410 Q 500 710 500 640 Z"/>';
+
+  var view = { palette: "signal_yellow", mode: "dark", plate: "rounded", picked: "plates" };
+
+  function svg(p, size) {
+    var c = PALETTES[view.palette][view.mode];
+    var rx = view.plate === "rounded" ? 174 : 0;
+    var body = "";
+    for (var i = 0; i < p.layers; i++) {
+      var depth = p.layers - 1 - i;
+      var t = p.layers > 1 ? i / (p.layers - 1) : 1;
+      var op = p.minop + (1 - p.minop) * Math.pow(t, p.gamma);
+      var sc = 1 - depth * p.scale;
+      var a = depth * p.step;
+      body += '<g transform="rotate(' + a + " " + PIVOT + " " + PIVOT + ") translate(" +
+        PIVOT + " " + PIVOT + ") scale(" + sc.toFixed(4) + ") translate(" +
+        (-PIVOT) + " " + (-PIVOT) + ')" opacity="' + op.toFixed(3) + '">' + SHAPES + "</g>";
+    }
+    var dim = size ? ' width="' + size + '" height="' + size + '"' : "";
+    return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024"' + dim +
+      ' role="img" aria-label="jeffols mark, ' + p.key + '">' +
+      '<rect width="1024" height="1024" rx="' + rx + '" fill="' + c[0] + '"/>' +
+      '<g fill="' + c[1] + '">' + body + "</g></svg>";
+  }
+
+  function command(p) {
+    return "python generate_rotational_logo.py \\\n  --preset <b>" + p.key +
+      "</b> --palette " + view.palette + " --mode " + view.mode;
+  }
+
+  var $ = function (id) { return document.getElementById(id); };
+  var grid = $("grid");
+
+  function render() {
+    grid.innerHTML = PRESETS.map(function (p) {
+      return '<button type="button" class="card" data-key="' + p.key +
+        '" aria-pressed="' + (p.key === view.picked) + '">' +
+        '<div class="art">' + svg(p) + "</div>" +
+        '<div class="meta">' +
+          '<span class="key">' + p.key + (p.ref ? '<em class="ref">yours</em>' : "") + "</span>" +
+          '<span class="label">' + p.label + "</span>" +
+          '<span class="note">' + p.note + "</span>" +
+          '<span class="chips">' + svg(p, 32) + svg(p, 16) + "<em>32 / 16 px</em></span>" +
+        "</div></button>";
+    }).join("");
+
+    var p = current();
+    $("picked-name").textContent = p.key;
+    $("picked-cmd").innerHTML = command(p);
+  }
+
+  function current() {
+    for (var i = 0; i < PRESETS.length; i++) if (PRESETS[i].key === view.picked) return PRESETS[i];
+    return PRESETS[0];
+  }
+
+  grid.addEventListener("click", function (e) {
+    var c = e.target.closest(".card");
+    if (!c) return;
+    view.picked = c.dataset.key;
+    render();
+  });
+
+  $("swatches").innerHTML = Object.keys(PALETTES).map(function (k) {
+    var c = PALETTES[k].dark;
+    return '<button type="button" class="sw" data-p="' + k + '" title="' + PALETTES[k].label +
+      '" aria-label="' + PALETTES[k].label + '" aria-pressed="' + (k === view.palette) +
+      '" style="background:' + c[0] + ";--dot:" + c[1] + '"></button>';
+  }).join("");
+
+  function syncSwatches() {
+    Array.prototype.forEach.call($("swatches").children, function (b) {
+      var c = PALETTES[b.dataset.p][view.mode];
+      b.style.background = c[0];
+      b.style.setProperty("--dot", c[1]);
+      b.setAttribute("aria-pressed", String(b.dataset.p === view.palette));
+    });
+  }
+
+  $("swatches").addEventListener("click", function (e) {
+    var b = e.target.closest(".sw");
+    if (!b) return;
+    view.palette = b.dataset.p;
+    syncSwatches();
+    render();
+  });
+
+  function seg(id, attr, apply) {
+    $(id).addEventListener("click", function (e) {
+      var b = e.target.closest("button");
+      if (!b) return;
+      Array.prototype.forEach.call(this.children, function (c) {
+        c.setAttribute("aria-pressed", String(c === b));
+      });
+      apply(b.dataset[attr]);
+      render();
+    });
+  }
+  seg("mode", "mode", function (v) { view.mode = v; syncSwatches(); });
+  seg("plate", "plate", function (v) { view.plate = v; });
+
+  function flash(btn, text) {
+    var was = btn.textContent;
+    btn.textContent = text;
+    setTimeout(function () { btn.textContent = was; }, 1400);
+  }
+
+  $("copy-cmd").addEventListener("click", function () {
+    var btn = this, txt = command(current()).replace(/<\/?b>/g, "");
+    navigator.clipboard.writeText(txt).then(
+      function () { flash(btn, "Copied"); },
+      function () { flash(btn, "Copy failed"); });
+  });
+
+  $("copy-svg").addEventListener("click", function () {
+    var btn = this;
+    navigator.clipboard.writeText(svg(current())).then(
+      function () { flash(btn, "Copied"); },
+      function () { flash(btn, "Copy failed"); });
+  });
+
+  render();
+})();
+</script>

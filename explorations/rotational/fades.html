@@ -1,0 +1,360 @@
+<title>Fade ramps × layer count</title>
+<style>
+  :root {
+    --ground: #FAFAF8; --panel: #FFFFFF; --sunk: #F2F2EE;
+    --line: #E2E2DC; --line-strong: #C9C9C0;
+    --ink: #16171A; --ink-mid: #55575E; --ink-dim: #8A8C93;
+    --accent: #A8850A; --accent-ink: #FFFFFF;
+    --warn: #A33A16;
+    --shadow: 0 1px 2px rgba(20,20,16,.05), 0 8px 24px -12px rgba(20,20,16,.18);
+    --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ground: #0E0F12; --panel: #16181D; --sunk: #101216;
+      --line: #24272E; --line-strong: #363A44;
+      --ink: #ECEDF0; --ink-mid: #9BA0AA; --ink-dim: #6B707B;
+      --accent: #FFD60A; --accent-ink: #16171A; --warn: #FF8A5B;
+      --shadow: 0 1px 2px rgba(0,0,0,.4), 0 12px 32px -14px rgba(0,0,0,.7);
+    }
+  }
+  :root[data-theme="light"] {
+    --ground: #FAFAF8; --panel: #FFFFFF; --sunk: #F2F2EE;
+    --line: #E2E2DC; --line-strong: #C9C9C0;
+    --ink: #16171A; --ink-mid: #55575E; --ink-dim: #8A8C93;
+    --accent: #A8850A; --accent-ink: #FFFFFF; --warn: #A33A16;
+    --shadow: 0 1px 2px rgba(20,20,16,.05), 0 8px 24px -12px rgba(20,20,16,.18);
+  }
+  :root[data-theme="dark"] {
+    --ground: #0E0F12; --panel: #16181D; --sunk: #101216;
+    --line: #24272E; --line-strong: #363A44;
+    --ink: #ECEDF0; --ink-mid: #9BA0AA; --ink-dim: #6B707B;
+    --accent: #FFD60A; --accent-ink: #16171A; --warn: #FF8A5B;
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 12px 32px -14px rgba(0,0,0,.7);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--ground); color: var(--ink);
+    font: 400 15px/1.6 var(--sans); -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1240px; margin: 0 auto; padding: 52px 28px 96px; }
+
+  .mast { border-bottom: 1px solid var(--line-strong); padding-bottom: 22px; margin-bottom: 24px; }
+  .eyebrow {
+    font: 500 11px/1 var(--mono); letter-spacing: .16em; text-transform: uppercase;
+    color: var(--ink-dim); margin: 0 0 13px;
+  }
+  h1 { font: 650 clamp(26px, 4vw, 38px)/1.1 var(--sans); letter-spacing: -.028em; margin: 0 0 11px; text-wrap: balance; }
+  .dek { margin: 0; max-width: 68ch; color: var(--ink-mid); }
+  .dek b { color: var(--ink); font-weight: 600; }
+  .dek code { font: 400 .92em var(--mono); color: var(--ink); }
+
+  /* ---- toolbar ---- */
+  .bar {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 22px;
+    padding: 14px 0 20px; margin-bottom: 30px; border-bottom: 1px solid var(--line);
+  }
+  .bar-grp { display: flex; align-items: center; gap: 10px; }
+  .bar-grp > span {
+    font: 500 10px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--ink-dim);
+  }
+  .swatches { display: flex; gap: 6px; }
+  .sw {
+    width: 26px; height: 26px; border-radius: 3px; border: 1px solid var(--line-strong);
+    padding: 0; cursor: pointer; position: relative; overflow: hidden;
+  }
+  .sw::after {
+    content: ""; position: absolute; inset: 24% 24% auto auto;
+    width: 50%; height: 50%; border-radius: 50%; background: var(--dot);
+  }
+  .sw[aria-pressed="true"] { box-shadow: 0 0 0 2px var(--accent); border-color: transparent; }
+  .sw:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  .seg { display: flex; border: 1px solid var(--line-strong); border-radius: 3px; overflow: hidden; }
+  .seg button {
+    padding: 7px 13px; border: 0; background: var(--panel); cursor: pointer;
+    font: 500 10px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase;
+    color: var(--ink-mid); border-right: 1px solid var(--line-strong);
+  }
+  .seg button:last-child { border-right: 0; }
+  .seg button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); }
+  .seg button:focus-visible { outline: 2px solid var(--accent); outline-offset: -3px; }
+
+  /* ---- matrix ---- */
+  .scroller { overflow-x: auto; padding-bottom: 6px; }
+  .matrix {
+    display: grid; gap: 16px; min-width: 900px;
+    grid-template-columns: 168px repeat(4, minmax(178px, 1fr));
+    align-items: start;
+  }
+  .colhead, .rowhead { position: relative; }
+  .colhead {
+    padding: 0 0 6px; border-bottom: 1px solid var(--line-strong);
+    display: flex; flex-direction: column; gap: 3px;
+  }
+  .colhead b { font: 600 13px/1.3 var(--mono); color: var(--ink); }
+  .colhead span { font: 400 11.5px/1.4 var(--mono); color: var(--ink-dim); }
+  .corner { border-bottom: 1px solid var(--line-strong); }
+
+  .rowhead { padding-top: 4px; display: flex; flex-direction: column; gap: 7px; }
+  .rowhead b { font: 600 14px/1.2 var(--mono); color: var(--accent); }
+  .rowhead .lab { font-size: 13px; color: var(--ink-mid); line-height: 1.4; }
+
+  /* opacity ladder viz — the ramp itself, drawn */
+  .ladder { display: flex; gap: 3px; align-items: flex-end; height: 30px; margin-top: 2px; }
+  .rung {
+    flex: 1; background: var(--ink); border-radius: 1px;
+    min-height: 3px; position: relative;
+  }
+  .ladder-nums {
+    font: 500 10px/1 var(--mono); color: var(--ink-dim);
+    font-variant-numeric: tabular-nums; letter-spacing: -.01em;
+  }
+  .flag { font: 500 10px/1.4 var(--mono); color: var(--warn); }
+
+  .cell { display: flex; flex-direction: column; gap: 9px; }
+  .cell svg { width: 100%; height: auto; display: block; border-radius: 13px; }
+  .cell figcaption {
+    display: flex; align-items: center; gap: 8px;
+    font: 500 10px/1 var(--mono); letter-spacing: .06em; color: var(--ink-dim);
+  }
+  .cell figcaption svg { width: 24px; height: 24px; border-radius: 3px; }
+
+  /* ---- notes ---- */
+  section { margin-top: 52px; }
+  .sec-head { border-bottom: 1px solid var(--line-strong); padding-bottom: 12px; margin-bottom: 22px; }
+  .sec-head h2 { font: 600 20px/1.2 var(--sans); letter-spacing: -.018em; margin: 0; }
+  .notes { display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 4px; overflow: hidden; }
+  .note { background: var(--panel); padding: 17px 20px; display: grid; grid-template-columns: 104px 1fr; gap: 20px; align-items: baseline; }
+  @media (max-width: 620px) { .note { grid-template-columns: 1fr; gap: 5px; } }
+  .note dt { font: 600 12.5px/1.4 var(--mono); color: var(--accent); }
+  .note dd { margin: 0; color: var(--ink-mid); font-size: 14.5px; }
+  .note dd b { color: var(--ink); font-weight: 600; }
+
+  footer {
+    margin-top: 44px; border-top: 1px solid var(--line-strong); padding-top: 18px;
+    font: 400 12px/1.8 var(--mono); color: var(--ink-dim);
+  }
+  footer b { color: var(--accent); font-weight: 500; }
+</style>
+
+<div class="wrap">
+  <header class="mast">
+    <p class="eyebrow">jeff-brand-logo · rotational · fade ramps</p>
+    <h1>Making the fade actually visible</h1>
+    <p class="dek">You were right that the fade was hard to read. A layer at alpha <i>a</i> composites
+      to <code>bg + a·(glyph − bg)</code>, so on a dark plate with a bright glyph anything under about
+      0.15 lands in a muddy near-background olive the eye files as noise. Your falloff of 3.0 put the
+      rear plates at <b>0.08 and 0.11</b> — a 3% gap, invisible. The floor matters more than the curve.
+      Recession stays at 0.06 throughout; step 6° and 9° are both here.</p>
+  </header>
+
+  <div class="bar">
+    <div class="bar-grp">
+      <span>Palette</span>
+      <div class="swatches" id="swatches"></div>
+    </div>
+    <div class="bar-grp">
+      <span>Mode</span>
+      <div class="seg" id="mode">
+        <button type="button" data-mode="dark" aria-pressed="true">Dark</button>
+        <button type="button" data-mode="light" aria-pressed="false">Light</button>
+      </div>
+    </div>
+    <div class="bar-grp">
+      <span>Plate</span>
+      <div class="seg" id="plate">
+        <button type="button" data-plate="rounded" aria-pressed="true">Favicon</button>
+        <button type="button" data-plate="square" aria-pressed="false">Avatar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroller">
+    <div class="matrix" id="matrix"></div>
+  </div>
+
+  <section>
+    <div class="sec-head"><h2>What each ramp costs you</h2></div>
+    <dl class="notes">
+      <div class="note">
+        <dt>whisper</dt>
+        <dd>Your current setting. <b>Breaks at 4 layers</b> — 0.08 → 0.11 is not a step, so you pay for
+          a plate you cannot see. Fine at 3, where the single echo at 0.20 is at least distinct from
+          the ground.</dd>
+      </div>
+      <div class="note">
+        <dt>soft</dt>
+        <dd>The smallest lift that fixes it. Every plate clears the background, and the stack still
+          reads as one mark with shadows rather than as three marks.</dd>
+      </div>
+      <div class="note">
+        <dt>even</dt>
+        <dd>Linear in alpha. Mathematically tidy, but perceived lightness is roughly a power curve, so
+          the front steps look smaller than the rear ones — the top of the ladder compresses.</dd>
+      </div>
+      <div class="note">
+        <dt>graded</dt>
+        <dd>Linear <b>to the eye</b>: alpha steps widen toward the front (0.26 → 0.41 → 0.67 → 1.0) to
+          cancel that compression. The most legible four-plate ladder here, and the one I'd defend if
+          you want the layer count to read as a count.</dd>
+      </div>
+      <div class="note">
+        <dt>strong</dt>
+        <dd>The mirror of <code>whisper</code>'s failure, at the other end: 0.83 against 1.00 is
+          indistinguishable, so the front two plates merge into one mass. Heavy and graphic, but you
+          lose a plate again.</dd>
+      </div>
+    </dl>
+  </section>
+
+  <footer>
+    Compose them: <b>--preset plates-wide --layers 4 --fade graded</b><br>
+    Ramps override rear opacity and falloff only; geometry comes from the preset. Explicit flags beat both.
+  </footer>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var PALETTES = {
+    signal_yellow: { label: "Signal Yellow", dark: ["#111827", "#FFD60A"], light: ["#FFF7E0", "#B8960A"] },
+    electric_blue: { label: "Electric Blue", dark: ["#0B1020", "#7DD3FC"], light: ["#F6FBFF", "#005A9C"] },
+    amber_utility: { label: "Amber Utility", dark: ["#1F1B16", "#FFB000"], light: ["#FFF8E1", "#8B5E00"] },
+    terminal_lime: { label: "Terminal Lime", dark: ["#151515", "#B6FF4D"], light: ["#F7FFE8", "#3D6600"] },
+    deep_indigo:   { label: "Deep Indigo",   dark: ["#190A24", "#DDB0FF"], light: ["#FBF5FF", "#4B0082"] },
+    slate_mono:    { label: "Slate Mono",    dark: ["#0F172A", "#F8FAFC"], light: ["#F8FAFC", "#0F172A"] }
+  };
+
+  var FADES = [
+    { key: "whisper", label: "Barely-there ghost", minop: 0.08, gamma: 3.0 },
+    { key: "soft",    label: "Visible but clearly secondary", minop: 0.18, gamma: 1.6 },
+    { key: "even",    label: "Evenly spaced ladder", minop: 0.28, gamma: 1.0 },
+    { key: "graded",  label: "Even to the eye, not to the maths", minop: 0.26, gamma: 1.45 },
+    { key: "strong",  label: "Near-solid plates", minop: 0.40, gamma: 0.8 }
+  ];
+
+  // Only the geometry you said you liked: both step angles, 3 and 4 layers, recession kept at 0.06.
+  var COLS = [
+    { step: 6, layers: 3, name: "plates", note: "6° · 3 layers" },
+    { step: 6, layers: 4, name: "plates", note: "6° · 4 layers" },
+    { step: 9, layers: 3, name: "plates-wide", note: "9° · 3 layers" },
+    { step: 9, layers: 4, name: "plates-wide", note: "9° · 4 layers" }
+  ];
+  var RECESSION = 0.06;
+
+  var PIVOT = 512;
+  var SHAPES =
+    '<circle cx="470" cy="190" r="70"/>' +
+    '<rect x="460" y="340" width="160" height="280" rx="6"/>' +
+    '<path d="M 500 640 H 660 V 720 Q 660 860 520 860 H 370 Q 280 860 280 780 ' +
+    'V 750 Q 280 710 330 710 H 410 Q 500 710 500 640 Z"/>';
+
+  var view = { palette: "signal_yellow", mode: "dark", plate: "rounded" };
+
+  function ramp(n, minop, gamma) {
+    var out = [];
+    for (var i = 0; i < n; i++) {
+      var t = n > 1 ? i / (n - 1) : 1;
+      out.push(minop + (1 - minop) * Math.pow(t, gamma));
+    }
+    return out;
+  }
+
+  function svg(step, layers, minop, gamma, size) {
+    var c = PALETTES[view.palette][view.mode];
+    var rx = view.plate === "rounded" ? 174 : 0;
+    var ops = ramp(layers, minop, gamma), body = "";
+    for (var i = 0; i < layers; i++) {
+      var depth = layers - 1 - i;
+      var sc = 1 - depth * RECESSION;
+      body += '<g transform="rotate(' + (depth * step) + " " + PIVOT + " " + PIVOT +
+        ") translate(" + PIVOT + " " + PIVOT + ") scale(" + sc.toFixed(4) +
+        ") translate(" + (-PIVOT) + " " + (-PIVOT) + ')" opacity="' + ops[i].toFixed(3) +
+        '">' + SHAPES + "</g>";
+    }
+    var dim = size ? ' width="' + size + '" height="' + size + '"' : "";
+    return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024"' + dim +
+      ' role="img" aria-label="mark at ' + step + " degrees, " + layers + ' layers">' +
+      '<rect width="1024" height="1024" rx="' + rx + '" fill="' + c[0] + '"/>' +
+      '<g fill="' + c[1] + '">' + body + "</g></svg>";
+  }
+
+  function ladderViz(f) {
+    // Show the 4-layer ramp, since that is where the ramps separate.
+    var ops = ramp(4, f.minop, f.gamma);
+    var bars = ops.map(function (o) {
+      return '<i class="rung" style="height:' + (o * 100).toFixed(0) + "%;opacity:" +
+        Math.max(o, 0.14).toFixed(2) + '"></i>';
+    }).join("");
+    var nums = ops.map(function (o) { return o.toFixed(2); }).join(" ");
+    var gaps = ops.slice(1).map(function (o, i) { return o - ops[i]; });
+    var tiny = gaps.some(function (g) { return g < 0.08; });
+    return '<span class="ladder">' + bars + "</span>" +
+      '<span class="ladder-nums">' + nums + "</span>" +
+      (tiny ? '<span class="flag">▲ two plates within 8%</span>' : "");
+  }
+
+  var $ = function (id) { return document.getElementById(id); };
+
+  function render() {
+    var html = '<div class="corner"></div>';
+    COLS.forEach(function (c) {
+      html += '<div class="colhead"><b>' + c.name + "</b><span>" + c.note + "</span></div>";
+    });
+
+    FADES.forEach(function (f) {
+      html += '<div class="rowhead"><b>' + f.key + '</b><span class="lab">' + f.label +
+        "</span>" + ladderViz(f) + "</div>";
+      COLS.forEach(function (c) {
+        html += '<figure class="cell">' + svg(c.step, c.layers, f.minop, f.gamma) +
+          "<figcaption>" + svg(c.step, c.layers, f.minop, f.gamma, 24) + "32 px →</figcaption></figure>";
+      });
+    });
+    $("matrix").innerHTML = html;
+  }
+
+  $("swatches").innerHTML = Object.keys(PALETTES).map(function (k) {
+    var c = PALETTES[k].dark;
+    return '<button type="button" class="sw" data-p="' + k + '" title="' + PALETTES[k].label +
+      '" aria-label="' + PALETTES[k].label + '" aria-pressed="' + (k === view.palette) +
+      '" style="background:' + c[0] + ";--dot:" + c[1] + '"></button>';
+  }).join("");
+
+  function syncSwatches() {
+    Array.prototype.forEach.call($("swatches").children, function (b) {
+      var c = PALETTES[b.dataset.p][view.mode];
+      b.style.background = c[0];
+      b.style.setProperty("--dot", c[1]);
+      b.setAttribute("aria-pressed", String(b.dataset.p === view.palette));
+    });
+  }
+
+  $("swatches").addEventListener("click", function (e) {
+    var b = e.target.closest(".sw");
+    if (!b) return;
+    view.palette = b.dataset.p;
+    syncSwatches();
+    render();
+  });
+
+  function seg(id, attr, apply) {
+    $(id).addEventListener("click", function (e) {
+      var b = e.target.closest("button");
+      if (!b) return;
+      Array.prototype.forEach.call(this.children, function (c) {
+        c.setAttribute("aria-pressed", String(c === b));
+      });
+      apply(b.dataset[attr]);
+      render();
+    });
+  }
+  seg("mode", "mode", function (v) { view.mode = v; syncSwatches(); });
+  seg("plate", "plate", function (v) { view.plate = v; });
+
+  render();
+})();
+</script>

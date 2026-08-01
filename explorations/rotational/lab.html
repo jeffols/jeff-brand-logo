@@ -1,0 +1,542 @@
+<title>Rotational j — depth-stack lab</title>
+<style>
+  :root {
+    --ground: #FAFAF8;
+    --panel: #FFFFFF;
+    --sunk: #F2F2EE;
+    --line: #E2E2DC;
+    --line-strong: #C9C9C0;
+    --ink: #16171A;
+    --ink-mid: #55575E;
+    --ink-dim: #8A8C93;
+    --accent: #A8850A;
+    --accent-ink: #16171A;
+    --shadow: 0 1px 2px rgba(20,20,16,.05), 0 8px 24px -12px rgba(20,20,16,.18);
+    --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ground: #0E0F12;
+      --panel: #16181D;
+      --sunk: #101216;
+      --line: #24272E;
+      --line-strong: #363A44;
+      --ink: #ECEDF0;
+      --ink-mid: #9BA0AA;
+      --ink-dim: #6B707B;
+      --accent: #FFD60A;
+      --accent-ink: #16171A;
+      --shadow: 0 1px 2px rgba(0,0,0,.4), 0 12px 32px -14px rgba(0,0,0,.7);
+    }
+  }
+  :root[data-theme="light"] {
+    --ground: #FAFAF8; --panel: #FFFFFF; --sunk: #F2F2EE;
+    --line: #E2E2DC; --line-strong: #C9C9C0;
+    --ink: #16171A; --ink-mid: #55575E; --ink-dim: #8A8C93;
+    --accent: #A8850A; --accent-ink: #16171A;
+    --shadow: 0 1px 2px rgba(20,20,16,.05), 0 8px 24px -12px rgba(20,20,16,.18);
+  }
+  :root[data-theme="dark"] {
+    --ground: #0E0F12; --panel: #16181D; --sunk: #101216;
+    --line: #24272E; --line-strong: #363A44;
+    --ink: #ECEDF0; --ink-mid: #9BA0AA; --ink-dim: #6B707B;
+    --accent: #FFD60A; --accent-ink: #16171A;
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 12px 32px -14px rgba(0,0,0,.7);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font: 400 15px/1.6 var(--sans);
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 56px 28px 96px; }
+
+  /* ---- masthead ---- */
+  .mast { border-bottom: 1px solid var(--line-strong); padding-bottom: 22px; margin-bottom: 40px; }
+  .eyebrow {
+    font: 500 11px/1 var(--mono);
+    letter-spacing: .16em; text-transform: uppercase;
+    color: var(--ink-dim); margin: 0 0 14px;
+  }
+  h1 {
+    font: 650 clamp(28px, 4.4vw, 42px)/1.08 var(--sans);
+    letter-spacing: -.028em; margin: 0 0 12px; text-wrap: balance;
+  }
+  .dek { margin: 0; max-width: 62ch; color: var(--ink-mid); font-size: 16px; }
+  .dek b { color: var(--ink); font-weight: 600; }
+
+  /* ---- workbench ---- */
+  .bench {
+    display: grid; gap: 24px; margin-bottom: 56px;
+    grid-template-columns: minmax(0, 1fr) 320px;
+    align-items: start;
+  }
+  @media (max-width: 860px) { .bench { grid-template-columns: 1fr; } }
+
+  .stage {
+    background: var(--panel); border: 1px solid var(--line);
+    border-radius: 4px; box-shadow: var(--shadow);
+    padding: 32px; display: flex; flex-direction: column; align-items: center; gap: 26px;
+  }
+  #hero { width: min(400px, 100%); aspect-ratio: 1; }
+  #hero svg { width: 100%; height: 100%; display: block; }
+  #hero.spin svg { animation: spin var(--dur, 9s) linear infinite; transform-origin: 50% 50%; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  @media (prefers-reduced-motion: reduce) { #hero.spin svg { animation: none; } }
+
+  /* ---- size ladder ---- */
+  .sizes {
+    display: flex; align-items: flex-end; justify-content: center;
+    gap: 26px; padding-top: 22px; border-top: 1px solid var(--line); width: 100%;
+  }
+  .size { display: flex; flex-direction: column; align-items: center; gap: 9px; }
+  .size svg { display: block; }
+  .size span { font: 500 10px/1 var(--mono); letter-spacing: .1em; color: var(--ink-dim); }
+
+  /* ---- controls ---- */
+  .panel {
+    background: var(--panel); border: 1px solid var(--line);
+    border-radius: 4px; box-shadow: var(--shadow); overflow: hidden;
+  }
+  .panel h2 {
+    font: 500 10px/1 var(--mono); letter-spacing: .16em; text-transform: uppercase;
+    color: var(--ink-dim); margin: 0; padding: 15px 18px;
+    border-bottom: 1px solid var(--line); background: var(--sunk);
+  }
+  .panel-body { padding: 18px; display: flex; flex-direction: column; gap: 17px; }
+
+  .ctl { display: grid; gap: 7px; }
+  .ctl-head {
+    display: flex; justify-content: space-between; align-items: baseline; gap: 10px;
+    font: 500 11px/1 var(--mono); letter-spacing: .07em; text-transform: uppercase;
+    color: var(--ink-mid);
+  }
+  .ctl-head b {
+    font-weight: 600; font-size: 12px; color: var(--ink);
+    font-variant-numeric: tabular-nums; letter-spacing: 0;
+  }
+  .ctl-note { font: 400 11px/1.4 var(--sans); color: var(--ink-dim); margin: -2px 0 0; }
+
+  input[type=range] {
+    -webkit-appearance: none; appearance: none;
+    width: 100%; height: 20px; background: transparent; margin: 0; cursor: ew-resize;
+  }
+  input[type=range]::-webkit-slider-runnable-track {
+    height: 2px; background: var(--line-strong); border-radius: 2px;
+  }
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none; appearance: none;
+    width: 13px; height: 13px; margin-top: -5.5px; border-radius: 50%;
+    background: var(--accent); border: 2px solid var(--panel);
+    box-shadow: 0 0 0 1px var(--line-strong);
+  }
+  input[type=range]::-moz-range-track { height: 2px; background: var(--line-strong); border-radius: 2px; }
+  input[type=range]::-moz-range-thumb {
+    width: 13px; height: 13px; border-radius: 50%; border: 2px solid var(--panel);
+    background: var(--accent); box-shadow: 0 0 0 1px var(--line-strong);
+  }
+  input[type=range]:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 3px; }
+
+  .swatches { display: grid; grid-template-columns: repeat(6, 1fr); gap: 7px; }
+  .sw {
+    aspect-ratio: 1; border-radius: 3px; border: 1px solid var(--line-strong);
+    padding: 0; cursor: pointer; position: relative; overflow: hidden;
+  }
+  .sw::after {
+    content: ""; position: absolute; inset: 26% 26% auto auto;
+    width: 48%; height: 48%; border-radius: 50%; background: var(--dot);
+  }
+  .sw[aria-pressed="true"] { box-shadow: 0 0 0 2px var(--accent); border-color: transparent; }
+  .sw:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  .seg { display: flex; border: 1px solid var(--line-strong); border-radius: 3px; overflow: hidden; }
+  .seg button {
+    flex: 1; padding: 8px 6px; border: 0; background: var(--panel); cursor: pointer;
+    font: 500 11px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase;
+    color: var(--ink-mid); border-right: 1px solid var(--line-strong);
+  }
+  .seg button:last-child { border-right: 0; }
+  .seg button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); }
+  .seg button:focus-visible { outline: 2px solid var(--accent); outline-offset: -3px; }
+
+  /* ---- command readout ---- */
+  .cmd {
+    margin-top: 6px; background: var(--sunk); border: 1px solid var(--line);
+    border-radius: 3px; padding: 13px 14px;
+    font: 400 11.5px/1.65 var(--mono); color: var(--ink-mid);
+    overflow-x: auto; white-space: pre; word-break: normal;
+  }
+  .cmd b { color: var(--accent); font-weight: 500; }
+  .rowbtns { display: flex; gap: 8px; }
+  .btn {
+    flex: 1; padding: 9px 10px; border: 1px solid var(--line-strong); border-radius: 3px;
+    background: var(--panel); color: var(--ink); cursor: pointer;
+    font: 500 11px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase;
+  }
+  .btn:hover { border-color: var(--accent); }
+  .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  /* ---- ladder ---- */
+  section { margin-bottom: 56px; }
+  .sec-head { border-bottom: 1px solid var(--line-strong); padding-bottom: 12px; margin-bottom: 24px; }
+  .sec-head h2 {
+    font: 600 20px/1.2 var(--sans); letter-spacing: -.018em; margin: 0 0 6px;
+  }
+  .sec-head p { margin: 0; color: var(--ink-mid); font-size: 14px; max-width: 64ch; }
+
+  .ladder { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 18px; }
+  .rung { display: flex; flex-direction: column; gap: 10px; }
+  .rung > svg { width: 100%; height: auto; display: block; border-radius: 10px; }
+  .rung figcaption {
+    display: flex; align-items: baseline; justify-content: space-between; gap: 8px;
+    font: 500 11px/1 var(--mono); letter-spacing: .06em; color: var(--ink-dim);
+  }
+  .rung figcaption b {
+    color: var(--ink); font-size: 13px; font-weight: 600;
+    font-variant-numeric: tabular-nums; letter-spacing: 0;
+  }
+  .rung.is-live figcaption b { color: var(--accent); }
+
+  /* ---- zones ---- */
+  .zones { display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 4px; overflow: hidden; }
+  .zone { background: var(--panel); padding: 18px 20px; display: grid; grid-template-columns: 108px 1fr; gap: 20px; align-items: baseline; }
+  @media (max-width: 620px) { .zone { grid-template-columns: 1fr; gap: 6px; } }
+  .zone dt {
+    font: 600 12px/1.4 var(--mono); letter-spacing: .04em; color: var(--accent);
+    font-variant-numeric: tabular-nums;
+  }
+  .zone dd { margin: 0; color: var(--ink-mid); font-size: 14.5px; }
+  .zone dd b { color: var(--ink); font-weight: 600; }
+
+  footer {
+    border-top: 1px solid var(--line-strong); padding-top: 20px;
+    font: 400 12px/1.7 var(--mono); color: var(--ink-dim);
+  }
+  footer code { color: var(--ink-mid); }
+</style>
+
+<div class="wrap">
+  <header class="mast">
+    <p class="eyebrow">jeff-brand-logo · exploration</p>
+    <h1>Rotational depth stack</h1>
+    <p class="dek">Eight copies of the tectonic <b>j</b>, each rotated one step further back, opacity
+      ramping from near-invisible at the rear to solid at the front. The front copy stays upright at
+      full opacity so the mark itself never stops being the mark — everything behind it is echo.
+      Drag the parameters; the strip below re-renders against whatever you land on.</p>
+  </header>
+
+  <div class="bench">
+    <div class="stage">
+      <div id="hero"></div>
+      <div class="sizes" id="sizes"></div>
+    </div>
+
+    <div class="panel">
+      <h2>Parameters</h2>
+      <div class="panel-body">
+        <div class="ctl">
+          <div class="ctl-head"><label for="layers">Layers</label><b id="v-layers">8</b></div>
+          <input type="range" id="layers" min="2" max="16" step="1" value="8">
+        </div>
+
+        <div class="ctl">
+          <div class="ctl-head"><label for="step">Step angle</label><b id="v-step">8&deg;</b></div>
+          <input type="range" id="step" min="0" max="45" step="0.5" value="8">
+          <p class="ctl-note">Degrees of rotation between neighbouring layers.</p>
+        </div>
+
+        <div class="ctl">
+          <div class="ctl-head"><label for="minop">Rear opacity</label><b id="v-minop">0.10</b></div>
+          <input type="range" id="minop" min="0" max="0.6" step="0.01" value="0.10">
+        </div>
+
+        <div class="ctl">
+          <div class="ctl-head"><label for="gamma">Falloff</label><b id="v-gamma">1.8</b></div>
+          <input type="range" id="gamma" min="0.4" max="3" step="0.1" value="1.8">
+          <p class="ctl-note">Above 1 the trail dims fast and hugs the mark; below 1 it stays heavy all the way back.</p>
+        </div>
+
+        <div class="ctl">
+          <div class="ctl-head"><label for="scale">Recession</label><b id="v-scale">0.02</b></div>
+          <input type="range" id="scale" min="-0.03" max="0.06" step="0.005" value="0.02">
+          <p class="ctl-note">How much each layer back shrinks. Negative blooms outward instead.</p>
+        </div>
+
+        <div class="ctl">
+          <div class="ctl-head"><span>Palette</span></div>
+          <div class="swatches" id="swatches"></div>
+        </div>
+
+        <div class="ctl">
+          <div class="ctl-head"><span>Mode</span></div>
+          <div class="seg" id="mode">
+            <button type="button" data-mode="dark" aria-pressed="true">Dark</button>
+            <button type="button" data-mode="light" aria-pressed="false">Light</button>
+          </div>
+        </div>
+
+        <div class="ctl">
+          <div class="ctl-head"><span>Plate</span></div>
+          <div class="seg" id="plate">
+            <button type="button" data-plate="rounded" aria-pressed="true">Favicon</button>
+            <button type="button" data-plate="square" aria-pressed="false">Avatar</button>
+          </div>
+        </div>
+
+        <div class="ctl">
+          <div class="ctl-head"><span>Motion</span></div>
+          <div class="seg" id="motion">
+            <button type="button" data-spin="off" aria-pressed="true">Still</button>
+            <button type="button" data-spin="on" aria-pressed="false">Spin 9s</button>
+          </div>
+        </div>
+
+        <div class="rowbtns">
+          <button type="button" class="btn" id="copy-svg">Copy SVG</button>
+          <button type="button" class="btn" id="reset">Reset</button>
+        </div>
+
+        <div class="cmd" id="cmd"></div>
+      </div>
+    </div>
+  </div>
+
+  <section>
+    <div class="sec-head">
+      <h2>Step angle is the whole decision</h2>
+      <p>Every other parameter tunes; this one changes what the mark <em>is</em>. Same eight layers,
+        same opacity ramp, same recession — only the angle between them differs.</p>
+    </div>
+    <div class="ladder" id="ladder"></div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <h2>What each band buys you</h2>
+      <p>Trade-offs, not a recommendation. The favicon column is the constraint that actually bites:
+        at 16px everything above roughly 10&deg; turns into a smudge with no <b>j</b> in it.</p>
+    </div>
+    <dl class="zones">
+      <div class="zone">
+        <dt>2–5&deg;</dt>
+        <dd><b>Ghosting.</b> Reads as a printing misregistration or a slight blur. Survives every size
+          intact because it barely changes the silhouette — which is also the argument against it:
+          at favicon scale it is indistinguishable from the mark you already have.</dd>
+      </div>
+      <div class="zone">
+        <dt>6–10&deg;</dt>
+        <dd><b>Stacked plates.</b> Discrete layers stay individually visible, so it reads as cards
+          fanned out rather than motion blur. Closest to the tectonic idea already in the mark — offset
+          rigid pieces, not a smear. Still collapses gracefully to the plain <b>j</b> at 32px.</dd>
+      </div>
+      <div class="zone">
+        <dt>12–20&deg;</dt>
+        <dd><b>Comet.</b> The dot detaches into a bead trail arcing over the stem and the hook throws a
+          wide fan. Genuinely striking at 512px and up, and it is the point where the composition starts
+          competing with the letter instead of supporting it. Dead at favicon size.</dd>
+      </div>
+      <div class="zone">
+        <dt>22–45&deg;</dt>
+        <dd><b>Mandala.</b> At 45&deg; the eight layers close a full circle and the <b>j</b> dissolves into
+          a pinwheel. Beautiful as a standalone graphic — a section divider, a loading state, a large
+          format print. Not a logo any more.</dd>
+      </div>
+    </dl>
+  </section>
+
+  <footer>
+    Geometry matches <code>render_icon()</code> in <code>generate_favicon_assets.py</code>, design space
+    1024&times;1024, pivot at the plate centre (512, 512).<br>
+    Static PNG/SVG output via <code>generate_rotational_logo.py</code>.
+  </footer>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var PALETTES = {
+    signal_yellow: { label: "Signal Yellow", dark: ["#111827", "#FFD60A"], light: ["#FFF7E0", "#B8960A"] },
+    electric_blue: { label: "Electric Blue", dark: ["#0B1020", "#7DD3FC"], light: ["#F6FBFF", "#005A9C"] },
+    amber_utility: { label: "Amber Utility", dark: ["#1F1B16", "#FFB000"], light: ["#FFF8E1", "#8B5E00"] },
+    terminal_lime: { label: "Terminal Lime", dark: ["#151515", "#B6FF4D"], light: ["#F7FFE8", "#3D6600"] },
+    deep_indigo:   { label: "Deep Indigo",   dark: ["#190A24", "#DDB0FF"], light: ["#FBF5FF", "#4B0082"] },
+    slate_mono:    { label: "Slate Mono",    dark: ["#0F172A", "#F8FAFC"], light: ["#F8FAFC", "#0F172A"] }
+  };
+
+  var PIVOT = 512;
+  var SHAPES =
+    '<circle cx="470" cy="190" r="70"/>' +
+    '<rect x="460" y="340" width="160" height="280" rx="6"/>' +
+    '<path d="M 500 640 H 660 V 720 Q 660 860 520 860 H 370 Q 280 860 280 780 ' +
+    'V 750 Q 280 710 330 710 H 410 Q 500 710 500 640 Z"/>';
+
+  var DEFAULTS = { layers: 8, step: 8, minop: 0.10, gamma: 1.8, scale: 0.02 };
+  var LADDER = [3, 6, 10, 15, 22.5, 45];
+
+  var state = {
+    layers: 8, step: 8, minop: 0.10, gamma: 1.8, scale: 0.02,
+    palette: "signal_yellow", mode: "dark", plate: "rounded", spin: false
+  };
+
+  function specs(n, step, minop, gamma, scaleStep) {
+    var out = [];
+    for (var i = 0; i < n; i++) {
+      var depth = n - 1 - i;
+      var t = n > 1 ? i / (n - 1) : 1;
+      out.push({
+        angle: depth * step,
+        opacity: minop + (1 - minop) * Math.pow(t, gamma),
+        scale: 1 - depth * scaleStep
+      });
+    }
+    return out;
+  }
+
+  function svg(o) {
+    var colors = PALETTES[o.palette][o.mode];
+    var bg = colors[0], glyph = colors[1];
+    var rx = o.plate === "rounded" ? 174 : 0;
+    var body = specs(o.layers, o.step, o.minop, o.gamma, o.scale).map(function (L) {
+      var tf = "rotate(" + fmt(L.angle) + " " + PIVOT + " " + PIVOT + ") " +
+               "translate(" + PIVOT + " " + PIVOT + ") scale(" + L.scale.toFixed(4) + ") " +
+               "translate(" + (-PIVOT) + " " + (-PIVOT) + ")";
+      return '<g transform="' + tf + '" opacity="' + L.opacity.toFixed(3) + '">' + SHAPES + '</g>';
+    }).join("");
+
+    return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" ' +
+           'role="img" aria-label="jeffols rotational mark">' +
+           '<rect width="1024" height="1024" rx="' + rx + '" fill="' + bg + '"/>' +
+           '<g fill="' + glyph + '">' + body + '</g></svg>';
+  }
+
+  function fmt(n) {
+    return String(Math.round(n * 100) / 100);
+  }
+
+  var $ = function (id) { return document.getElementById(id); };
+  var hero = $("hero"), sizesEl = $("sizes"), ladderEl = $("ladder"), cmdEl = $("cmd");
+
+  function render() {
+    hero.innerHTML = svg(state);
+    hero.classList.toggle("spin", state.spin);
+
+    sizesEl.innerHTML = [64, 32, 16].map(function (px) {
+      var m = svg(state).replace("<svg ", '<svg width="' + px + '" height="' + px + '" ');
+      return '<div class="size">' + m + "<span>" + px + "px</span></div>";
+    }).join("");
+
+    ladderEl.innerHTML = LADDER.map(function (deg) {
+      var o = Object.assign({}, state, { step: deg });
+      var live = Math.abs(state.step - deg) < 0.26;
+      return '<figure class="rung' + (live ? " is-live" : "") + '">' + svg(o) +
+             "<figcaption><b>" + deg + "&deg;</b><span>" + zone(deg) + "</span></figcaption></figure>";
+    }).join("");
+
+    var d = DEFAULTS, s = state;
+    var flags = "";
+    if (s.layers !== d.layers) flags += " --layers " + s.layers;
+    if (s.step !== d.step) flags += " --step " + fmt(s.step);
+    if (s.minop !== d.minop) flags += " --min-opacity " + s.minop.toFixed(2);
+    if (s.gamma !== d.gamma) flags += " --gamma " + s.gamma.toFixed(1);
+    if (s.scale !== d.scale) flags += " --scale-step " + s.scale.toFixed(3);
+    cmdEl.innerHTML = "python generate_rotational_logo.py \\\n  --palette " + s.palette +
+      " --mode " + s.mode + "<b>" + flags + "</b>";
+  }
+
+  function zone(deg) {
+    if (deg <= 5) return "ghost";
+    if (deg <= 10) return "plates";
+    if (deg <= 20) return "comet";
+    return "mandala";
+  }
+
+  // sliders
+  [["layers", 0, "v-layers", function (v) { return String(v); }],
+   ["step", 1, "v-step", function (v) { return fmt(v) + "°"; }],
+   ["minop", 2, "v-minop", function (v) { return v.toFixed(2); }],
+   ["gamma", 1, "v-gamma", function (v) { return v.toFixed(1); }],
+   ["scale", 3, "v-scale", function (v) { return v.toFixed(3); }]
+  ].forEach(function (row) {
+    var key = row[0], out = $(row[2]), fmtv = row[3], input = $(key);
+    input.addEventListener("input", function () {
+      state[key] = parseFloat(input.value);
+      out.textContent = fmtv(state[key]);
+      render();
+    });
+  });
+
+  // palette swatches
+  $("swatches").innerHTML = Object.keys(PALETTES).map(function (k) {
+    var c = PALETTES[k].dark;
+    return '<button type="button" class="sw" data-p="' + k + '" title="' + PALETTES[k].label +
+      '" aria-label="' + PALETTES[k].label + '" aria-pressed="' + (k === state.palette) +
+      '" style="background:' + c[0] + ";--dot:" + c[1] + '"></button>';
+  }).join("");
+
+  $("swatches").addEventListener("click", function (e) {
+    var b = e.target.closest(".sw");
+    if (!b) return;
+    state.palette = b.dataset.p;
+    Array.prototype.forEach.call(this.children, function (c) {
+      c.setAttribute("aria-pressed", String(c === b));
+    });
+    syncSwatches();
+    render();
+  });
+
+  function syncSwatches() {
+    Array.prototype.forEach.call($("swatches").children, function (b) {
+      var c = PALETTES[b.dataset.p][state.mode];
+      b.style.background = c[0];
+      b.style.setProperty("--dot", c[1]);
+    });
+  }
+
+  // segmented toggles
+  function seg(id, attr, apply) {
+    $(id).addEventListener("click", function (e) {
+      var b = e.target.closest("button");
+      if (!b) return;
+      Array.prototype.forEach.call(this.children, function (c) {
+        c.setAttribute("aria-pressed", String(c === b));
+      });
+      apply(b.dataset[attr]);
+      render();
+    });
+  }
+  seg("mode", "mode", function (v) { state.mode = v; syncSwatches(); });
+  seg("plate", "plate", function (v) { state.plate = v; });
+  seg("motion", "spin", function (v) { state.spin = v === "on"; });
+
+  $("copy-svg").addEventListener("click", function () {
+    var btn = this;
+    navigator.clipboard.writeText(svg(state)).then(function () {
+      btn.textContent = "Copied";
+      setTimeout(function () { btn.textContent = "Copy SVG"; }, 1400);
+    }, function () {
+      btn.textContent = "Copy failed";
+      setTimeout(function () { btn.textContent = "Copy SVG"; }, 1400);
+    });
+  });
+
+  $("reset").addEventListener("click", function () {
+    Object.keys(DEFAULTS).forEach(function (k) {
+      state[k] = DEFAULTS[k];
+      $(k).value = String(DEFAULTS[k]);
+    });
+    $("v-layers").textContent = String(DEFAULTS.layers);
+    $("v-step").textContent = DEFAULTS.step + "°";
+    $("v-minop").textContent = DEFAULTS.minop.toFixed(2);
+    $("v-gamma").textContent = DEFAULTS.gamma.toFixed(1);
+    $("v-scale").textContent = DEFAULTS.scale.toFixed(3);
+    render();
+  });
+
+  render();
+})();
+</script>
