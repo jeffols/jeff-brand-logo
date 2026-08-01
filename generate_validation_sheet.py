@@ -23,7 +23,7 @@ Usage:
 from pathlib import Path
 import argparse
 
-from generate_favicon_assets import PALETTES, render_icon
+from generate_favicon_assets import PALETTES, modes_for, render_icon
 from generate_rotational_logo import PIVOT, PRESETS, ramp, render_stack, resolve
 
 # The ladder from BRAND.md section 8. Note 24 and 80: they bracket the stated
@@ -196,7 +196,7 @@ def main():
 
     docs = Path(a.out)
     (docs / "validation").mkdir(parents=True, exist_ok=True)
-    modes = ["dark", "light"]
+    modes = modes_for(a.palette)
 
     render_all(docs / "validation", a.palette, modes)
     page = docs / "size-validation.html"

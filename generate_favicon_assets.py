@@ -21,11 +21,15 @@ from PIL import Image, ImageDraw
 import argparse
 import json
 
+# Not every palette has both modes. signal_yellow is dark-only by decision 0003:
+# its light variant was a generated cell rather than a designed one, it sat at
+# 2.65:1, and darkening the glyph to fix that collapsed it into amber_utility
+# (dE 8.0, on a plate already dE 0.5 away). Use modes_for() rather than assuming
+# both keys exist.
 PALETTES = {
     "signal_yellow": {
         "label": "Signal Yellow",
         "dark":  {"background": "#111827", "glyph": "#FFD60A"},
-        "light": {"background": "#FFF7E0", "glyph": "#B8960A"},
     },
     "electric_blue": {
         "label": "Electric Blue",
@@ -56,6 +60,30 @@ PALETTES = {
 DESIGN_SIZE = 1024
 DEFAULT_SIZES = [16, 32, 48, 64, 128, 180, 192, 256, 512]
 SUPERSAMPLE = 4
+MODES = ("dark", "light")
+
+
+def modes_for(palette_key):
+    """Modes this palette actually defines, in canonical order."""
+    return [m for m in MODES if m in PALETTES[palette_key]]
+
+
+def resolve_modes(palette_key, requested):
+    """Modes to generate, and whether an explicit request was unsatisfiable.
+
+    `--mode both` quietly skips a mode a palette does not define. Naming that
+    mode explicitly is an error, because silently producing nothing is worse
+    than saying why.
+    """
+    available = modes_for(palette_key)
+    if requested == "both":
+        return available
+    if requested not in available:
+        raise SystemExit(
+            f"{palette_key} has no {requested} mode "
+            f"(available: {', '.join(available)}). See docs/decisions/0003."
+        )
+    return [requested]
 
 
 def hex_to_rgba(value):
@@ -214,8 +242,10 @@ def write_assets(out_dir, palette_key, mode, background, glyph, sizes):
 
 def list_palettes():
     for key, palette in PALETTES.items():
-        print(f"{key}: {palette['label']}")
-        for mode in ["dark", "light"]:
+        available = modes_for(key)
+        suffix = "" if len(available) == len(MODES) else f"  ({available[0]}-only)"
+        print(f"{key}: {palette['label']}{suffix}")
+        for mode in available:
             c = palette[mode]
             print(f"  {mode}: background {c['background']} glyph {c['glyph']}")
 
@@ -248,10 +278,9 @@ def main():
         return
 
     palette_keys = list(PALETTES.keys()) if args.palette == "all" else [args.palette]
-    modes = ["dark", "light"] if args.mode == "both" else [args.mode]
 
     for palette_key in palette_keys:
-        for mode in modes:
+        for mode in resolve_modes(palette_key, args.mode):
             colors = PALETTES[palette_key][mode]
             target = out
             if args.palette == "all":

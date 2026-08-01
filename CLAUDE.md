@@ -45,8 +45,11 @@ Wide surfaces (banners, covers) are governed by composition, not by size.
   leftover transparency flattens to white slivers.
 
 ## Palettes
-signal_yellow (default), electric_blue, amber_utility, terminal_lime, deep_indigo,
-slate_mono. `signal_yellow` light fails contrast at 2.65:1 — see docs/accessibility.md.
+signal_yellow (default, **dark-only** — decision 0003), electric_blue, amber_utility,
+terminal_lime, deep_indigo, slate_mono. The matrix is NOT symmetric: use
+`modes_for(key)` / `resolve_modes(key, requested)`, never `["dark","light"]`.
+`--palette all --mode both` yields 11 combinations, not 12.
+Separation lives in the glyph, not the plate — see docs/accessibility.md.
 
 ## Run
 ```bash

@@ -25,7 +25,7 @@ import json
 import math
 
 from generate_favicon_assets import (
-    DEFAULT_SIZES, PALETTES, hex_to_rgba, parse_sizes, quad_bezier,
+    DEFAULT_SIZES, PALETTES, hex_to_rgba, parse_sizes, quad_bezier, resolve_modes,
 )
 
 DESIGN_SIZE = 1024
@@ -494,42 +494,45 @@ def main():
     out.mkdir(parents=True, exist_ok=True)
 
     keys = list(PALETTES) if a.palette == "all" else [a.palette]
-    modes = ["dark", "light"] if a.mode == "both" else [a.mode]
     slug = "-".join(x for x in (a.preset or "custom", a.fade) if x)
 
-    for key in keys:
-        for mode in modes:
-            c = PALETTES[key][mode]
-            bg, gl = c["background"], c["glyph"]
+    # Flat list of the palette/mode pairs that actually exist, so a dark-only
+    # palette does not have to be special-cased downstream and the nesting
+    # decision below stays a single count.
+    combos = [(k, m) for k in keys for m in resolve_modes(k, a.mode)]
 
-            if a.assets:
-                target = out / key / mode if len(keys) > 1 or len(modes) > 1 else out
-                write_rot_assets(target, key, mode, bg, gl, cfg, pivot, parse_sizes(a.sizes))
-                print(f"assets: {target}")
-                continue
-            if a.preset_sheet:
-                print(f"preset sheet: {write_preset_sheet(out, key, mode, bg, gl, pivot)}")
-                continue
-            if a.sheet:
-                print(f"sheet: {write_sheet(out, key, mode, bg, gl, cfg['layers'],
-                                            cfg['min_opacity'], cfg['gamma'],
-                                            cfg['scale_step'], pivot)}")
-                continue
+    for key, mode in combos:
+        c = PALETTES[key][mode]
+        bg, gl = c["background"], c["glyph"]
 
-            name = f"rot-{slug}-{key}-{mode}"
-            (out / f"{name}.svg").write_text(
-                build_svg(bg, gl, cfg["layers"], cfg["step"], cfg["min_opacity"],
-                          cfg["gamma"], cfg["scale_step"], pivot),
-                encoding="utf-8")
-            (out / f"{name}-spin.svg").write_text(
-                build_svg(bg, gl, cfg["layers"], cfg["step"], cfg["min_opacity"],
-                          cfg["gamma"], cfg["scale_step"], pivot, spin_seconds=9),
-                encoding="utf-8")
-            for size in (512, 128, 32):
-                render_stack(size, bg, gl, cfg["layers"], cfg["step"],
-                             cfg["min_opacity"], cfg["gamma"], cfg["scale_step"],
-                             pivot).save(out / f"{name}-{size}.png")
-            print(f"generated {name} in {out}")
+        if a.assets:
+            target = out / key / mode if len(combos) > 1 else out
+            write_rot_assets(target, key, mode, bg, gl, cfg, pivot, parse_sizes(a.sizes))
+            print(f"assets: {target}")
+            continue
+        if a.preset_sheet:
+            print(f"preset sheet: {write_preset_sheet(out, key, mode, bg, gl, pivot)}")
+            continue
+        if a.sheet:
+            print(f"sheet: {write_sheet(out, key, mode, bg, gl, cfg['layers'],
+                                        cfg['min_opacity'], cfg['gamma'],
+                                        cfg['scale_step'], pivot)}")
+            continue
+
+        name = f"rot-{slug}-{key}-{mode}"
+        (out / f"{name}.svg").write_text(
+            build_svg(bg, gl, cfg["layers"], cfg["step"], cfg["min_opacity"],
+                      cfg["gamma"], cfg["scale_step"], pivot),
+            encoding="utf-8")
+        (out / f"{name}-spin.svg").write_text(
+            build_svg(bg, gl, cfg["layers"], cfg["step"], cfg["min_opacity"],
+                      cfg["gamma"], cfg["scale_step"], pivot, spin_seconds=9),
+            encoding="utf-8")
+        for size in (512, 128, 32):
+            render_stack(size, bg, gl, cfg["layers"], cfg["step"],
+                         cfg["min_opacity"], cfg["gamma"], cfg["scale_step"],
+                         pivot).save(out / f"{name}-{size}.png")
+        print(f"generated {name} in {out}")
 
 
 if __name__ == "__main__":

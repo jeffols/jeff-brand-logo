@@ -42,19 +42,23 @@ validate against [`docs/size-validation.html`](docs/size-validation.html).
 
 | Palette | Dark | Light | Dark BG | Dark Glyph | Light BG | Light Glyph |
 |---|---|---|---|---|---|---|
-| **Signal Yellow** (default) | ![](palettes/signal_yellow/dark/favicon-64x64.png) | ![](palettes/signal_yellow/light/favicon-64x64.png) | `#111827` | `#FFD60A` | `#FFF7E0` | `#B8960A` ⚠ |
+| **Signal Yellow** (default) | ![](palettes/signal_yellow/dark/favicon-64x64.png) | — | `#111827` | `#FFD60A` | dark-only | — |
 | **Electric Blue** | ![](palettes/electric_blue/dark/favicon-64x64.png) | ![](palettes/electric_blue/light/favicon-64x64.png) | `#0B1020` | `#7DD3FC` | `#F6FBFF` | `#005A9C` |
 | **Amber Utility** | ![](palettes/amber_utility/dark/favicon-64x64.png) | ![](palettes/amber_utility/light/favicon-64x64.png) | `#1F1B16` | `#FFB000` | `#FFF8E1` | `#8B5E00` |
 | **Terminal Lime** | ![](palettes/terminal_lime/dark/favicon-64x64.png) | ![](palettes/terminal_lime/light/favicon-64x64.png) | `#151515` | `#B6FF4D` | `#F7FFE8` | `#3D6600` |
 | **Deep Indigo** | ![](palettes/deep_indigo/dark/favicon-64x64.png) | ![](palettes/deep_indigo/light/favicon-64x64.png) | `#190A24` | `#DDB0FF` | `#FBF5FF` | `#4B0082` |
 | **Slate Mono** | ![](palettes/slate_mono/dark/favicon-64x64.png) | ![](palettes/slate_mono/light/favicon-64x64.png) | `#0F172A` | `#F8FAFC` | `#F8FAFC` | `#0F172A` |
 
-⚠ Signal Yellow light fails WCAG non-text contrast at 2.65:1. Measured ratios and
-a proposed fix: [`docs/accessibility.md`](docs/accessibility.md).
+**Signal Yellow is dark-only** ([decision 0003](docs/decisions/0003-signal-yellow-is-dark-only.md)).
+Its light variant sat at 2.65:1 against a sibling range of 5.34 to 17.06, and
+darkening it collapsed it into Amber Utility. On light surfaces use Slate Mono or
+Amber Utility. The palette matrix is therefore not symmetric — generators use
+`modes_for()` rather than assuming both modes exist.
 
 Geometry is constant; palette is contextual. Signal Yellow is the default
 recognition palette, not a requirement. Semantic roles per palette are
-provisional — see `BRAND.md` section 11.
+provisional — see `BRAND.md` section 11. Measured contrast and palette separation:
+[`docs/accessibility.md`](docs/accessibility.md).
 
 ## Two forms of every icon
 

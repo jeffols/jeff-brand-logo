@@ -29,7 +29,6 @@ Treat the numbers below as legibility evidence, not as compliance results.
 
 | Palette | Mode | Background | Glyph | Ratio | Status |
 |---|---|---|---|---|---|
-| signal_yellow | light | `#FFF7E0` | `#B8960A` | **2.65** | **outlier — see below** |
 | amber_utility | light | `#FFF8E1` | `#8B5E00` | 5.34 | AA |
 | terminal_lime | light | `#F7FFE8` | `#3D6600` | 6.59 | AA |
 | electric_blue | light | `#F6FBFF` | `#005A9C` | 6.85 | AA |
@@ -38,11 +37,15 @@ Treat the numbers below as legibility evidence, not as compliance results.
 | electric_blue | dark | `#0B1020` | `#7DD3FC` | 11.36 | AAA |
 | deep_indigo | light | `#FBF5FF` | `#4B0082` | 12.09 | AAA |
 | signal_yellow | dark | `#111827` | `#FFD60A` | 12.57 | AAA |
+| — | — | signal_yellow has no light mode | | | decision `0003` |
 | terminal_lime | dark | `#151515` | `#B6FF4D` | 15.13 | AAA |
 | slate_mono | dark | `#0F172A` | `#F8FAFC` | 17.06 | AAA |
 | slate_mono | light | `#F8FAFC` | `#0F172A` | 17.06 | AAA |
 
-## Open finding: signal_yellow light is an outlier
+## Resolved: signal_yellow light removed (decision 0003)
+
+The analysis below is kept because it is the reasoning behind `0003` and because
+it is the method to reuse when adding or changing any palette.
 
 `#B8960A` on `#FFF7E0` is **2.65:1**. Every other light mode lands between 5.34
 and 17.06. It is not a standards failure — logos are exempt — but it is roughly
@@ -83,32 +86,56 @@ This is the standard trap in hand-tuned palettes, not a mistake specific to this
 one. Any palette picked by eye across multiple hues will drift this way unless
 luminance is checked.
 
-### Consequence
+### Why darkening the glyph was rejected
 
-Limited today: the light plate is opaque, so the mark is low-contrast but
-present. It becomes material when the transparent mark ships and the glyph meets
-arbitrary page backgrounds, and it is already visible at 16 px where the hook
-softens into the plate.
+The obvious fix collapses Signal Yellow into Amber Utility. CIEDE2000 distance
+from `amber_utility` light (`#8B5E00`):
 
-Candidate replacements, same hue, darkened:
-
-| Candidate | Ratio | Note |
+| Candidate | Contrast | ΔE vs amber |
 |---|---|---|
-| `#937808` | 3.98 | still reads light; below every sibling |
-| `#806907` | 4.98 | inside the sibling band, still recognisably yellow |
-| `#776106` | 5.61 | matches amber_utility light (5.34); arguably no longer yellow |
+| `#B8960A` current | 2.65 | 21.2 — distinct |
+| `#937808` | 3.98 | 11.0 — close |
+| `#806907` | 4.98 | **8.0 — collides** |
+| `#776106` | 5.61 | 7.8 — collides |
 
-**Recommendation: `#806907`** — the darkest value that still reads as the same
-colour family as the dark mode, which matters because both modes have to be
-recognisable as one palette.
+The two light plates were already `#FFF7E0` vs `#FFF8E1` — **ΔE 0.49**, below
+human perception. The low contrast was the only thing separating the palettes.
 
-**Doing nothing is defensible.** The mark is exempt, the plate is opaque, and
-brand recognition is a real argument against darkening the signature colour. The
-case for changing it is consistency with the other five palettes and legibility
-at favicon sizes, not compliance.
+Adjusting the plate instead is arithmetically impossible: at luminance 0.320 the
+glyph cannot reach 3:1 against any lighter background. Pure white gives 2.84:1
+and that is the ceiling.
 
-Either way it is a palette decision: it needs a decision record and sign-off
-before Phase 2 regenerates anything.
+Removing the variant was the only move that did not trade one defect for another.
+Recorded in `0003`.
+
+## Palette separation
+
+Contrast is one axis; whether two palettes look like different palettes is
+another. CIEDE2000 on glyphs, since the plates carry almost no differentiation.
+
+**Rule of thumb:** under 10 is a collision, 10–20 is close, 20+ reads as
+unambiguously different.
+
+Closest pairs:
+
+| Mode | Pair | ΔE | |
+|---|---|---|---|
+| dark | signal_yellow / amber_utility | **13.1** | closest in the system |
+| dark | electric_blue / slate_mono | 21.7 | fine |
+| light | deep_indigo / slate_mono | 20.7 | fine |
+| light | amber_utility / terminal_lime | 26.8 | fine |
+
+Every other pair is 21.7 or higher. Signal Yellow and Amber Utility are the only
+marginal pair, and only in dark mode.
+
+This matters less than it looks: `BRAND.md` section 11 treats palettes as
+contextual, one at a time. It would matter if two palettes ever had to be told
+apart side by side — a legend, a category key, a matrix of covers. Do not build
+one that depends on distinguishing those two.
+
+Dark plates are all near-black (ΔE 2.2 to 9.5 apart) and light plates include two
+imperceptible pairs. **Separation lives in the glyph. Do not rely on the plate to
+distinguish anything.**
 
 ## Transparent mark rule
 
@@ -125,7 +152,6 @@ Glyph directly on a white or black page:
 | electric_blue | dark | 1.67 | 12.60 |
 | deep_indigo | dark | 1.79 | 11.73 |
 | amber_utility | dark | 1.83 | 11.46 |
-| signal_yellow | light | 2.84 | 7.40 |
 | electric_blue | light | 7.14 | 2.94 |
 | terminal_lime | light | 6.78 | 3.10 |
 | deep_indigo | light | 12.95 | 1.62 |
