@@ -84,7 +84,7 @@ its two modes are exact inverses, so shipping both covers every case.
 - Colour-blind simulation (deuteranopia, protanopia, tritanopia)
 - Social-platform compression (LinkedIn and Substack re-encode uploads)
 - Print viability, CMYK conversion
-- The rotational mark's echo layers, which sit at 0.08 and 0.11 opacity and are
+- The rotational mark's echo layers, which sit at 0.08 and 0.195 opacity and are
   not intended to meet contrast minimums — they are texture, not information
 
 The last point matters: the echoes must never carry meaning that the front layer

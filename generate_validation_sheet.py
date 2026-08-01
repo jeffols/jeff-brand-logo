@@ -37,7 +37,7 @@ LADDER = [16, 24, 32, 48, 64, 80, 128]
 REFERENCE = [256, 512]
 ALL_SIZES = LADDER + REFERENCE
 PRESET_SIZES = [512, 64, 32, 16]
-CANONICAL = "plates-4"
+CANONICAL = "plates"
 
 # BRAND.md section 9. The page states these so a choice is made against them
 # rather than on first impression.
@@ -91,7 +91,8 @@ def preset_cards(mode):
     for key, p in PRESETS.items():
         c = resolve(key, None, {})
         opacities = " ".join(f"{o:.2f}" for o in ramp(c))
-        canon = ' <span class="flag">current default</span>' if key == CANONICAL else ""
+        canon = (' <span class="flag">canonical &mdash; decision 0002</span>'
+                 if key == CANONICAL else "")
         small = "".join(
             f'<img src="validation/preset-{key}-{mode}-{s}.png" '
             f'width="{s}" height="{s}" alt="{s}px">'

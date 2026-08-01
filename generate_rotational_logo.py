@@ -40,15 +40,15 @@ BASE = {"layers": 8, "step": 8.0, "min_opacity": 0.10, "gamma": 1.8, "scale_step
 # The plates-* family are all near neighbours of "plates": each moves one axis
 # only, so a side-by-side comparison isolates what that axis actually buys.
 PRESETS = {
-    "plates-4": {
-        "label": "The pick — solid mark, one clear echo, one soft shadow",
-        "note": "plates at 4 layers; the rear two merge into a single wider shadow",
-        "layers": 4, "step": 6.0, "min_opacity": 0.08, "gamma": 3.0, "scale_step": 0.06,
-    },
     "plates": {
-        "label": "Two faint echoes behind a solid mark",
-        "note": "the 3-layer original",
+        "label": "CANONICAL — one clear echo, one faint trace, solid mark in front",
+        "note": "decision 0002; the 3-layer original",
         "layers": 3, "step": 6.0, "min_opacity": 0.08, "gamma": 3.0, "scale_step": 0.06,
+    },
+    "plates-4": {
+        "label": "One more layer, which buys density not legibility",
+        "note": "rejected in 0002; the rear two merge into a single wider shadow",
+        "layers": 4, "step": 6.0, "min_opacity": 0.08, "gamma": 3.0, "scale_step": 0.06,
     },
     "plates-even": {
         "label": "Middle plate reads as its own plate",

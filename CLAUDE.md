@@ -52,16 +52,16 @@ slate_mono. `signal_yellow` light fails contrast at 2.65:1 — see docs/accessib
 ```bash
 pip install pillow
 python generate_favicon_assets.py --out ./out --palette all --mode both
-python generate_rotational_logo.py --preset plates-4 --palette all --mode both --assets
+python generate_rotational_logo.py --preset plates --palette all --mode both --assets
 python generate_validation_sheet.py
 ```
 
 ## Rotational variant
 N copies rotated `--step` degrees apart, opacity ramping to opaque at the front,
 each layer back shrunk by `--scale-step`. Front layer stays upright at full opacity.
-Current default `plates-4` (4 layers, 6°, rear 0.08, falloff 3.0, recession 0.06) is
-a **comparison-sheet tag that became a default, not a ratified choice**. Decision
-0002 settles it using docs/size-validation.html.
+Canonical construction is **`plates`** (decision 0002): 3 layers, 6°, rear 0.08,
+falloff 3.0, recession 0.06 — ramp 0.08 / 0.195 / 1.00. The other seven presets stay
+in the CLI as the comparison family that produced the decision; do not ship from them.
 
 ## Design reference
 - Canvas 1024×1024, 4× supersample, LANCZOS downscale

@@ -15,7 +15,7 @@
     512
   ],
   "variant": "rotational depth stack",
-  "layers": 4,
+  "layers": 3,
   "step_degrees": 6.0,
   "min_opacity": 0.08,
   "gamma": 3.0,
@@ -26,8 +26,7 @@
   ],
   "layer_opacities": [
     0.08,
-    0.1141,
-    0.3526,
+    0.195,
     1.0
   ]
 }

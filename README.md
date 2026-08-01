@@ -99,9 +99,9 @@ python generate_favicon_assets.py --list-palettes
 # Custom colours
 python generate_favicon_assets.py --out ./out --background "#111827" --glyph "#FFD60A"
 
-# Signature variant — two orthogonal axes: --preset (geometry), --fade (opacity ramp)
+# Signature variant — canonical construction is "plates" (decision 0002)
 python generate_rotational_logo.py --list-presets
-python generate_rotational_logo.py --preset plates-4 --palette all --mode both --assets
+python generate_rotational_logo.py --preset plates --palette all --mode both --assets
 
 # Comparison sheets
 python generate_rotational_logo.py --preset-sheet

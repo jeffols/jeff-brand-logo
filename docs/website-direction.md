@@ -4,9 +4,9 @@ Strategy: `BRAND.md` sections 13 and 14. This file is the build checklist for
 `jeffols.github.io`.
 
 **Do not edit the site repository until the brand guidance and required assets
-are stable.** Current blockers: decision `0002` (rotational construction), the
-transparent and monochrome exports, and the `signal_yellow` light contrast
-finding.
+are stable.** Remaining blockers: the transparent and monochrome exports, and the
+`signal_yellow` light contrast finding. The rotational construction is settled —
+decision `0002`.
 
 ## The shift
 
@@ -78,7 +78,9 @@ The mark has a natural animation: echo states appear, the three components rotat
 toward alignment, the echoes fade, the primary mark remains. The echo mark
 resolves into the durable state.
 
-Calm and intentional. Must respect `prefers-reduced-motion`. Blocked on `0002`.
+Calm and intentional. Must respect `prefers-reduced-motion`. Construction settled
+in `0002`; `generate_rotational_logo.py` can emit an animated SVG via
+`spin_seconds`, which is the starting point rather than the finished behaviour.
 
 ## Validate before ship
 
