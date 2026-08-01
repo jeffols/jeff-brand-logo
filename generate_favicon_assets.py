@@ -21,15 +21,19 @@ from PIL import Image, ImageDraw
 import argparse
 import json
 
-# Not every palette has both modes. signal_yellow is dark-only by decision 0003:
-# its light variant was a generated cell rather than a designed one, it sat at
-# 2.65:1, and darkening the glyph to fix that collapsed it into amber_utility
-# (dE 8.0, on a plate already dE 0.5 away). Use modes_for() rather than assuming
-# both keys exist.
+# Every palette but signal_yellow puts its colour in the glyph and its neutral in
+# the plate. signal_yellow light inverts that (decision 0004): the plate carries
+# the yellow and the glyph is the dark navy. A dark yellow glyph is an olive, and
+# an olive on cream is amber_utility — there was no room for both. Inverting keeps
+# the same two colours, the same 12.57:1, and no collision.
+#
+# The matrix is not guaranteed symmetric. Use modes_for() / resolve_modes() rather
+# than assuming both keys exist.
 PALETTES = {
     "signal_yellow": {
         "label": "Signal Yellow",
         "dark":  {"background": "#111827", "glyph": "#FFD60A"},
+        "light": {"background": "#FFD60A", "glyph": "#111827"},
     },
     "electric_blue": {
         "label": "Electric Blue",

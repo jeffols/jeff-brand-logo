@@ -37,15 +37,20 @@ Treat the numbers below as legibility evidence, not as compliance results.
 | electric_blue | dark | `#0B1020` | `#7DD3FC` | 11.36 | AAA |
 | deep_indigo | light | `#FBF5FF` | `#4B0082` | 12.09 | AAA |
 | signal_yellow | dark | `#111827` | `#FFD60A` | 12.57 | AAA |
-| — | — | signal_yellow has no light mode | | | decision `0003` |
+| signal_yellow | light | `#FFD60A` | `#111827` | 12.57 | AAA — inverted, `0004` |
 | terminal_lime | dark | `#151515` | `#B6FF4D` | 15.13 | AAA |
 | slate_mono | dark | `#0F172A` | `#F8FAFC` | 17.06 | AAA |
 | slate_mono | light | `#F8FAFC` | `#0F172A` | 17.06 | AAA |
 
-## Resolved: signal_yellow light removed (decision 0003)
+## Resolved: signal_yellow light inverts (decisions 0003, 0004)
 
-The analysis below is kept because it is the reasoning behind `0003` and because
-it is the method to reuse when adding or changing any palette.
+The light variant measured 2.65:1 and every fix inside the usual pattern
+collapsed it into `amber_utility`. `0003` removed it. `0004` restored it by
+inverting the dark mode instead — plate `#FFD60A`, glyph `#111827`, 12.57:1.
+
+The analysis below is why darkening the glyph does not work. It is still the
+reason not to try it again, and it is the method to reuse when adding or changing
+any palette.
 
 `#B8960A` on `#FFF7E0` is **2.65:1**. Every other light mode lands between 5.34
 and 17.06. It is not a standards failure — logos are exempt — but it is roughly
@@ -135,7 +140,27 @@ one that depends on distinguishing those two.
 
 Dark plates are all near-black (ΔE 2.2 to 9.5 apart) and light plates include two
 imperceptible pairs. **Separation lives in the glyph. Do not rely on the plate to
-distinguish anything.**
+distinguish anything** — with one deliberate exception: `signal_yellow` light
+carries its identity in the plate (`0004`), which is why it does not collide with
+`amber_utility` the way a darkened glyph would.
+
+### Under colour blindness
+
+Measured with `generate_palette_audit.py`; see `docs/palette-audit.html`.
+
+| View | Closest pair | ΔE | |
+|---|---|---|---|
+| normal | signal_yellow / amber_utility | 13.1 | no collisions |
+| tritanopia | signal_yellow / amber_utility | 10.4 | no collisions |
+| protanopia | electric_blue / deep_indigo | 6.1 | 3 collisions |
+| **deuteranopia** | **electric_blue / deep_indigo** | **0.3** | 4 collisions |
+
+`electric_blue` and `deep_indigo` are the same colour to a deuteranope — roughly
+6% of men — while being 30.4 apart in normal vision. Nothing reveals this without
+simulating it.
+
+Low impact while palettes appear one at a time. **Never build a legend, category
+key, or cover grid that requires telling those two apart.**
 
 ## Transparent mark rule
 

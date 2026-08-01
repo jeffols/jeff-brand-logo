@@ -42,23 +42,26 @@ validate against [`docs/size-validation.html`](docs/size-validation.html).
 
 | Palette | Dark | Light | Dark BG | Dark Glyph | Light BG | Light Glyph |
 |---|---|---|---|---|---|---|
-| **Signal Yellow** (default) | ![](palettes/signal_yellow/dark/favicon-64x64.png) | — | `#111827` | `#FFD60A` | dark-only | — |
+| **Signal Yellow** (default) | ![](palettes/signal_yellow/dark/favicon-64x64.png) | ![](palettes/signal_yellow/light/favicon-64x64.png) | `#111827` | `#FFD60A` | `#FFD60A` | `#111827` |
 | **Electric Blue** | ![](palettes/electric_blue/dark/favicon-64x64.png) | ![](palettes/electric_blue/light/favicon-64x64.png) | `#0B1020` | `#7DD3FC` | `#F6FBFF` | `#005A9C` |
 | **Amber Utility** | ![](palettes/amber_utility/dark/favicon-64x64.png) | ![](palettes/amber_utility/light/favicon-64x64.png) | `#1F1B16` | `#FFB000` | `#FFF8E1` | `#8B5E00` |
 | **Terminal Lime** | ![](palettes/terminal_lime/dark/favicon-64x64.png) | ![](palettes/terminal_lime/light/favicon-64x64.png) | `#151515` | `#B6FF4D` | `#F7FFE8` | `#3D6600` |
 | **Deep Indigo** | ![](palettes/deep_indigo/dark/favicon-64x64.png) | ![](palettes/deep_indigo/light/favicon-64x64.png) | `#190A24` | `#DDB0FF` | `#FBF5FF` | `#4B0082` |
 | **Slate Mono** | ![](palettes/slate_mono/dark/favicon-64x64.png) | ![](palettes/slate_mono/light/favicon-64x64.png) | `#0F172A` | `#F8FAFC` | `#F8FAFC` | `#0F172A` |
 
-**Signal Yellow is dark-only** ([decision 0003](docs/decisions/0003-signal-yellow-is-dark-only.md)).
-Its light variant sat at 2.65:1 against a sibling range of 5.34 to 17.06, and
-darkening it collapsed it into Amber Utility. On light surfaces use Slate Mono or
-Amber Utility. The palette matrix is therefore not symmetric — generators use
-`modes_for()` rather than assuming both modes exist.
+**Signal Yellow light inverts its dark mode** — the plate carries the yellow and
+the glyph is the dark navy ([decision 0004](docs/decisions/0004-signal-yellow-light-inverts.md)).
+Every other palette does the reverse. A dark yellow glyph is an olive, and an
+olive on cream is Amber Utility, so inverting was the only construction that kept
+both palettes distinct at full contrast.
 
 Geometry is constant; palette is contextual. Signal Yellow is the default
 recognition palette, not a requirement. Semantic roles per palette are
-provisional — see `BRAND.md` section 11. Measured contrast and palette separation:
-[`docs/accessibility.md`](docs/accessibility.md).
+provisional — see `BRAND.md` section 11.
+
+Measured contrast, palette separation, and colour-blind simulation:
+[`docs/accessibility.md`](docs/accessibility.md) and
+[`docs/palette-audit.html`](docs/palette-audit.html).
 
 ## Two forms of every icon
 

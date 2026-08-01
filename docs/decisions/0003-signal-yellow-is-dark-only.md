@@ -1,7 +1,12 @@
 # 0003 — Signal Yellow is dark-only
 
 **Date:** 2026-08-01
-**Status:** Accepted
+**Status:** Superseded by `0004`
+
+> `0004` restored the light mode by inverting the dark one — plate `#FFD60A`,
+> glyph `#111827` — which no option considered here allowed for. The analysis
+> below is why that was necessary and is still the reason not to darken the
+> glyph. Only the conclusion is superseded.
 
 ## Decision
 
