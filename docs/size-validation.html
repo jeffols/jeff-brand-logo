@@ -1,0 +1,248 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>mark validation &mdash; signal_yellow</title>
+<style>
+:root { color-scheme: dark; }
+body { margin:0; padding:48px; background:#0e0f12; color:#eceef0;
+       font:14px/1.6 ui-monospace,SFMono-Regular,Menlo,monospace; }
+h1 { font-size:19px; letter-spacing:-.01em; margin:0 0 6px; }
+h2 { font-size:13px; font-weight:600; letter-spacing:.14em; text-transform:uppercase;
+     color:#6b707b; margin:56px 0 18px; padding-top:22px; border-top:1px solid #22252b; }
+p.lede { color:#9ba0aa; margin:0 0 8px; max-width:62ch; }
+p.q { color:#FFD60A; margin:0 0 40px; max-width:62ch; }
+table { border-collapse:collapse; margin:0 0 34px; }
+td, th { padding:14px 16px; text-align:center; vertical-align:bottom; }
+th { color:#6b707b; font-weight:500; text-align:right; padding-right:20px; white-space:nowrap; }
+tr:first-child td { color:#6b707b; font-size:12px; padding-bottom:4px; }
+img { display:block; }
+td img { margin:0 auto; }
+.mode { display:inline-block; padding:3px 9px; border-radius:4px; font-size:11px;
+        letter-spacing:.1em; text-transform:uppercase; background:#1b1e24; color:#9ba0aa;
+        margin-bottom:14px; }
+.grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:32px; }
+figure { margin:0; }
+.big { width:100%; border-radius:16px; }
+figcaption { margin-top:12px; display:flex; flex-direction:column; gap:4px; }
+figcaption b { color:#FFD60A; font-weight:600; }
+figcaption span { color:#9ba0aa; font-size:12px; }
+.note, .spec { color:#6b707b !important; }
+.flag { color:#8ce99a !important; font-size:11px; }
+.row { display:flex; align-items:flex-end; gap:12px; margin-top:10px; }
+.row img { border-radius:3px; }
+ul.crit { color:#9ba0aa; max-width:62ch; padding-left:20px; }
+ul.crit li { margin-bottom:5px; }
+.rule { background:#15171c; border-left:2px solid #FFD60A; padding:16px 20px;
+        margin:0 0 34px; max-width:62ch; color:#c9ced6; }
+</style>
+<h1>Mark validation &mdash; signal_yellow</h1>
+<p class="lede">Rendered at true pixel size and displayed 1:1. BRAND.md section 8
+writes its rule in CSS pixels, so this page is measured in them too.</p>
+
+<h2>1 &middot; Size ladder &mdash; where the echoes stop reading</h2>
+<div class="rule">Working rule under test: below roughly 64&ndash;80 px use the naked
+mark. Read along each row and find the size where the rotational echoes stop
+looking deliberate and start looking like blur, shadow, or bad registration.
+That size is the real threshold.</div>
+<div class="mode">dark</div><table><tr><th></th><td>16</td><td>24</td><td>32</td><td>48</td><td>64</td><td>80</td><td>128</td></tr><tr><th>naked</th><td><img src="validation/naked-dark-16.png" width="16" height="16" alt="naked 16px"></td><td><img src="validation/naked-dark-24.png" width="24" height="24" alt="naked 24px"></td><td><img src="validation/naked-dark-32.png" width="32" height="32" alt="naked 32px"></td><td><img src="validation/naked-dark-48.png" width="48" height="48" alt="naked 48px"></td><td><img src="validation/naked-dark-64.png" width="64" height="64" alt="naked 64px"></td><td><img src="validation/naked-dark-80.png" width="80" height="80" alt="naked 80px"></td><td><img src="validation/naked-dark-128.png" width="128" height="128" alt="naked 128px"></td></tr><tr><th>rotational</th><td><img src="validation/rot-dark-16.png" width="16" height="16" alt="rotational 16px"></td><td><img src="validation/rot-dark-24.png" width="24" height="24" alt="rotational 24px"></td><td><img src="validation/rot-dark-32.png" width="32" height="32" alt="rotational 32px"></td><td><img src="validation/rot-dark-48.png" width="48" height="48" alt="rotational 48px"></td><td><img src="validation/rot-dark-64.png" width="64" height="64" alt="rotational 64px"></td><td><img src="validation/rot-dark-80.png" width="80" height="80" alt="rotational 80px"></td><td><img src="validation/rot-dark-128.png" width="128" height="128" alt="rotational 128px"></td></tr></table>
+<div class="mode">light</div><table><tr><th></th><td>16</td><td>24</td><td>32</td><td>48</td><td>64</td><td>80</td><td>128</td></tr><tr><th>naked</th><td><img src="validation/naked-light-16.png" width="16" height="16" alt="naked 16px"></td><td><img src="validation/naked-light-24.png" width="24" height="24" alt="naked 24px"></td><td><img src="validation/naked-light-32.png" width="32" height="32" alt="naked 32px"></td><td><img src="validation/naked-light-48.png" width="48" height="48" alt="naked 48px"></td><td><img src="validation/naked-light-64.png" width="64" height="64" alt="naked 64px"></td><td><img src="validation/naked-light-80.png" width="80" height="80" alt="naked 80px"></td><td><img src="validation/naked-light-128.png" width="128" height="128" alt="naked 128px"></td></tr><tr><th>rotational</th><td><img src="validation/rot-light-16.png" width="16" height="16" alt="rotational 16px"></td><td><img src="validation/rot-light-24.png" width="24" height="24" alt="rotational 24px"></td><td><img src="validation/rot-light-32.png" width="32" height="32" alt="rotational 32px"></td><td><img src="validation/rot-light-48.png" width="48" height="48" alt="rotational 48px"></td><td><img src="validation/rot-light-64.png" width="64" height="64" alt="rotational 64px"></td><td><img src="validation/rot-light-80.png" width="80" height="80" alt="rotational 80px"></td><td><img src="validation/rot-light-128.png" width="128" height="128" alt="rotational 128px"></td></tr></table>
+<h2>1b &middot; Reference sizes</h2><p class="lede">Not part of the threshold decision. Here to show what each mark is meant to look like when it has room.</p>
+<div class="mode">dark</div><table><tr><th></th><td>256</td><td>512</td></tr><tr><th>naked</th><td><img src="validation/naked-dark-256.png" width="256" height="256" alt="naked 256px"></td><td><img src="validation/naked-dark-512.png" width="512" height="512" alt="naked 512px"></td></tr><tr><th>rotational</th><td><img src="validation/rot-dark-256.png" width="256" height="256" alt="rotational 256px"></td><td><img src="validation/rot-dark-512.png" width="512" height="512" alt="rotational 512px"></td></tr></table>
+<div class="mode">light</div><table><tr><th></th><td>256</td><td>512</td></tr><tr><th>naked</th><td><img src="validation/naked-light-256.png" width="256" height="256" alt="naked 256px"></td><td><img src="validation/naked-light-512.png" width="512" height="512" alt="naked 512px"></td></tr><tr><th>rotational</th><td><img src="validation/rot-light-256.png" width="256" height="256" alt="rotational 256px"></td><td><img src="validation/rot-light-512.png" width="512" height="512" alt="rotational 512px"></td></tr></table>
+<h2>2 &middot; Rotational constructions</h2>
+<p class="lede">Every preset, same palette, same pivot. Only the construction
+changes.</p>
+<p class="q">Which of these is the canonical rotational mark? BRAND.md section 23
+still lists this as undecided.</p>
+<ul class="crit"><li>Reads as prior states, not motion blur</li><li>Does not muddy the hook</li><li>Keeps the frontmost mark dominant</li><li>Works on light and dark backgrounds</li><li>Survives PNG export and social-media compression</li><li>Does not rely on glow for readability</li></ul>
+<div class="mode">dark</div><div class="grid"><figure>
+  <img class="big" src="validation/preset-plates-4-dark-512.png" alt="plates-4">
+  <figcaption>
+    <b>plates-4</b> <span class="flag">current default</span>
+    <span>The pick — solid mark, one clear echo, one soft shadow</span>
+    <span class="note">plates at 4 layers; the rear two merge into a single wider shadow</span>
+    <span class="spec">4 layers &middot; 6&deg; &middot;
+      recession 0.06</span>
+    <span class="spec">opacity 0.08 0.11 0.35 1.00</span>
+    <span class="row"><img src="validation/preset-plates-4-dark-64.png" width="64" height="64" alt="64px"><img src="validation/preset-plates-4-dark-32.png" width="32" height="32" alt="32px"><img src="validation/preset-plates-4-dark-16.png" width="16" height="16" alt="16px"></span>
+  </figcaption>
+</figure>
+<figure>
+  <img class="big" src="validation/preset-plates-dark-512.png" alt="plates">
+  <figcaption>
+    <b>plates</b>
+    <span>Two faint echoes behind a solid mark</span>
+    <span class="note">the 3-layer original</span>
+    <span class="spec">3 layers &middot; 6&deg; &middot;
+      recession 0.06</span>
+    <span class="spec">opacity 0.08 0.20 1.00</span>
+    <span class="row"><img src="validation/preset-plates-dark-64.png" width="64" height="64" alt="64px"><img src="validation/preset-plates-dark-32.png" width="32" height="32" alt="32px"><img src="validation/preset-plates-dark-16.png" width="16" height="16" alt="16px"></span>
+  </figcaption>
+</figure>
+<figure>
+  <img class="big" src="validation/preset-plates-even-dark-512.png" alt="plates-even">
+  <figcaption>
+    <b>plates-even</b>
+    <span>Middle plate reads as its own plate</span>
+    <span class="note">falloff 3.0 -> 0.8, so the echo stops being a ghost</span>
+    <span class="spec">3 layers &middot; 6&deg; &middot;
+      recession 0.06</span>
+    <span class="spec">opacity 0.08 0.61 1.00</span>
+    <span class="row"><img src="validation/preset-plates-even-dark-64.png" width="64" height="64" alt="64px"><img src="validation/preset-plates-even-dark-32.png" width="32" height="32" alt="32px"><img src="validation/preset-plates-even-dark-16.png" width="16" height="16" alt="16px"></span>
+  </figcaption>
+</figure>
+<figure>
+  <img class="big" src="validation/preset-plates-tight-dark-512.png" alt="plates-tight">
+  <figcaption>
+    <b>plates-tight</b>
+    <span>Narrower fan</span>
+    <span class="note">step 6 -> 4 degrees</span>
+    <span class="spec">3 layers &middot; 4&deg; &middot;
+      recession 0.06</span>
+    <span class="spec">opacity 0.08 0.20 1.00</span>
+    <span class="row"><img src="validation/preset-plates-tight-dark-64.png" width="64" height="64" alt="64px"><img src="validation/preset-plates-tight-dark-32.png" width="32" height="32" alt="32px"><img src="validation/preset-plates-tight-dark-16.png" width="16" height="16" alt="16px"></span>
+  </figcaption>
+</figure>
+<figure>
+  <img class="big" src="validation/preset-plates-wide-dark-512.png" alt="plates-wide">
+  <figcaption>
+    <b>plates-wide</b>
+    <span>More separation between plates</span>
+    <span class="note">step 6 -> 9 degrees</span>
+    <span class="spec">3 layers &middot; 9&deg; &middot;
+      recession 0.06</span>
+    <span class="spec">opacity 0.08 0.20 1.00</span>
+    <span class="row"><img src="validation/preset-plates-wide-dark-64.png" width="64" height="64" alt="64px"><img src="validation/preset-plates-wide-dark-32.png" width="32" height="32" alt="32px"><img src="validation/preset-plates-wide-dark-16.png" width="16" height="16" alt="16px"></span>
+  </figcaption>
+</figure>
+<figure>
+  <img class="big" src="validation/preset-plates-flat-dark-512.png" alt="plates-flat">
+  <figcaption>
+    <b>plates-flat</b>
+    <span>Pure rotation, no perspective</span>
+    <span class="note">recession 0.06 -> 0, plates stay the same size</span>
+    <span class="spec">3 layers &middot; 6&deg; &middot;
+      recession 0</span>
+    <span class="spec">opacity 0.08 0.20 1.00</span>
+    <span class="row"><img src="validation/preset-plates-flat-dark-64.png" width="64" height="64" alt="64px"><img src="validation/preset-plates-flat-dark-32.png" width="32" height="32" alt="32px"><img src="validation/preset-plates-flat-dark-16.png" width="16" height="16" alt="16px"></span>
+  </figcaption>
+</figure>
+<figure>
+  <img class="big" src="validation/preset-plates-bloom-dark-512.png" alt="plates-bloom">
+  <figcaption>
+    <b>plates-bloom</b>
+    <span>Rear plates larger, blooming outward</span>
+    <span class="note">recession 0.06 -> -0.025</span>
+    <span class="spec">3 layers &middot; 6&deg; &middot;
+      recession -0.025</span>
+    <span class="spec">opacity 0.08 0.20 1.00</span>
+    <span class="row"><img src="validation/preset-plates-bloom-dark-64.png" width="64" height="64" alt="64px"><img src="validation/preset-plates-bloom-dark-32.png" width="32" height="32" alt="32px"><img src="validation/preset-plates-bloom-dark-16.png" width="16" height="16" alt="16px"></span>
+  </figcaption>
+</figure>
+<figure>
+  <img class="big" src="validation/preset-plates-deep-dark-512.png" alt="plates-deep">
+  <figcaption>
+    <b>plates-deep</b>
+    <span>One more echo in the stack</span>
+    <span class="note">layers 3 -> 4</span>
+    <span class="spec">4 layers &middot; 6&deg; &middot;
+      recession 0.06</span>
+    <span class="spec">opacity 0.08 0.11 0.35 1.00</span>
+    <span class="row"><img src="validation/preset-plates-deep-dark-64.png" width="64" height="64" alt="64px"><img src="validation/preset-plates-deep-dark-32.png" width="32" height="32" alt="32px"><img src="validation/preset-plates-deep-dark-16.png" width="16" height="16" alt="16px"></span>
+  </figcaption>
+</figure></div>
+<div class="mode">light</div><div class="grid"><figure>
+  <img class="big" src="validation/preset-plates-4-light-512.png" alt="plates-4">
+  <figcaption>
+    <b>plates-4</b> <span class="flag">current default</span>
+    <span>The pick — solid mark, one clear echo, one soft shadow</span>
+    <span class="note">plates at 4 layers; the rear two merge into a single wider shadow</span>
+    <span class="spec">4 layers &middot; 6&deg; &middot;
+      recession 0.06</span>
+    <span class="spec">opacity 0.08 0.11 0.35 1.00</span>
+    <span class="row"><img src="validation/preset-plates-4-light-64.png" width="64" height="64" alt="64px"><img src="validation/preset-plates-4-light-32.png" width="32" height="32" alt="32px"><img src="validation/preset-plates-4-light-16.png" width="16" height="16" alt="16px"></span>
+  </figcaption>
+</figure>
+<figure>
+  <img class="big" src="validation/preset-plates-light-512.png" alt="plates">
+  <figcaption>
+    <b>plates</b>
+    <span>Two faint echoes behind a solid mark</span>
+    <span class="note">the 3-layer original</span>
+    <span class="spec">3 layers &middot; 6&deg; &middot;
+      recession 0.06</span>
+    <span class="spec">opacity 0.08 0.20 1.00</span>
+    <span class="row"><img src="validation/preset-plates-light-64.png" width="64" height="64" alt="64px"><img src="validation/preset-plates-light-32.png" width="32" height="32" alt="32px"><img src="validation/preset-plates-light-16.png" width="16" height="16" alt="16px"></span>
+  </figcaption>
+</figure>
+<figure>
+  <img class="big" src="validation/preset-plates-even-light-512.png" alt="plates-even">
+  <figcaption>
+    <b>plates-even</b>
+    <span>Middle plate reads as its own plate</span>
+    <span class="note">falloff 3.0 -> 0.8, so the echo stops being a ghost</span>
+    <span class="spec">3 layers &middot; 6&deg; &middot;
+      recession 0.06</span>
+    <span class="spec">opacity 0.08 0.61 1.00</span>
+    <span class="row"><img src="validation/preset-plates-even-light-64.png" width="64" height="64" alt="64px"><img src="validation/preset-plates-even-light-32.png" width="32" height="32" alt="32px"><img src="validation/preset-plates-even-light-16.png" width="16" height="16" alt="16px"></span>
+  </figcaption>
+</figure>
+<figure>
+  <img class="big" src="validation/preset-plates-tight-light-512.png" alt="plates-tight">
+  <figcaption>
+    <b>plates-tight</b>
+    <span>Narrower fan</span>
+    <span class="note">step 6 -> 4 degrees</span>
+    <span class="spec">3 layers &middot; 4&deg; &middot;
+      recession 0.06</span>
+    <span class="spec">opacity 0.08 0.20 1.00</span>
+    <span class="row"><img src="validation/preset-plates-tight-light-64.png" width="64" height="64" alt="64px"><img src="validation/preset-plates-tight-light-32.png" width="32" height="32" alt="32px"><img src="validation/preset-plates-tight-light-16.png" width="16" height="16" alt="16px"></span>
+  </figcaption>
+</figure>
+<figure>
+  <img class="big" src="validation/preset-plates-wide-light-512.png" alt="plates-wide">
+  <figcaption>
+    <b>plates-wide</b>
+    <span>More separation between plates</span>
+    <span class="note">step 6 -> 9 degrees</span>
+    <span class="spec">3 layers &middot; 9&deg; &middot;
+      recession 0.06</span>
+    <span class="spec">opacity 0.08 0.20 1.00</span>
+    <span class="row"><img src="validation/preset-plates-wide-light-64.png" width="64" height="64" alt="64px"><img src="validation/preset-plates-wide-light-32.png" width="32" height="32" alt="32px"><img src="validation/preset-plates-wide-light-16.png" width="16" height="16" alt="16px"></span>
+  </figcaption>
+</figure>
+<figure>
+  <img class="big" src="validation/preset-plates-flat-light-512.png" alt="plates-flat">
+  <figcaption>
+    <b>plates-flat</b>
+    <span>Pure rotation, no perspective</span>
+    <span class="note">recession 0.06 -> 0, plates stay the same size</span>
+    <span class="spec">3 layers &middot; 6&deg; &middot;
+      recession 0</span>
+    <span class="spec">opacity 0.08 0.20 1.00</span>
+    <span class="row"><img src="validation/preset-plates-flat-light-64.png" width="64" height="64" alt="64px"><img src="validation/preset-plates-flat-light-32.png" width="32" height="32" alt="32px"><img src="validation/preset-plates-flat-light-16.png" width="16" height="16" alt="16px"></span>
+  </figcaption>
+</figure>
+<figure>
+  <img class="big" src="validation/preset-plates-bloom-light-512.png" alt="plates-bloom">
+  <figcaption>
+    <b>plates-bloom</b>
+    <span>Rear plates larger, blooming outward</span>
+    <span class="note">recession 0.06 -> -0.025</span>
+    <span class="spec">3 layers &middot; 6&deg; &middot;
+      recession -0.025</span>
+    <span class="spec">opacity 0.08 0.20 1.00</span>
+    <span class="row"><img src="validation/preset-plates-bloom-light-64.png" width="64" height="64" alt="64px"><img src="validation/preset-plates-bloom-light-32.png" width="32" height="32" alt="32px"><img src="validation/preset-plates-bloom-light-16.png" width="16" height="16" alt="16px"></span>
+  </figcaption>
+</figure>
+<figure>
+  <img class="big" src="validation/preset-plates-deep-light-512.png" alt="plates-deep">
+  <figcaption>
+    <b>plates-deep</b>
+    <span>One more echo in the stack</span>
+    <span class="note">layers 3 -> 4</span>
+    <span class="spec">4 layers &middot; 6&deg; &middot;
+      recession 0.06</span>
+    <span class="spec">opacity 0.08 0.11 0.35 1.00</span>
+    <span class="row"><img src="validation/preset-plates-deep-light-64.png" width="64" height="64" alt="64px"><img src="validation/preset-plates-deep-light-32.png" width="32" height="32" alt="32px"><img src="validation/preset-plates-deep-light-16.png" width="16" height="16" alt="16px"></span>
+  </figcaption>
+</figure></div>
