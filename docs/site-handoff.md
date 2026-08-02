@@ -40,13 +40,21 @@ Signal Yellow dark is the canonical recognition palette.
 
 | From | To |
 |---|---|
-| `assets/fonts/InterVariable.ttf` | `/assets/fonts/` (convert to woff2) |
-| `assets/fonts/iAWriterDuoS-Regular.ttf` | `/assets/fonts/` (convert to woff2) |
-| `assets/fonts/iAWriterDuoS-Bold.ttf` | `/assets/fonts/` (convert to woff2) |
+| `assets/fonts/InterVariable.ttf` | `/assets/fonts/` (woff2; may be subset) |
+| `assets/fonts/iAWriterDuoS-Regular.ttf` | `/assets/fonts/` (woff2, container only) |
+| `assets/fonts/iAWriterDuoS-Bold.ttf` | `/assets/fonts/` (woff2, container only) |
 | `assets/fonts/Inter-LICENSE.txt` | `/assets/fonts/` |
 | `assets/fonts/iAWriterDuoS-LICENSE.md` | `/assets/fonts/` |
 
 Ship the licence files. OFL requires it.
+
+The site may take fewer faces than this list offers, and may subset Inter. Both
+are its call: performance belongs to the site repository. What it may not do is
+subset iA Writer Duo under its own name. Whatever it does must be written down on
+its side, so the difference between a choice and a sync failure stays visible.
+
+As of 2026-08-01 the site ships Inter subset to Latin and does not ship
+`iAWriterDuoS-Bold`, because nothing on the page sets bold in the essay register.
 
 ## Head block
 
@@ -102,11 +110,15 @@ Full rules in `docs/logo-usage.md`.
 
 ## Rules that are easy to get wrong
 
-**Do not redraw or inline the mark geometry.** The site currently has two
-hand-copied copies of the path data — one favicon data URI, one hero SVG. Both
-must be replaced with references to generated assets. A geometry change here
-cannot reach a hand-copied path, and nothing fails loudly when they diverge.
-`BRAND.md` section 21.
+**Do not redraw or inline the mark geometry.** Inline the *contents* of a
+generated file when `currentColor` needs to inherit. Never hand-author path data.
+A geometry change here cannot reach a hand-copied path, and nothing fails loudly
+when they diverge. `BRAND.md` section 21.
+
+The site carried three hand-copied constructions until 2026-08-01, one of them a
+modified mark with a stroked plate. See `docs/website-direction.md`. Both inline
+SVGs are now byte-identical to their source files, which is the property to
+re-check after any edit to the site's markup.
 
 **`currentColor` only inherits when the SVG is inlined.** Through
 `<img src="...">` an SVG is an isolated document with no parent colour, and the
@@ -135,10 +147,16 @@ Paths changed at `v2.0.0` — anything pinned to `v1.0.0` still resolves there.
 
 ## Known drift
 
-As of `v2.0.0` the site is behind on two counts:
+**The site is current as of 2026-08-01** and re-copied from the list above at
+`v2.0.0`.
 
-- **Framing.** Decision `0005` shifted the glyph 42 units right. Every published
-  asset predating it is 4% out of register.
-- **Naming.** `signature-*.svg` became `icon-*.svg` in decision `0006`.
+Other published surfaces are not. Decision `0005` shifted the glyph 42 units
+right, so every asset uploaded before it is 4% out of register:
 
-Both are fixed by re-copying from the list above.
+- **Substack** avatar. Re-upload `palettes/signal_yellow/dark/avatar-512x512.png`.
+  Never a favicon PNG.
+- **LinkedIn** banner and any article graphics predating `0005`.
+- **GitHub** profile and organisation avatars.
+
+Also renamed in `0006`: `signature-*.svg` became `icon-*.svg`. Anything hotlinking
+a `v1.0.0` path still resolves there, but should be repointed.

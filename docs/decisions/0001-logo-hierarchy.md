@@ -64,6 +64,14 @@ mark, not a replacement for it.
 - Trademark strategy follows the hierarchy: the primary mark is the thing to
   protect first. See `docs/legal-and-protection-notes.md`.
 
+## Addendum, 2026-08-01
+
+The consequence above is discharged. `jeffols.github.io` was rebuilt to consume
+generated assets and inlines no hand-authored geometry. The count in the original
+text is left as written: the audit later found **three** copies, not two, and the
+third was a modified mark. That the record undercounted is itself the point, and
+`docs/website-direction.md` carries the corrected finding.
+
 ## Open
 
 The canonical rotational construction — echo count, angular step, opacity ramp —

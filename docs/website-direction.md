@@ -3,21 +3,29 @@
 Strategy: `BRAND.md` sections 13 and 14. This file is the build checklist for
 `jeffols.github.io`.
 
-**Do not edit the site repository until the brand guidance and required assets
-are stable.** Remaining blockers: the transparent and monochrome exports, and the
-`signal_yellow` light contrast finding. The rotational construction is settled —
-decision `0002`.
+The guidance and the required assets are stable. The transparent and monochrome
+exports shipped, the `signal_yellow` light contrast finding was resolved by
+inverting the mode (`0004`), and the rotational construction is settled (`0002`).
+
+The site was rebuilt against this document on 2026-08-01. Read
+`docs/site-handoff.md` before changing what it consumes.
 
 ## The shift
 
-The site currently reads as a manifesto. It should function as a front door. A
-new visitor answers five questions fast:
+The site read as a manifesto. It should function as a front door. A new visitor
+answers five questions fast:
 
 1. Who is Jeff?
 2. What does he work on?
 3. What does he think differently?
 4. Where can I see evidence?
 5. What should I do next?
+
+Rebuilt to this structure on 2026-08-01. Questions 1 to 3 and 5 are answered.
+Question 4 is answered thinly and by design: the arc of work is real but mostly
+applied inside organizations, so it is stated as a sequence rather than linked.
+That gap closes by publishing, not by redesigning. See the note under
+**Proof of work** below.
 
 ## Homepage sections
 
@@ -51,6 +59,28 @@ will I learn or use. Candidates: *On Track Is Not a State*; *Complaints Don't
 Travel Upward. Costs Do.*; a Working Faster overview or field guide; a
 context-engineering artifact; an open-source project.
 
+### As built, 2026-08-01
+
+The seven sections are all present. Two carry less than this document asks for,
+and in both cases the constraint is inventory rather than design.
+
+**Featured thinking** shows 2 items, not 3 to 5. Those are the two essays that
+exist. A field guide or a third essay fills the gap; padding it with a repository
+that is not writing would not.
+
+**Proof of work** carries no case cards and no outbound links. The arc it
+describes is real, but the work sits inside organizations and cannot be published
+as sanitized diagrams or before-and-after examples without separating employer
+specifics from the underlying models first. The section states the sequence
+instead, and says plainly that it is doing so. That is the honest form of the
+section until a public artifact exists to link, and the markup is structured so a
+card drops in without a redesign.
+
+The two paths are visually co-equal per `BRAND.md` section 1, but their evidence
+is not: Working Faster carries published essays, Context Engineering carries a
+current-focus statement saying the applied work is proprietary and the models
+come from self-directed projects. Naming the asymmetry is better than hiding it.
+
 ## Mark usage on site
 
 | Slot | Mark | Rule |
@@ -62,15 +92,69 @@ context-engineering artifact; an open-source project.
 | Watermark | Glow treatment | Subordinate to content; must not reduce text contrast; must not read as a second competing logo; must respond on mobile; must be hideable |
 | Footer | Primary | |
 
-## Compliance gap
+## Compliance gap, closed 2026-08-01
 
-`index.html` inlines the mark geometry twice — once as a favicon data URI, once
-as the hero SVG. It references no file this repository produces, so a geometry
-change here will not reach the site and nobody will notice.
+**Resolved.** The site now consumes generated assets and inlines no hand-authored
+geometry. What it does today:
 
-Required fix (Phase 4): consume exported assets. The site repository owns
-implementation, content, deployment, page accessibility, performance, and *copies
-of generated assets required to deploy*. It does not own the mark.
+| Slot | Asset | Form |
+|---|---|---|
+| Header | `assets/lockups/lockup-horizontal-mono.svg` | inlined verbatim, `currentColor` |
+| Hero | `palettes-rotational/signal_yellow/dark/mark-1024x1024.png` | `<img>`, 8.5% opacity |
+| Footer | `assets/marks/primary/mark-mono.svg` | inlined verbatim, `currentColor` |
+| Favicon | `palettes/signal_yellow/dark/` package | copied, primary mark |
+| Social | `assets/social/social-signal_yellow-dark-1200x630.png` | copied |
+
+Both inline SVGs are byte-identical to the generated files, verified by
+comparison rather than by eye. A geometry change here now reaches the site by
+re-copying, and a divergence is detectable.
+
+Two deliberate divergences from `docs/site-handoff.md`, both recorded in the site
+repository's `CLAUDE.md`:
+
+- **`iAWriterDuoS-Bold` is not shipped.** Nothing on the page sets bold in the
+  essay register, so the file and its `@font-face` rule would both be dead. Add
+  it with the long-form content that needs it.
+- **Inter is subset to Latin**, 344 KB to 60 KB. Permitted by `0007` because
+  Inter carries no Reserved Font Name. Both variable axes preserved and the
+  rendered page is pixel-identical. iA Writer Duo is a container conversion only
+  and is never subset.
+
+The audit that produced this section is kept below, because the failure mode it
+describes is the one to watch for.
+
+### What was wrong
+
+Audited 2026-08-01 against `jeffols.github.io` at commit `1a5ee0e`.
+
+`index.html` inlined the mark geometry in **three** places, not two:
+
+| Line | Copy |
+|---|---|
+| 8 | favicon data URI |
+| 233–235 | `glow-bg` — a stroke-outline construction that exists **nowhere** in this repository |
+| 243 | header mark, plus `stroke="#FFD60A" stroke-width="2"` on the plate |
+
+The third was the serious one: the header carried a **modified** mark, not a copy
+of a generated one. No canonical asset has a stroked plate. The second was a
+fourth construction of the mark that was never a brand decision.
+
+All three used pre-`0005` coordinates (`x=400/460/500`), so they were 42 units out
+of register with everything this repository now produces.
+
+The site referenced no file this repository generates, so a geometry change here
+could not reach it and nothing failed loudly when they diverged. That is the
+failure mode, and it is silent by construction: hand-copied geometry keeps
+rendering correctly long after it stops being the mark.
+
+The fix was to consume exported assets per `docs/site-handoff.md`. The site
+repository owns implementation, content, deployment, page accessibility,
+performance, and *copies of generated assets required to deploy*. It does not own
+the mark.
+
+Also found, and outside this document's scope but worth recording: the site has
+no Open Graph tags, exactly one external link on the whole page, and no calls to
+action.
 
 ## Motion
 

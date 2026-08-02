@@ -7,7 +7,7 @@ what is done, and what is outstanding.
 
 | Channel | Job | Mark | Status |
 |---|---|---|---|
-| jeffols.com | Canonical hub and synthesis | Primary in header/footer, rotational or echo composition in hero | Redraws the mark inline. Non-compliant, Phase 4 |
+| jeffols.com | Canonical hub and synthesis | Horizontal lockup in header, primary in footer, rotational as hero background | Rebuilt 2026-08-01. Consumes generated assets, compliant |
 | Substack | Long-form thinking, subscription | Primary as avatar (`avatar-512x512.png`) | Not aligned |
 | LinkedIn | Professional conversation, distribution | Headshot as profile, echo composition as banner | Banners done, all 12 palette/mode pairs |
 | GitHub | Technical evidence, artifacts | Primary as org/profile avatar | Repo metadata done. Profile README not written |
