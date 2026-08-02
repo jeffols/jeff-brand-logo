@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-label="jeffols signature icon">
-  <circle cx="470" cy="190" r="70" fill="#FFB000"/>
-  <rect x="460" y="340" width="160" height="280" rx="6" fill="#FFB000"/>
-  <path d="M 500 640 L 660 640 L 660 720 Q 660 860 520 860 L 370 860 Q 280 860 280 780 L 280 750 Q 280 710 330 710 L 410 710 Q 500 710 500 640 Z" fill="#FFB000"/>
+  <circle cx="512" cy="190" r="70" fill="#FFB000"/>
+  <rect x="502" y="340" width="160" height="280" rx="6" fill="#FFB000"/>
+  <path d="M 542 640 L 702 640 L 702 720 Q 702 860 562 860 L 412 860 Q 322 860 322 780 L 322 750 Q 322 710 372 710 L 452 710 Q 542 710 542 640 Z" fill="#FFB000"/>
 </svg>

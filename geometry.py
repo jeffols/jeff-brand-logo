@@ -27,7 +27,7 @@ DESIGN_SIZE = 1024
 # bounding box is x 280..660, centre 470, so +42 centres it on the 1024 canvas.
 # This is padding, not geometry: the shapes and their relative positions are
 # untouched. Set to 0 to reproduce pre-0005 assets.
-GLYPH_DX = 0
+GLYPH_DX = 42
 GLYPH_DY = 0
 
 # --- the mark, stated once ------------------------------------------------
