@@ -131,6 +131,9 @@ python scripts/generate_rotational_logo.py --canonical assets/marks/rotational
 # Regenerate the CSS watermark from geometry.py
 python scripts/generate_favicon_assets.py --watermark assets/watermarks/watermark.css
 
+# Lockups (needs fonttools)
+python scripts/generate_lockups.py
+
 # LinkedIn banners (needs headless Chrome)
 python scripts/generate_linkedin_banners.py
 
@@ -171,6 +174,8 @@ scripts/
   generate_palette_audit.py     distinctiveness and colour-blind simulation
   generate_linkedin_banners.py  banner compositions (needs headless Chrome)
 assets/
+  lockups/                    mark + wordmark; wordmark outlined, no font dependency
+  fonts/                      Inter + iA Writer Duo (ship), Plex Sans (design-time)
   marks/{primary,rotational}/ palette-independent canonicals (mono, black, white)
   banners/linkedin/           generated banner compositions
   watermarks/watermark.css    generated drop-in page watermark

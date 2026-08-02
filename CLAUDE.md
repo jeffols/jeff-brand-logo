@@ -25,6 +25,9 @@ scripts/generate_rotational_logo.py  — signature variant. Also --canonical
 scripts/generate_validation_sheet.py — builds docs/size-validation.html
 scripts/generate_palette_audit.py    — builds docs/palette-audit.html (CVD sim)
 scripts/generate_linkedin_banners.py — banners. Needs headless Chrome
+scripts/generate_lockups.py  — mark + wordmark lockups. Needs fonttools
+assets/lockups/              — mark + wordmark, wordmark OUTLINED (no font dep)
+assets/fonts/                — Inter + iA Writer Duo (ship) · Plex Sans (design-time)
 assets/marks/{primary,rotational}/   — palette-independent canonicals
 assets/banners/linkedin/     — generated banner compositions
 assets/watermarks/watermark.css      — GENERATED. Do not hand-edit; use --watermark
@@ -80,6 +83,15 @@ each layer back shrunk by `--scale-step`. Front layer stays upright at full opac
 Canonical construction is **`plates`** (decision 0002): 3 layers, 6°, rear 0.08,
 falloff 3.0, recession 0.06 — ramp 0.08 / 0.195 / 1.00. The other seven presets stay
 in the CLI as the comparison family that produced the decision; do not ship from them.
+
+## Typography (decision 0007)
+Wordmark/lockups: IBM Plex Sans SemiBold, OUTLINED — design-time only, never ships.
+UI: Inter. Essays: iA Writer Duo S. Both ship from assets/fonts/.
+- **Never** set the mark horizontally beside lowercase `jeffols` — reads "j jeffols".
+  Horizontal lockups use "Jeff Olsen"; `jeffols` only ever stacks.
+- iA Writer Duo has Reserved Font Names: a subset may NOT keep the name.
+- `currentColor` inherits only when the SVG is INLINED, not via `<img>`.
+- The typeface does not touch the mark. Geometry is geometry.py, always.
 
 ## Design reference
 - Canvas 1024×1024, 4× supersample, LANCZOS downscale

@@ -56,6 +56,46 @@ pre-rounded asset fights theirs, and the leftover transparent corners get
 flattened to whatever the platform assumes. Substack assumes white, which shows
 as white slivers. Use the `avatar-*` files.
 
+## Lockups
+
+Mark plus wordmark. Two constructions only — decision `0007`.
+
+| Construction | Text | File |
+|---|---|---|
+| Horizontal | **Jeff Olsen** | `assets/lockups/lockup-horizontal-*.svg` |
+| Stacked | **jeffols** | `assets/lockups/lockup-stacked-*.svg` |
+
+**Never set the mark horizontally beside lowercase `jeffols`.** The mark is a
+lowercase j and the word starts with one, so side by side they read as
+*"j jeffols"* — the mark stops being a symbol and becomes a letter. The capital
+J in the full name breaks the echo, which is why horizontal lockups use
+**Jeff Olsen** and the compact brand only ever stacks.
+
+The wordmark is IBM Plex Sans SemiBold converted to outlines, so lockups carry
+no font dependency. Do not re-set them in live text.
+
+### currentColor needs inlining
+
+`lockup-*-mono.svg` and `assets/marks/*/mark-mono.svg` use `fill="currentColor"`.
+That inherits **only when the SVG is inlined into the HTML**. Referenced through
+`<img src="...">` the SVG is an isolated document with no parent colour and the
+mark renders black.
+
+Inline the mono variants. Use a palette variant for `<img>`.
+
+## Typography
+
+| Register | Face | Ships to the web |
+|---|---|---|
+| Wordmark, lockups | IBM Plex Sans SemiBold, outlined | No — design-time only |
+| UI, navigation, headings | Inter | Yes |
+| Essays, long-form | iA Writer Duo S | Yes |
+
+Files in `assets/fonts/`. **Do not ship a subset of iA Writer Duo under its own
+name** — it carries Reserved Font Names and OFL clause 3 forbids it. Serve it
+unmodified, or subset and rename. Inter has no reserved name and may be subset
+freely. See `docs/legal-and-protection-notes.md`.
+
 ## Palette
 
 Geometry is constant. Palette is contextual. Signal Yellow is the default
