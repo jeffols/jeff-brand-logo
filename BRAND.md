@@ -72,6 +72,24 @@ It explores:
 - Delivery Smells
 - The Week-One Test
 
+##### The thesis
+
+**You change a system by changing yourself.** Your expectations, what you measure, and how you articulate the cost of a delay. Those are available to an individual without authority, and they move the system anyway.
+
+Two things follow, and both are easy to lose.
+
+**Shorter timelines, not longer hours.** The speed comes from removing wait, not from adding effort. Section 2 already forbids treating speed as pressure on individuals. This is the affirmative form of that rule, and any copy implying "work harder" is wrong.
+
+**The habits have to be explainable.** A practice only scales if you can hand it to someone else. That is why the body of work is vocabulary and models rather than personal discipline.
+
+Origin: a question about delivering in weeks rather than months. **Do not index on the numbers.** They were the framing of one ask, not a claim. The durable question is what actually consumes the calendar.
+
+##### Naming is not settled
+
+**"Working Faster" is a working title.** It names the outcome, and read cold it sounds like hustle, which is the opposite of the content. It has shipped on the site, on Substack, and on LinkedIn, so a change is now a rename with consumers rather than a free choice.
+
+Section 21 lists Working Faster naming as decision-record territory. Not settled here.
+
 #### Context Engineering and Knowledge Systems
 
 Makes meaning, evidence, constraints, and relationships visible to software and AI systems.
@@ -132,6 +150,7 @@ Avoid:
 - Treating speed as pressure on individuals
 - Assuming a local optimization is automatically good for the whole system
 - Em dashes in finished copy
+- Colons in finished copy. A colon promises a list or a payoff and usually announces a sentence that would read better as two. This rule was enforced in the Working Faster repository long before it was written here, which is why drafts for other channels kept violating it
 
 ---
 
@@ -871,24 +890,29 @@ Suggested topics:
 
 Treat Substack as the publishing and subscription engine for developed ideas.
 
-### Publication positioning
+### Publication scope
 
-The publication should make the Working Faster thesis immediately understandable.
+**The publication is the hub voice, not Working Faster's channel.** It carries the whole body of thinking. Working Faster is simply the first thing published in it.
 
-Possible description:
+This was miscorded until 2026-08-02, when the guidance here said the publication should make the Working Faster thesis understandable. That is the path description, not the publication description, and using it would have scoped the publication to one of two paths permanently.
 
-> Practical systems thinking for seeing where work really is, where time goes, and what is worth changing.
+Working Faster arrived as multiple parts for practical reasons. It was too long for one post, and having several finished pieces was a way to start the habit of publishing. **That is not an editorial format.** Later writing may be forward looking or retrospective, and the guidance must not imply a series structure that was never chosen.
+
+### Publication description
+
+> Long-form thinking on complex systems and the work of making them understandable. Delivery, ontology, context engineering, and the models I build along the way. Start with Working Faster.
 
 ### Navigation
 
 Create clear entry points for:
 
 - Start here
-- Working Faster concepts
-- Latest essays
-- Field guide or glossary
+- Working Faster
+- Archive
 - About Jeff
 - jeffols.com
+
+Series-level, not Working-Faster-internal. A field guide or glossary belongs inside Working Faster, not in the publication's top-level navigation.
 
 ### Brand consistency
 

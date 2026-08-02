@@ -22,14 +22,45 @@ Decision `0008` changed the headline and how seniority is stated. The site is
 updated. **Every other channel still carries the retired positioning** and needs a
 pass by hand:
 
-| Channel | What to change |
+| Channel | State |
 |---|---|
-| LinkedIn | Headline, About section. Rank not years. See `0008` |
-| Substack | Publication description and bio |
-| GitHub | Profile README, still unwritten. Write it against `0008`, not against the older drafts below |
+| LinkedIn | Headline drafted below, ready to paste. About section still to write |
+| Substack | Description and About drafted below, ready to paste |
+| GitHub | Profile README still unwritten. Write it against `0008` |
 
-The sections below predate `0008` where they quote positioning language. The
-structural guidance in them still holds.
+Copy below is current. Anything elsewhere in this file that quotes positioning
+language predates `0008`; the structural guidance in it still holds.
+
+## Copy to paste
+
+Neither profile can be edited from here. These are final drafts for Jeff to apply.
+
+**LinkedIn headline**, 132 characters, within the 220 limit.
+
+> Distinguished Engineer | I build systems that understand before they act | Security, data, scale and architecture held in one design
+
+Rank rather than elapsed time, per `0008`. The range clause is the differentiator
+and is the reason this was chosen over a domain list, which is also what section 15
+warns the headline must not become. It survives feed truncation, since the first 60
+characters carry both the rank and the thesis.
+
+**Substack description**, 187 characters.
+
+> Long-form thinking on complex systems and the work of making them understandable. Delivery, ontology, context engineering, and the models I build along the way. Start with Working Faster.
+
+**Substack About page.**
+
+> I'm Jeff Olsen. I build systems that understand before they act, and this is where I work out the thinking behind that.
+>
+> Some of it is forward looking. Some of it is what I learned from a project that is already finished. Delivery, ontology, context engineering, architecture. What holds it together is that every piece tries to leave you with something usable, a model or a question you can take into a real room.
+>
+> Working Faster is the first of it. It's about delay, and specifically the kind that hides inside a status report. A week in someone else's queue looks identical to a week of work, and the calendar moves either way.
+>
+> Start anywhere. New writing most weeks.
+
+The second paragraph carries the range without predicting a form, so a
+retrospective piece fits it as naturally as a forward looking one. No colons and no
+em dashes in any of the above, per `BRAND.md` section 2.
 
 ## Repository metadata — done
 
@@ -81,10 +112,14 @@ relationship to the broader body of work.
 
 ## Substack
 
-Positioning:
+Positioning is the publication description under **Copy to paste** above. The
+publication is the hub voice and carries the whole body of thinking. Working Faster
+is the first thing published in it, not its subject. `BRAND.md` section 17.
 
-> Practical systems thinking for seeing where work really is, where time goes,
-> and what is worth changing.
+The line previously recorded here, "practical systems thinking for seeing where
+work really is, where time goes, and what is worth changing," is the Working Faster
+*path* description. It still describes that path on the site. It is not the
+publication description.
 
 Navigation entry points: Start here, Working Faster concepts, Latest essays,
 Field guide or glossary, About Jeff, jeffols.com.
@@ -96,7 +131,8 @@ Upload `avatar-512x512.png`, never a favicon PNG — Substack flattens leftover
 transparency to white and a pre-rounded asset shows white corner slivers.
 
 A custom publication domain is optional and lower priority than consistent
-navigation and identity.
+navigation and identity. `braindini.com` is already owned and is the candidate if
+one is ever wanted. Recorded so it is not lost, not as a recommendation to use it.
 
 ## Publishing loop
 
