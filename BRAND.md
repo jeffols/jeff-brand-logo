@@ -141,7 +141,18 @@ A useful internal organizing phrase is:
 
 > **Make hidden systems visible.**
 
-Possible external formulations:
+**Internal means internal. Never publish it.** It is a thinking tool for deciding
+what belongs in the body of work, not a tagline, sign-off, footer line, bio, or
+social profile string. It shipped in the site footer on 2026-08-01 and was removed
+on 2026-08-02. Nothing failed when it went out, which is why the rule is written
+here rather than assumed.
+
+Two reasons it does not work externally. It is an instruction with no subject, so
+a reader cannot tell who is doing it or for whom. And "hidden" is Working Faster's
+register, so on a surface covering both paths it tilts the page the way the
+retired headline did. Decision `0008`.
+
+Possible external formulations, any of which may be published:
 
 > I make hidden work visible so people and systems can act with better context.
 

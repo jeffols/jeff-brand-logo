@@ -39,6 +39,17 @@ That gap closes by publishing, not by redesigning. See the note under
 | 6 | Subscribe and connect | Substack, LinkedIn, GitHub, contact | — |
 | 7 | Footer | Name, links, copyright, optional brand line | Primary mark |
 
+**The footer brand line is optional, and it must be an external formulation.**
+`BRAND.md` section 3 lists the publishable ones. The internal organizing phrase
+"make hidden systems visible" is not among them and must never appear on a public
+surface. It shipped here on 2026-08-01 and was removed on 2026-08-02.
+
+The footer is the last thing read, so the line has to survive being the only
+sentence someone remembers. It also must not re-tilt a two-path page toward one
+path, which rules out "hidden" vocabulary. Currently:
+
+> The deliberate pursuit of simplicity in complex domains.
+
 Hero, settled by decision `0008`:
 
 > I build systems that understand before they act.
