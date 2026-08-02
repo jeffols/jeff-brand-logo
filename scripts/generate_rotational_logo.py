@@ -32,6 +32,10 @@ from generate_favicon_assets import (
 )
 
 SUPERSAMPLE = 4
+
+# Outputs are anchored to the repo, not the CWD, so the scripts behave the
+# same whether run from the root or from scripts/.
+REPO = Path(__file__).resolve().parent.parent
 PIVOT = (512.0, 512.0)          # rotate about the plate centre, not the glyph bbox
 GLYPH_PIVOT = (470.0, 490.0)    # glyph bounding-box centre, for a tighter sweep
 
@@ -315,7 +319,7 @@ def write_rot_assets(out_dir, palette_key, mode, background, glyph, cfg, pivot, 
     def stack(size, rounded=True):
         return render_stack(size, background, glyph, *g, pivot=pivot, rounded=rounded)
 
-    (out_dir / f"signature-{palette_key}-{mode}.svg").write_text(
+    (out_dir / f"icon-{palette_key}-{mode}.svg").write_text(
         build_svg(background, glyph, *g, pivot=pivot), encoding="utf-8")
     (out_dir / f"avatar-{palette_key}-{mode}.svg").write_text(
         build_svg(background, glyph, *g, pivot=pivot, rounded=False), encoding="utf-8")
@@ -430,7 +434,7 @@ def list_presets():
 
 def main():
     p = argparse.ArgumentParser()
-    p.add_argument("--out", default="explorations/rotational")
+    p.add_argument("--out", default=str(REPO / "explorations" / "rotational"))
     p.add_argument("--palette", default="signal_yellow",
                    choices=list(PALETTES.keys()) + ["all"])
     p.add_argument("--mode", default="dark", choices=["dark", "light", "both"])

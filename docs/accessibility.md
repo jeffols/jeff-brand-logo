@@ -146,7 +146,7 @@ carries its identity in the plate (`0004`), which is why it does not collide wit
 
 ### Under colour blindness
 
-Measured with `generate_palette_audit.py`; see `docs/palette-audit.html`.
+Measured with `scripts/generate_palette_audit.py`; see `docs/palette-audit.html`.
 
 | View | Closest pair | ΔE | |
 |---|---|---|---|

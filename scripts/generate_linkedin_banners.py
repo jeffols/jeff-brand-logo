@@ -17,7 +17,7 @@ from pathlib import Path
 from geometry import svg_shapes
 from generate_favicon_assets import PALETTES, modes_for
 
-REPO = Path(__file__).resolve().parent
+REPO = Path(__file__).resolve().parent.parent
 CHROME_CANDIDATES = [
     "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
     "/Applications/Chromium.app/Contents/MacOS/Chromium",
@@ -205,7 +205,7 @@ def render_png(chrome, html_path, png_path):
 
 def main():
     chrome = find_chrome()
-    out = REPO / "linkedin-banners"   # anchored to the repo, not the CWD
+    out = REPO / "assets" / "banners" / "linkedin"   # anchored to the repo, not the CWD
     out.mkdir(exist_ok=True)
     tmp = out / "_tmp.html"
 

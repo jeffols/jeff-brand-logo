@@ -9,7 +9,7 @@ what is done, and what is outstanding.
 |---|---|---|---|
 | jeffols.com | Canonical hub and synthesis | Primary in header/footer, rotational or echo composition in hero | Redraws the mark inline. Non-compliant, Phase 4 |
 | Substack | Long-form thinking, subscription | Primary as avatar (`avatar-512x512.png`) | Not aligned |
-| LinkedIn | Professional conversation, distribution | Headshot as profile, echo composition as banner | Banner done, 5 of 6 palettes |
+| LinkedIn | Professional conversation, distribution | Headshot as profile, echo composition as banner | Banners done, all 12 palette/mode pairs |
 | GitHub | Technical evidence, artifacts | Primary as org/profile avatar | Repo metadata done. Profile README not written |
 | This repository | Visual and verbal source of truth | — | Foundation in place |
 
@@ -37,8 +37,8 @@ the composition carries the expression; see `docs/logo-usage.md`. Requirements:
 keep content out of LinkedIn's profile-image obstruction area, little or no text,
 no generic role-title language, visually related to the site hero.
 
-Outstanding: `deep_indigo` is missing — `generate_linkedin_banners.py` carries its
-own five-palette dictionary instead of importing the canonical one. Phase 2.
+Banners live in `assets/banners/linkedin/`, regenerated from the canonical
+`PALETTES` so every palette and mode is covered.
 
 **Headline.** Connect role and point of view, not a technology list. Structure:
 

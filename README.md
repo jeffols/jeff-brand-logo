@@ -28,7 +28,7 @@ what makes the mark distinctive — not the letterform itself.
 |---|---|---|---|
 | **1. Primary mark** | naked deconstructed j | Favicons, avatars, small sizes, monochrome, anywhere echo detail would be lost | `palettes/` |
 | **2. Signature variant** | rotational echo j | Hero areas, banners, covers, posters, presentation slides, motion | `palettes-rotational/` |
-| **3. Treatments** | glow, watermark, crop, palette, animation | Applied *to* level 1 or 2 | `watermark.css`, `linkedin-banners/` |
+| **3. Treatments** | glow, watermark, crop, palette, animation | Applied *to* level 1 or 2 | `assets/watermarks/`, `assets/banners/` |
 
 Level 3 is never a logo in its own right. The rotational variant never replaces
 the primary mark as the default.
@@ -91,7 +91,7 @@ Per palette and mode:
 | `android-chrome-{192,512}.png` | 192, 512 | Android, PWA |
 | `avatar-{512,1024}.png` | 512, 1024 | Social profiles |
 | `mark-{512,1024}.png`, `mark-*.svg` | scalable | **Transparent** — no plate |
-| `signature-*.svg`, `avatar-*.svg` | scalable | Vector embed, watermark |
+| `icon-*.svg`, `avatar-*.svg` | scalable | Vector embed, watermark |
 | `site.webmanifest` | — | PWA manifest |
 | `metadata.json` | — | Palette, colour, and construction reference |
 
@@ -114,30 +114,30 @@ dark-mode glyph on a light background falls under 2:1. See
 pip install pillow
 
 # Primary mark — all palettes, both modes
-python generate_favicon_assets.py --out ./out --palette all --mode both
-python generate_favicon_assets.py --list-palettes
+python scripts/generate_favicon_assets.py --out ./out --palette all --mode both
+python scripts/generate_favicon_assets.py --list-palettes
 
 # Custom colours
-python generate_favicon_assets.py --out ./out --background "#111827" --glyph "#FFD60A"
+python scripts/generate_favicon_assets.py --out ./out --background "#111827" --glyph "#FFD60A"
 
 # Signature variant — canonical construction is "plates" (decision 0002)
-python generate_rotational_logo.py --list-presets
-python generate_rotational_logo.py --preset plates --palette all --mode both --assets
+python scripts/generate_rotational_logo.py --list-presets
+python scripts/generate_rotational_logo.py --preset plates --palette all --mode both --assets
 
 # Palette-independent monochrome marks
-python generate_favicon_assets.py --canonical assets/marks/primary
-python generate_rotational_logo.py --canonical assets/marks/rotational
+python scripts/generate_favicon_assets.py --canonical assets/marks/primary
+python scripts/generate_rotational_logo.py --canonical assets/marks/rotational
 
 # Regenerate the CSS watermark from geometry.py
-python generate_favicon_assets.py --watermark watermark.css
+python scripts/generate_favicon_assets.py --watermark assets/watermarks/watermark.css
 
 # LinkedIn banners (needs headless Chrome)
-python generate_linkedin_banners.py
+python scripts/generate_linkedin_banners.py
 
 # Comparison sheets
-python generate_rotational_logo.py --preset-sheet
-python generate_validation_sheet.py        # docs/size-validation.html
-python generate_palette_audit.py           # docs/palette-audit.html
+python scripts/generate_rotational_logo.py --preset-sheet
+python scripts/generate_validation_sheet.py        # docs/size-validation.html
+python scripts/generate_palette_audit.py           # docs/palette-audit.html
 ```
 
 ## HTML integration
@@ -150,8 +150,9 @@ python generate_palette_audit.py           # docs/palette-audit.html
 <link rel="manifest" href="/site.webmanifest">
 ```
 
-`watermark.css` is a drop-in page watermark — `body::after`, data URI, bottom
-right. See the file for customisation.
+`assets/watermarks/watermark.css` is a drop-in page watermark — `body::after`,
+data URI, bottom right. It is generated from `scripts/geometry.py`; do not edit
+it by hand.
 
 ## Layout
 
@@ -162,16 +163,20 @@ docs/                         operational guidance, decision records
   accessibility.md            measured contrast ratios
   size-validation.html        naked vs rotational at true pixel size
   decisions/                  numbered decision records
-geometry.py                   THE mark. Single source of truth for coordinates
-generate_favicon_assets.py    primary mark generator
-generate_rotational_logo.py   signature variant generator
-generate_validation_sheet.py  comparison sheet builder
-generate_linkedin_banners.py  banner compositions (needs headless Chrome)
-watermark.css                 drop-in page watermark
-assets/marks/                 palette-independent canonicals (mono, black, white)
+scripts/
+  geometry.py                 THE mark. Single source of truth for coordinates
+  generate_favicon_assets.py  primary mark; also --canonical and --watermark
+  generate_rotational_logo.py signature variant; also --canonical
+  generate_validation_sheet.py  size + construction comparison sheet
+  generate_palette_audit.py     distinctiveness and colour-blind simulation
+  generate_linkedin_banners.py  banner compositions (needs headless Chrome)
+assets/
+  marks/{primary,rotational}/ palette-independent canonicals (mono, black, white)
+  banners/linkedin/           generated banner compositions
+  watermarks/watermark.css    generated drop-in page watermark
 palettes/<name>/<mode>/       primary mark, per palette and mode
 palettes-rotational/…         signature variant, same layout
-linkedin-banners/             generated banner compositions
+examples/                     worked applications on real surfaces
 explorations/                 not brand assets. Do not ship from here
 ```
 

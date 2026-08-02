@@ -163,7 +163,10 @@ def write_assets(out_dir, palette_key, mode, background, glyph, sizes):
     out_dir = Path(out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    svg_name = f"signature-{palette_key}-{mode}.svg"
+    # icon / avatar / mark = rounded plate / full-bleed plate / bare glyph.
+    # Named for what they are; "signature" meant the rotational variant in
+    # BRAND.md and the same filename in two trees meant two different marks.
+    svg_name = f"icon-{palette_key}-{mode}.svg"
     (out_dir / svg_name).write_text(build_svg(background, glyph), encoding="utf-8")
 
     # Avatar form: full-bleed opaque square, no rounding, no alpha. Upload this to

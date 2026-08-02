@@ -12,7 +12,7 @@ Split deliberately across two files.
 
 | File | Covers | Terms |
 |---|---|---|
-| `LICENSE` | The generator scripts, `watermark.css` | Apache-2.0 |
+| `LICENSE` | The generator scripts, `assets/watermarks/watermark.css` | Apache-2.0 |
 | `ASSETS-LICENSE.md` | The mark, both palette trees, all generated assets | All rights reserved |
 
 Apache-2.0 rather than MIT because of its section 6: it grants copyright and

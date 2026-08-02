@@ -79,7 +79,7 @@ toward alignment, the echoes fade, the primary mark remains. The echo mark
 resolves into the durable state.
 
 Calm and intentional. Must respect `prefers-reduced-motion`. Construction settled
-in `0002`; `generate_rotational_logo.py` can emit an animated SVG via
+in `0002`; `scripts/generate_rotational_logo.py` can emit an animated SVG via
 `spin_seconds`, which is the starting point rather than the finished behaviour.
 
 ## Validate before ship

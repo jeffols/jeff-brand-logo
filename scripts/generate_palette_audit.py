@@ -46,6 +46,10 @@ PREVALENCE = {
 }
 SIZES = [128, 32]
 
+# Outputs are anchored to the repo, not the CWD, so the scripts behave the
+# same whether run from the root or from scripts/.
+REPO = Path(__file__).resolve().parent.parent
+
 
 # ---------------------------------------------------------------- colour maths
 
@@ -256,7 +260,7 @@ same colour. 10&ndash;20 is close. 20+ is unambiguously different.</div>
 
 def main():
     p = argparse.ArgumentParser()
-    p.add_argument("--out", default="docs")
+    p.add_argument("--out", default=str(REPO / "docs"))
     a = p.parse_args()
 
     docs = Path(a.out)

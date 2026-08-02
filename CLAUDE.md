@@ -18,19 +18,28 @@ are stable.
 ```
 BRAND.md                     — strategy. Read before changing anything visual
 docs/                        — operational guidance + numbered decision records
-geometry.py                  — THE mark. Every coordinate lives here, once. No Pillow
+scripts/geometry.py          — THE mark. Every coordinate lives here, once. No Pillow
                                import. Change the mark ONLY here
-generate_favicon_assets.py   — CLI: primary mark. Also --canonical (mono marks) and
-                               --watermark (regenerates watermark.css)
-generate_rotational_logo.py  — CLI: signature variant. Also --canonical
-generate_validation_sheet.py — CLI: builds docs/size-validation.html
-generate_palette_audit.py    — CLI: builds docs/palette-audit.html (CVD simulation)
-generate_linkedin_banners.py — CLI: banner compositions. Needs headless Chrome
-watermark.css                — GENERATED. Do not hand-edit; use --watermark
-assets/marks/                — palette-independent canonicals (mono/black/white)
+scripts/generate_favicon_assets.py   — primary mark. Also --canonical, --watermark
+scripts/generate_rotational_logo.py  — signature variant. Also --canonical
+scripts/generate_validation_sheet.py — builds docs/size-validation.html
+scripts/generate_palette_audit.py    — builds docs/palette-audit.html (CVD sim)
+scripts/generate_linkedin_banners.py — banners. Needs headless Chrome
+assets/marks/{primary,rotational}/   — palette-independent canonicals
+assets/banners/linkedin/     — generated banner compositions
+assets/watermarks/watermark.css      — GENERATED. Do not hand-edit; use --watermark
 palettes/<name>/dark|light/  — primary mark per palette+mode
 palettes-rotational/…        — signature variant, same layout
+examples/                    — worked applications on real surfaces
 explorations/                — not brand assets. Never ship from here
+
+Scripts run from anywhere; outputs anchor to the repo root, not the CWD.
+
+## Asset naming (decision 0006)
+Three SVG forms per palette+mode dir, named for what they are:
+`icon-*` rounded plate · `avatar-*` full-bleed plate · `mark-*` bare glyph, transparent.
+`signature-*` is GONE — it meant the rotational variant in BRAND.md and named the
+flat mark on disk.
 ```
 
 ## Hierarchy (decision 0001)
@@ -60,9 +69,9 @@ See docs/accessibility.md and docs/palette-audit.html.
 ## Run
 ```bash
 pip install pillow
-python generate_favicon_assets.py --out ./out --palette all --mode both
-python generate_rotational_logo.py --preset plates --palette all --mode both --assets
-python generate_validation_sheet.py
+python scripts/generate_favicon_assets.py --out ./out --palette all --mode both
+python scripts/generate_rotational_logo.py --preset plates --palette all --mode both --assets
+python scripts/generate_validation_sheet.py
 ```
 
 ## Rotational variant

@@ -39,6 +39,10 @@ ALL_SIZES = LADDER + REFERENCE
 PRESET_SIZES = [512, 64, 32, 16]
 CANONICAL = "plates"
 
+# Outputs are anchored to the repo, not the CWD, so the scripts behave the
+# same whether run from the root or from scripts/.
+REPO = Path(__file__).resolve().parent.parent
+
 # BRAND.md section 9. The page states these so a choice is made against them
 # rather than on first impression.
 CRITERIA = [
@@ -191,7 +195,7 @@ still lists this as undecided.</p>
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("--palette", default="signal_yellow", choices=list(PALETTES))
-    p.add_argument("--out", default="docs")
+    p.add_argument("--out", default=str(REPO / "docs"))
     a = p.parse_args()
 
     docs = Path(a.out)

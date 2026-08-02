@@ -9,7 +9,7 @@ rule — what to reach for, at what size, from which path.
 |---|---|---|---|
 | 1 | Primary mark | Naked deconstructed j. Dot, stem, hook. | `palettes/<palette>/<mode>/` |
 | 2 | Signature variant | Rotational echo j. Same geometry, rotated traces behind it. | `palettes-rotational/<palette>/<mode>/` |
-| 3 | Treatments | Glow, watermark, crop, palette change, animation. | `watermark.css`, `linkedin-banners/` |
+| 3 | Treatments | Glow, watermark, crop, palette change, animation. | `assets/watermarks/`, `assets/banners/` |
 
 Level 3 is applied *to* level 1 or 2. It is never a third logo.
 
@@ -47,8 +47,8 @@ you are below the threshold. Drop to the primary mark.
 | iOS home screen | `apple-touch-icon.png` | 180 px |
 | Android, PWA | `android-chrome-<192\|512>.png` + `site.webmanifest` | |
 | Substack, LinkedIn, GitHub avatar | `avatar-512x512.png` or `avatar-1024x1024.png` | full-bleed, opaque, no alpha |
-| Vector embed, print | `signature-<palette>-<mode>.svg` | inline fills, no CSS variables |
-| Page watermark | `watermark.css` | `body::after`, data URI |
+| Vector embed, print | `icon-<palette>-<mode>.svg` | inline fills, no CSS variables |
+| Page watermark | `assets/watermarks/watermark.css` | `body::after`, data URI |
 
 **Never upload a favicon PNG as an avatar.** The favicon form is a rounded plate
 on transparency. Substack, LinkedIn, and GitHub apply their own corner mask, so a
