@@ -134,6 +134,9 @@ python scripts/generate_favicon_assets.py --watermark assets/watermarks/watermar
 # Lockups (needs fonttools)
 python scripts/generate_lockups.py
 
+# Social preview / Open Graph (needs fonttools + headless Chrome)
+python scripts/generate_social.py --mode both
+
 # LinkedIn banners (needs headless Chrome)
 python scripts/generate_linkedin_banners.py
 
@@ -174,6 +177,7 @@ scripts/
   generate_palette_audit.py     distinctiveness and colour-blind simulation
   generate_linkedin_banners.py  banner compositions (needs headless Chrome)
 assets/
+  social/                     Open Graph preview, 1200x630
   lockups/                    mark + wordmark; wordmark outlined, no font dependency
   fonts/                      Inter + iA Writer Duo (ship), Plex Sans (design-time)
   marks/{primary,rotational}/ palette-independent canonicals (mono, black, white)

@@ -26,7 +26,10 @@ scripts/generate_validation_sheet.py — builds docs/size-validation.html
 scripts/generate_palette_audit.py    — builds docs/palette-audit.html (CVD sim)
 scripts/generate_linkedin_banners.py — banners. Needs headless Chrome
 scripts/generate_lockups.py  — mark + wordmark lockups. Needs fonttools
+scripts/generate_social.py   — Open Graph 1200x630. Needs fonttools + Chrome
 assets/lockups/              — mark + wordmark, wordmark OUTLINED (no font dep)
+assets/social/               — Open Graph preview 1200x630
+docs/site-handoff.md         — what jeffols.github.io copies, and where it goes
 assets/fonts/                — Inter + iA Writer Duo (ship) · Plex Sans (design-time)
 assets/marks/{primary,rotational}/   — palette-independent canonicals
 assets/banners/linkedin/     — generated banner compositions
