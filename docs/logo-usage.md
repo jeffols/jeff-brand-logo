@@ -46,7 +46,7 @@ you are below the threshold. Drop to the primary mark.
 | Browser, modern | `favicon-<N>x<N>.png` | rounded plate, transparent outside the radius |
 | iOS home screen | `apple-touch-icon.png` | 180 px |
 | Android, PWA | `android-chrome-<192\|512>.png` + `site.webmanifest` | |
-| Substack, LinkedIn, GitHub avatar | `avatar-512x512.png` or `avatar-1024x1024.png` | full-bleed, opaque, no alpha |
+| Substack, LinkedIn, GitHub avatar | `avatar-512x512.png` or `avatar-1024x1024.png`, **light mode** | full-bleed, opaque, no alpha |
 | Vector embed, print | `icon-<palette>-<mode>.svg` | inline fills, no CSS variables |
 | Page watermark | `assets/watermarks/watermark.css` | `body::after`, data URI |
 
@@ -55,6 +55,36 @@ on transparency. Substack, LinkedIn, and GitHub apply their own corner mask, so 
 pre-rounded asset fights theirs, and the leftover transparent corners get
 flattened to whatever the platform assumes. Substack assumes white, which shows
 as white slivers. Use the `avatar-*` files.
+
+### Avatar mode: light on light-first platforms
+
+**Use the light-mode avatar on Substack, LinkedIn, and GitHub.** For
+`signal_yellow` that is the yellow plate with the dark glyph, decision `0004`.
+
+An avatar plate carries its own background, so it is either a hard block against
+the page or it dissolves into it. There is no middle. Rendered at 40 to 96 px on
+both page themes:
+
+| Avatar | On white | On a dark page |
+|---|---|---|
+| `signal_yellow` dark | stark block, 17.74 plate against page | plate dissolves, 1.02 |
+| `signal_yellow` light | reads clearly | strong block, 12.33 |
+
+The dark plate is the only variant with a bad state, and it has two. The light
+plate holds on both, which matters because every one of these platforms lets the
+reader choose a theme.
+
+It is also better recognition behaviour. Signal Yellow is the recognition palette,
+so leading with yellow is what makes the avatar findable in a crowded list.
+Leading with charcoal makes the yellow a detail inside a dark square.
+
+**The plate contrast number is the wrong tool here.** `signal_yellow` light
+measures 1.41 against white, which reads as invisible and is not. Contrast ratio
+is luminance only and hue is not part of it, so a saturated yellow separates from
+white by chroma. Render it before trusting the number. See `docs/accessibility.md`.
+
+The site favicon stays `signal_yellow` **dark**, because the site's own page is
+`#111827`. Match the surface, not the sibling asset.
 
 ## Lockups
 

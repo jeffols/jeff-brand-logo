@@ -1171,9 +1171,20 @@ Recommended instruction:
 
 ### Still to decide
 
+Parked deliberately. Each is captured where it belongs so it is not lost, and none
+is being chased.
+
 - Whether to pursue separate trademark registration for the rotational variant
-- The canonical rotational echo count and spacing
 - Final semantic use of palettes
+- **Renaming "Working Faster."** It names the outcome and reads cold as hustle, which inverts the content. Now shipped on three surfaces, so a change is a rename with consumers. Section 1
+- **Whether the section 1 positioning statement should be rewritten.** It leads with "hidden work" and carries the same bias as the headline retired by `0008`. It does a different job and nothing reads it aloud to a stranger, so it was left alone. Decision `0008`
+- **A distinct Substack publication name.** Currently `jeffols`, which section 1 already assigns to publication identity. A subject-bearing name would be more memorable to a cold reader but creates a fourth identity beside Jeff Olsen, jeffols and Working Faster. Pairs with the custom domain question rather than standing alone
+- **Substack typography.** Currently SF Pro for wordmark and titles, against `0007` which settled Inter and iA Writer Duo S. Whether Substack's font list offers either is unchecked
+- **The Substack recommendations panel.** It sits directly under the publication description and reads as part of the identity to a first-time visitor
+
+Settled since this list was written, and left here only until verified: lockup
+construction by `0007`, rotational echo count and spacing by `0002`, the LinkedIn
+profile image by `docs/online-presence.md`, and the homepage headline by `0008`.
 - Whether the LinkedIn profile image remains a headshot or becomes the mark
 - Final lockups
 - Whether to rename the brand repository later

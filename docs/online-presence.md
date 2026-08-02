@@ -127,8 +127,25 @@ Field guide or glossary, About Jeff, jeffols.com.
 Brand consistency: same mark, same canonical palette, consistent article-cover
 system, same short bio.
 
-Upload `avatar-512x512.png`, never a favicon PNG — Substack flattens leftover
-transparency to white and a pre-rounded asset shows white corner slivers.
+Upload `palettes/signal_yellow/light/avatar-512x512.png`, the **light** mode, never
+a favicon PNG. Substack flattens leftover transparency to white and a pre-rounded
+asset shows white corner slivers. Mode rationale in `docs/logo-usage.md`.
+
+**Site appearance settings**, applied 2026-08-02.
+
+| Field | Value |
+|---|---|
+| Background | `FFFFFF` |
+| Accent | `111827` |
+
+The accent is Signal Yellow's plate colour, which is also the background of
+jeffols.com, so the two surfaces share a colour identity. It leaves the yellow
+avatar as the only colour on the page.
+
+Previously `4B0082`, which is the deep_indigo glyph, while the avatar was
+signal_yellow. That ran two palettes on one surface. **Signal Yellow itself cannot
+be the accent**, since Substack puts white label text on it and yellow measures
+1.41 against white. See `docs/accessibility.md`.
 
 A custom publication domain is optional and lower priority than consistent
 navigation and identity. `braindini.com` is already owned and is the candidate if

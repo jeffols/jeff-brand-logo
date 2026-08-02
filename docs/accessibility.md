@@ -113,6 +113,31 @@ and that is the ceiling.
 Removing the variant was the only move that did not trade one defect for another.
 Recorded in `0003`.
 
+## Signal Yellow cannot be a UI accent
+
+**Never set `#FFD60A` as an accent colour on a platform that puts white label text
+on it.** It measures **1.41** against white. Buttons and links become unreadable.
+
+This is the same arithmetic that removed `signal_yellow` light in `0003` before
+`0004` restored it by inverting. Yellow collects 93% of the available luminance
+weight, so it is always close to white in the only dimension contrast measures.
+
+Where a hosted platform exposes one accent field, use the palette's **plate**
+colour instead of its glyph.
+
+| Accent candidate | White text on it | |
+|---|---|---|
+| `#FFD60A` signal_yellow glyph | **1.41** | unusable |
+| `#8B5E00` amber_utility glyph | 5.68 | passes AA |
+| `#4B0082` deep_indigo glyph | 12.95 | strong |
+| `#111827` signal_yellow plate | **17.74** | strong, and matches jeffols.com |
+| `#0F172A` slate_mono plate | 17.85 | strong |
+
+Applied on Substack 2026-08-02. Background `FFFFFF`, accent `111827`, which leaves
+the yellow avatar as the only colour on the surface. Before that the accent was
+`4B0082` while the avatar was `signal_yellow`, which ran two palettes on one
+surface. Section 11 treats palettes as contextual, one at a time.
+
 ## Palette separation
 
 Contrast is one axis; whether two palettes look like different palettes is
