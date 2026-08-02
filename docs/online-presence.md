@@ -16,6 +16,21 @@ what is done, and what is outstanding.
 Every channel links back to `jeffols.com`. The site links out to every active
 channel.
 
+## Channel copy is stale, 2026-08-02
+
+Decision `0008` changed the headline and how seniority is stated. The site is
+updated. **Every other channel still carries the retired positioning** and needs a
+pass by hand:
+
+| Channel | What to change |
+|---|---|
+| LinkedIn | Headline, About section. Rank not years. See `0008` |
+| Substack | Publication description and bio |
+| GitHub | Profile README, still unwritten. Write it against `0008`, not against the older drafts below |
+
+The sections below predate `0008` where they quote positioning language. The
+structural guidance in them still holds.
+
 ## Repository metadata — done
 
 Set 2026-08-01:

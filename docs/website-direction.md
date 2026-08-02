@@ -39,16 +39,21 @@ That gap closes by publishing, not by redesigning. See the note under
 | 6 | Subscribe and connect | Substack, LinkedIn, GitHub, contact | — |
 | 7 | Footer | Name, links, copyright, optional brand line | Primary mark |
 
-Working hero draft:
+Hero, settled by decision `0008`:
 
-> I make hidden work and complex systems easier to see.
+> I build systems that understand before they act.
 
-> I write and build practical models for organizational delivery, context
-> engineering, knowledge systems, and enterprise technology.
+> Distinguished engineer. Ontology, context engineering, agentic development, and
+> knowledge systems, designed across security, infrastructure, data, scale,
+> networking, and architecture. The deliberate pursuit of simplicity in complex
+> domains.
 
 CTAs: Read Working Faster / Explore the work / Connect on LinkedIn.
 
-Do not explain every concept in the hero.
+Do not explain every concept in the hero. Do not state seniority as elapsed time:
+"distinguished engineer" carries it, a year count does not, and `0008` explains
+why. The anticipation thesis that justifies the range belongs in the principles,
+not here.
 
 **Two paths** — each needs: a one-line description, a featured item, a link out
 (Substack for Working Faster, GitHub for Context Engineering), and a current-focus
@@ -77,9 +82,21 @@ section until a public artifact exists to link, and the markup is structured so 
 card drops in without a redesign.
 
 The two paths are visually co-equal per `BRAND.md` section 1, but their evidence
-is not: Working Faster carries published essays, Context Engineering carries a
-current-focus statement saying the applied work is proprietary and the models
-come from self-directed projects. Naming the asymmetry is better than hiding it.
+is not. Working Faster carries published essays. Context Engineering carries a
+current-focus statement rather than links.
+
+Revised 2026-08-02 by `0008`: that statement now leads with original method work
+on retrieval accuracy, cost, and risk, and mentions the proprietary constraint
+second. Leading with the constraint made the path sound like an absence. Leading
+with the invention makes it a body of work that happens to be mostly unpublished,
+which is what it is. The asymmetry is still real and still named.
+
+### Revised 2026-08-02
+
+The hero, the About section, and the three meta descriptions changed with `0008`,
+and a fourth principle was added: **Speed comes from anticipation**. The page no
+longer leads with Working Faster vocabulary, so the two paths now hang off a
+headline that belongs to neither of them.
 
 ## Mark usage on site
 

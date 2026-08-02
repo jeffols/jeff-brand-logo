@@ -18,6 +18,24 @@ This document consolidates the current findings and recommendations for the Jeff
 
 Use **Jeff Olsen** where biography, credibility, or professional identity matters. Use **jeffols** for the domain, repository namespace, logo system, publication identity, and compact branded applications.
 
+### Range
+
+Fluent across security, infrastructure, engineering, data science, data, scale, networking, and architecture, and between those concerns and the C-suite.
+
+The differentiator is not depth in any one of them. It is fluency across enough of them to anticipate what each will ask, and to design so that no pillar is traded against another.
+
+> The only way to move fast is to anticipate the concerns and questions of every team and bake them into the design.
+
+This is the claim the homepage hero makes, and it is the reason the two primary paths belong to one person rather than reading as two careers.
+
+**Do not state seniority as elapsed time.** "Distinguished engineer" is a rank that carries the same signal without inviting arithmetic, and a year count is both weaker evidence and an ageism exposure. Seniority is better carried by the specificity of the writing than by a number. Decision `0008`.
+
+### Hobby, passion, vocation
+
+This is not a job description. The same curiosity runs through the side projects, the writing, and the paid work.
+
+That is why the public models come from practice rather than theory, and why the body of work compounds instead of resetting with each role. It is also the honest answer to why the applied work can be proprietary while the thinking behind it is still publishable.
+
 ### Positioning
 
 > Jeff Olsen is an enterprise technologist and systems thinker who makes hidden work and complex systems understandable enough to act on.
@@ -67,6 +85,9 @@ It includes:
 - Retrieval and evidence
 - Structured prompt-driven design
 - Agent and system architecture
+- Retrieval accuracy, cost, and risk as a single design trade-off
+
+This path is **original method work, not applied reading.** The approaches to retrieval accuracy, cost, and risk are designed and tested here rather than adopted from published patterns. That distinction is what makes this a body of work rather than a set of interests, and it is the reason the path can be stated confidently even while most of the applied work stays proprietary.
 
 Both areas express the same worldview:
 
@@ -563,11 +584,13 @@ Include:
 - Two or three calls to action
 - A restrained use of the naked or rotational mark
 
-Working draft:
+Settled by decision `0008`:
 
-> **I make hidden work and complex systems easier to see.**
+> **I build systems that understand before they act.**
 
-> I write and build practical models for organizational delivery, context engineering, knowledge systems, and enterprise technology.
+> Distinguished engineer. Ontology, context engineering, agentic development, and knowledge systems, designed across security, infrastructure, data, scale, networking, and architecture. The deliberate pursuit of simplicity in complex domains.
+
+The earlier draft, "I make hidden work and complex systems easier to see," is retired as a headline. It is an accurate umbrella, but "hidden work" is Working Faster's signature phrase, so as a hero it collapsed a two-path brand into one of its halves. The positioning statement in section 1 still holds; it is the *headline* that changed. See `0008`.
 
 Calls to action:
 
@@ -642,7 +665,11 @@ Keep this concise. Link to LinkedIn for full career detail.
 
 Working draft:
 
-> Jeff Olsen is a distinguished engineer and systems thinker working across enterprise architecture, AI enablement, knowledge systems, operational resilience, and organizational delivery. He focuses on turning complex, hidden systems into models people can understand and use.
+> I work across security, infrastructure, data, scale, networking, and architecture, and translate between engineering teams and the C-suite. People, process, and technology is an overused phrase and still the right one. Most hard problems live in the seams between the three.
+
+> This is my hobby, my passion, and my vocation. The side projects, the writing, and the paid work are the same activity, which is why the models here come from practice rather than theory.
+
+First person, because the site is written in first person everywhere else. Do not restate "distinguished engineer" here: the hero already carries it, and on a single-scroll page the repetition reads as insecurity rather than emphasis.
 
 #### 6. Subscribe and connect
 
@@ -1102,14 +1129,15 @@ Recommended instruction:
 - The online brand needs stronger connective tissue, not more platforms.
 - `jeffols.com` should become the canonical hub.
 - Working Faster is the strongest broad-audience entry point.
-- Context engineering and knowledge systems remain a second primary path.
+- Context engineering and knowledge systems remain a second primary path, and are original method work rather than applied reading.
 - Public proof should be strengthened.
+- The homepage headline is **"I build systems that understand before they act."** Decision `0008`.
+- Seniority is stated as rank and demonstrated by specificity, never as elapsed time. Decision `0008`.
 
 ### Still to decide
 
 - Whether to pursue separate trademark registration for the rotational variant
 - The canonical rotational echo count and spacing
-- Final homepage headline
 - Final semantic use of palettes
 - Whether the LinkedIn profile image remains a headshot or becomes the mark
 - Final lockups
