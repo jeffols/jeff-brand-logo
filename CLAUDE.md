@@ -111,3 +111,14 @@ Prefer simple over clever. Fix root causes, not presentation patches. Do not inv
 brand strategy without flagging it. Do not replace the naked mark with the rotational
 one. Signal Yellow is not mandatory. Keep contrast accessible. Update all consumers
 when canonical asset paths change.
+
+**No colons or em dashes in finished copy** (BRAND.md section 2). **Never publish
+the section 3 internal organizing phrase.** Section 23 is the parked list; read it
+before reopening a question.
+
+## Working agreement
+Jeff circles an idea across several messages rather than stating a full spec.
+Answering each message with finished work causes rebuilds. Build on past decisions,
+hold the goal, park valuable noise, tie off work. Full version in
+`../jeffols.github.io/CLAUDE.md`; it applies to both repos and is not duplicated
+here.
