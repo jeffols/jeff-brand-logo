@@ -634,7 +634,11 @@ Do not explain every concept in the hero.
 
 **Working Faster**
 
-> Practical systems thinking for seeing where work really is, where time goes, and what is worth changing.
+> You change a system by changing yourself. Your expectations, what you measure, and how you articulate the cost of a delay. Shorter timelines, not longer hours.
+
+The earlier line, "practical systems thinking for seeing where work really is, where time goes, and what is worth changing," described an outcome rather than the idea. Section 1 carries the full thesis.
+
+**Do not call it a series.** It arrived in parts because it was too long for one post and because several finished pieces were a way to start the habit of publishing. That was practical, not editorial, and later writing may take any form.
 
 Include:
 
