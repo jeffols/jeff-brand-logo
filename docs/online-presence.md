@@ -86,11 +86,45 @@ no generic role-title language, visually related to the site hero.
 Banners live in `assets/banners/linkedin/`, regenerated from the canonical
 `PALETTES` so every palette and mode is covered.
 
-**Headline.** Connect role and point of view, not a technology list. Structure:
+**Banner palette is `signal_yellow` dark**, decided 2026-08-02.
+
+```
+assets/banners/linkedin/linkedin-signal_yellow-dark.png
+```
+
+Two reasons, and the first is specific to this platform. **Do not use
+`electric_blue` on LinkedIn.** It is the palette closest to LinkedIn's own
+`#0A66C2`, so the banner reads as platform chrome rather than as an identity.
+CIEDE2000 against LinkedIn blue:
+
+| Palette | dE | |
+|---|---|---|
+| deep_indigo | 45.2 | too close |
+| **electric_blue** | **53.0** | **closest, do not use here** |
+| slate_mono | 77.4 | neutral, viable fallback |
+| amber_utility | 139.7 | distinct |
+| **signal_yellow** | **147.9** | **chosen, maximally distinct** |
+
+Second, it is the same plate and glyph as jeffols.com and the favicon, so every
+surface carries one palette.
+
+**Not the light variant.** At banner scale it is a full yellow field and reads
+promotional, which section 2 rules out. Dark keeps the calm register.
+
+This supersedes an earlier note that read "the banner is already the electric blue
+echo banner, good separation, leave it." That note was about echo versus single
+mark, not palette, and it predates the site and Substack both settling on
+signal_yellow.
+
+The upload is also still pre-`0005` and 42 units out of register, so it needs
+replacing regardless. Check the mobile crop after uploading, since the solid mark
+sits far right.
+
+**Headline.** Connect role and point of view, not a technology list. The current
+one is under **Copy to paste** above. The older structure below is retained only as
+the shape, and its third segment is retired by `0008`.
 
 > Distinguished Engineer | Enterprise AI, Architecture and Knowledge Systems | Making Hidden Work Visible
-
-Wording should match current professional constraints.
 
 **Featured section**, in order: best introductory Working Faster essay,
 jeffols.com, a technical proof-of-work item, a second essay or field guide.
