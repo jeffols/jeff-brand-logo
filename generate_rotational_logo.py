@@ -6,8 +6,8 @@ Stacks N copies of the mark, each rotated by a fixed step, and ramps opacity so
 the back of the stack is nearly invisible and the front copy is fully opaque.
 Reads as depth: the mark spiralling toward the viewer.
 
-Geometry is shared with generate_favicon_assets.py (design space is 1024x1024).
-Keep the primitives here in sync with render_icon() / build_svg() there.
+Geometry comes from geometry.py, which is the single source of truth for the
+mark. Nothing here redefines a coordinate; this module owns only the stack.
 
 Dependencies:
     pip install pillow
@@ -28,6 +28,7 @@ import geometry
 from geometry import DESIGN_SIZE, glyph_polygons, plate_radius, svg_shapes
 from generate_favicon_assets import (
     DEFAULT_SIZES, PALETTES, hex_to_rgba, parse_sizes, resolve_modes,
+    write_canonical_marks,
 )
 
 SUPERSAMPLE = 4
@@ -173,16 +174,18 @@ def render_stack(size, background, glyph, layers=8, step=8.0, min_opacity=0.10,
                  gamma=1.8, scale_step=0.02, pivot=PIVOT, rounded=True):
     render_size = size * SUPERSAMPLE
     s = render_size / DESIGN_SIZE
-    bg = hex_to_rgba(background)
+    bg = hex_to_rgba(background) if background is not None else None
     gl = hex_to_rgba(glyph)
 
     base = Image.new("RGBA", (render_size, render_size), (0, 0, 0, 0))
     draw = ImageDraw.Draw(base)
-    if rounded:
-        draw.rounded_rectangle([0, 0, render_size - 1, render_size - 1],
-                               radius=max(1, round(geometry.PLATE_RADIUS * s)), fill=bg)
-    else:
-        draw.rectangle([0, 0, render_size - 1, render_size - 1], fill=bg)
+    if background is not None:
+        if rounded:
+            draw.rounded_rectangle([0, 0, render_size - 1, render_size - 1],
+                                   radius=max(1, round(geometry.PLATE_RADIUS * s)),
+                                   fill=bg)
+        else:
+            draw.rectangle([0, 0, render_size - 1, render_size - 1], fill=bg)
 
     parts = glyph_parts()
     for angle, opacity, scale in layer_specs(layers, step, min_opacity, gamma,
@@ -196,6 +199,8 @@ def render_stack(size, background, glyph, layers=8, step=8.0, min_opacity=0.10,
         base = Image.alpha_composite(base, layer)
 
     out = base.resize((size, size), Image.Resampling.LANCZOS)
+    if background is None:
+        return out                      # transparent: keep the alpha channel
     return out if rounded else out.convert("RGB")
 
 
@@ -228,10 +233,12 @@ def build_svg(background, glyph, layers=8, step=8.0, min_opacity=0.10, gamma=1.8
             + stack + '  </g>\n'
         )
 
+    plate = (f'  <rect width="{size}" height="{size}" rx="{rx}"'
+             f' fill="{background}"/>\n' if background is not None else "")
     return (
         f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {size} {size}"'
         f' role="img" aria-label="jeffols rotational mark">\n'
-        f'  <rect width="{size}" height="{size}" rx="{rx}" fill="{background}"/>\n'
+        f'{plate}'
         f'  <g fill="{glyph}">\n{stack}  </g>\n'
         f'</svg>\n'
     )
@@ -316,6 +323,15 @@ def write_rot_assets(out_dir, palette_key, mode, background, glyph, cfg, pivot, 
     for avatar_size in (512, 1024):
         stack(avatar_size, rounded=False).save(
             out_dir / f"avatar-{avatar_size}x{avatar_size}.png")
+
+    # Transparent form: the echo stack with no plate behind it. The rear layers
+    # sit at 0.08 opacity, so on a busy surface they vanish. Use over flat
+    # backgrounds only.
+    (out_dir / f"mark-{palette_key}-{mode}.svg").write_text(
+        build_svg(None, glyph, *g, pivot=pivot, rounded=False), encoding="utf-8")
+    for mark_size in (512, 1024):
+        render_stack(mark_size, None, glyph, *g, pivot=pivot).save(
+            out_dir / f"mark-{mark_size}x{mark_size}.png")
 
     for size in sizes:
         stack(size).save(out_dir / f"favicon-{size}x{size}.png")
@@ -438,10 +454,26 @@ def main():
                    help="full favicon + avatar + ICO + manifest set, per palette/mode")
     p.add_argument("--sizes", default=",".join(str(s) for s in DEFAULT_SIZES))
     p.add_argument("--list-presets", action="store_true")
+    p.add_argument("--canonical", metavar="DIR",
+                   help="write the palette-independent monochrome rotational "
+                        "marks to DIR and exit, e.g. assets/marks/rotational")
     a = p.parse_args()
 
     if a.list_presets:
         list_presets()
+        return
+
+    if a.canonical:
+        cfg = resolve(a.preset or "plates", a.fade, {})
+        g = (cfg["layers"], cfg["step"], cfg["min_opacity"], cfg["gamma"],
+             cfg["scale_step"])
+        for name in write_canonical_marks(
+                a.canonical,
+                renderer=lambda size, fill: render_stack(size, None, fill, *g),
+                label="jeffols rotational mark",
+                svg_builder=lambda fill: build_svg(None, fill, *g, rounded=False)):
+            print(f"  {name}")
+        print(f"Canonical rotational marks in {a.canonical}")
         return
 
     cfg = resolve(a.preset, a.fade, {

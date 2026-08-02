@@ -173,11 +173,16 @@ def hook_path_d(dx=None, dy=None):
     return " ".join(parts) + " Z"
 
 
-def svg_shapes(fill=None, indent="  ", dx=None, dy=None):
-    """The three pieces as SVG elements. fill=None leaves them to inherit."""
+def svg_shapes(fill=None, indent="  ", dx=None, dy=None, extra=""):
+    """The three pieces as SVG elements.
+
+    fill=None leaves them to inherit from a parent. `extra` is appended to every
+    element verbatim, which is how the outline treatments get their stroke
+    without a second copy of the coordinates.
+    """
     dx = GLYPH_DX if dx is None else dx
     dy = GLYPH_DY if dy is None else dy
-    f = f' fill="{fill}"' if fill else ""
+    f = (f' fill="{fill}"' if fill else "") + extra
     return (
         f'{indent}<circle cx="{DOT["cx"] + dx:g}" cy="{DOT["cy"] + dy:g}"'
         f' r="{DOT["r"]:g}"{f}/>\n'

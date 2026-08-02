@@ -18,14 +18,16 @@ are stable.
 ```
 BRAND.md                     — strategy. Read before changing anything visual
 docs/                        — operational guidance + numbered decision records
-generate_favicon_assets.py   — CLI: primary mark, all assets (PNG, ICO, SVG, manifest)
-generate_rotational_logo.py  — CLI: signature variant; imports PALETTES + quad_bezier
-                               from generate_favicon_assets but RE-DECLARES the glyph
-                               coordinates. They can drift. Phase 2 extracts geometry.py
+geometry.py                  — THE mark. Every coordinate lives here, once. No Pillow
+                               import. Change the mark ONLY here
+generate_favicon_assets.py   — CLI: primary mark. Also --canonical (mono marks) and
+                               --watermark (regenerates watermark.css)
+generate_rotational_logo.py  — CLI: signature variant. Also --canonical
 generate_validation_sheet.py — CLI: builds docs/size-validation.html
-generate_linkedin_banners.py — CLI: banner compositions. Own 5-palette dict, missing
-                               deep_indigo. Hardcoded macOS Chrome path
-watermark.css                — drop-in CSS watermark (body::after, data URI)
+generate_palette_audit.py    — CLI: builds docs/palette-audit.html (CVD simulation)
+generate_linkedin_banners.py — CLI: banner compositions. Needs headless Chrome
+watermark.css                — GENERATED. Do not hand-edit; use --watermark
+assets/marks/                — palette-independent canonicals (mono/black/white)
 palettes/<name>/dark|light/  — primary mark per palette+mode
 palettes-rotational/…        — signature variant, same layout
 explorations/                — not brand assets. Never ship from here
@@ -72,10 +74,13 @@ in the CLI as the comparison family that produced the decision; do not ship from
 
 ## Design reference
 - Canvas 1024×1024, 4× supersample, LANCZOS downscale
-- Geometry currently duplicated in 17 files — keep `render_icon()` and `build_svg()`
-  in sync until Phase 2 extracts it
+- **All geometry is in `geometry.py`.** Nothing else defines a coordinate
+- `PLATE_RADIUS` is 174 DESIGN UNITS, not 0.17 of the canvas. 0.17×1024 = 174.08,
+  which rounds to a different pixel at 192px and silently shifts every corner
+- Hook is stored as path ops so the SVG `d` and the raster polygon come from one
+  description. Tessellation is a caller argument: flat renderer snaps to integer
+  pixels, rotational must not
 - SVG uses inline fills, no CSS variables — intentional for max compatibility
-- Rounded-rect radius ≈ 17% of size
 
 ## Guardrails
 Prefer simple over clever. Fix root causes, not presentation patches. Do not invent

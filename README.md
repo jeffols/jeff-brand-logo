@@ -90,9 +90,23 @@ Per palette and mode:
 | `apple-touch-icon.png` | 180 | iOS home screen |
 | `android-chrome-{192,512}.png` | 192, 512 | Android, PWA |
 | `avatar-{512,1024}.png` | 512, 1024 | Social profiles |
+| `mark-{512,1024}.png`, `mark-*.svg` | scalable | **Transparent** — no plate |
 | `signature-*.svg`, `avatar-*.svg` | scalable | Vector embed, watermark |
 | `site.webmanifest` | — | PWA manifest |
 | `metadata.json` | — | Palette, colour, and construction reference |
+
+Palette-independent canonicals live in `assets/marks/`:
+
+| File | Use |
+|---|---|
+| `mark-mono.svg` | `currentColor` — inherits from surrounding CSS |
+| `mark-black.svg` / `.png` | Print, engraving, embroidery, single-colour |
+| `mark-white.svg` / `.png` | Knockout on any dark surface |
+
+**Transparent marks have no plate**, so the glyph meets whatever the page
+supplies. Pick the variant matching the *page*, not your other assets — a
+dark-mode glyph on a light background falls under 2:1. See
+[`docs/accessibility.md`](docs/accessibility.md).
 
 ## Run
 
@@ -110,9 +124,20 @@ python generate_favicon_assets.py --out ./out --background "#111827" --glyph "#F
 python generate_rotational_logo.py --list-presets
 python generate_rotational_logo.py --preset plates --palette all --mode both --assets
 
+# Palette-independent monochrome marks
+python generate_favicon_assets.py --canonical assets/marks/primary
+python generate_rotational_logo.py --canonical assets/marks/rotational
+
+# Regenerate the CSS watermark from geometry.py
+python generate_favicon_assets.py --watermark watermark.css
+
+# LinkedIn banners (needs headless Chrome)
+python generate_linkedin_banners.py
+
 # Comparison sheets
 python generate_rotational_logo.py --preset-sheet
 python generate_validation_sheet.py        # docs/size-validation.html
+python generate_palette_audit.py           # docs/palette-audit.html
 ```
 
 ## HTML integration
@@ -137,11 +162,13 @@ docs/                         operational guidance, decision records
   accessibility.md            measured contrast ratios
   size-validation.html        naked vs rotational at true pixel size
   decisions/                  numbered decision records
+geometry.py                   THE mark. Single source of truth for coordinates
 generate_favicon_assets.py    primary mark generator
 generate_rotational_logo.py   signature variant generator
 generate_validation_sheet.py  comparison sheet builder
 generate_linkedin_banners.py  banner compositions (needs headless Chrome)
 watermark.css                 drop-in page watermark
+assets/marks/                 palette-independent canonicals (mono, black, white)
 palettes/<name>/<mode>/       primary mark, per palette and mode
 palettes-rotational/…         signature variant, same layout
 linkedin-banners/             generated banner compositions

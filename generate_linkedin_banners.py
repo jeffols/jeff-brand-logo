@@ -1,40 +1,53 @@
 #!/usr/bin/env python3
-"""Generate LinkedIn banners for all palette/mode combinations."""
+"""Generate LinkedIn banners for all palette/mode combinations.
 
+Wide surfaces are governed by composition rather than by the size rule: the
+aspect ratio does the expressive work, so the scale-and-glow echo here is a
+level 3 treatment of the primary mark, not a competing variant. See
+docs/logo-usage.md and decision 0001.
+
+Requires headless Chrome to rasterise the SVG.
+"""
+
+import shutil
 import subprocess
 import json
 from pathlib import Path
 
-PALETTES = {
-    "signal_yellow": {
-        "dark":  {"bg": "#111827", "glyph": "#FFD60A"},
-        "light": {"bg": "#FFF7E0", "glyph": "#B8960A"},
-    },
-    "electric_blue": {
-        "dark":  {"bg": "#0B1020", "glyph": "#7DD3FC"},
-        "light": {"bg": "#F6FBFF", "glyph": "#005A9C"},
-    },
-    "amber_utility": {
-        "dark":  {"bg": "#1F1B16", "glyph": "#FFB000"},
-        "light": {"bg": "#FFF8E1", "glyph": "#8B5E00"},
-    },
-    "terminal_lime": {
-        "dark":  {"bg": "#151515", "glyph": "#B6FF4D"},
-        "light": {"bg": "#F7FFE8", "glyph": "#3D6600"},
-    },
-    "slate_mono": {
-        "dark":  {"bg": "#0F172A", "glyph": "#F8FAFC"},
-        "light": {"bg": "#F8FAFC", "glyph": "#0F172A"},
-    },
-}
+from geometry import svg_shapes
+from generate_favicon_assets import PALETTES, modes_for
 
-J_PARTS = """<circle cx="470" cy="190" r="70" fill="none" stroke="{glyph}" stroke-width="{sw}"/>
-    <rect x="460" y="340" width="160" height="280" rx="6" fill="none" stroke="{glyph}" stroke-width="{sw}"/>
-    <path d="M 500 640 H 660 V 720 Q 660 860 520 860 H 370 Q 280 860 280 780 V 750 Q 280 710 330 710 H 410 Q 500 710 500 640 Z" fill="none" stroke="{glyph}" stroke-width="{sw}"/>"""
+REPO = Path(__file__).resolve().parent
+CHROME_CANDIDATES = [
+    "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+    "/Applications/Chromium.app/Contents/MacOS/Chromium",
+    "google-chrome",
+    "chromium",
+]
 
-J_SOLID = """<circle cx="470" cy="190" r="70" fill="{glyph}"/>
-    <rect x="460" y="340" width="160" height="280" rx="6" fill="{glyph}"/>
-    <path d="M 500 640 H 660 V 720 Q 660 860 520 860 H 370 Q 280 860 280 780 V 750 Q 280 710 330 710 H 410 Q 500 710 500 640 Z" fill="{glyph}"/>"""
+
+def find_chrome():
+    """Locate a headless-capable browser, or say clearly that there is none.
+
+    The previous version hardcoded one macOS path and passed
+    capture_output=True, so a missing browser produced empty PNGs and no error.
+    """
+    for c in CHROME_CANDIDATES:
+        if Path(c).exists() or shutil.which(c):
+            return c
+    raise SystemExit(
+        "No Chrome or Chromium found. Tried:\n  "
+        + "\n  ".join(CHROME_CANDIDATES)
+        + "\nInstall one, or set the path in CHROME_CANDIDATES."
+    )
+
+def j_outline(glyph, sw):
+    return svg_shapes(fill="none", indent="    ",
+                      extra=f' stroke="{glyph}" stroke-width="{sw}"').strip()
+
+
+def j_solid(glyph):
+    return svg_shapes(fill=glyph, indent="    ").strip()
 
 
 def darken(hex_color, factor=0.6):
@@ -83,25 +96,25 @@ def dark_svg(bg, glyph):
     <line x1="792" y1="0" x2="792" y2="396"/><line x1="1188" y1="0" x2="1188" y2="396"/>
   </g>
   <g transform="translate(-741,-391) scale(1.15)" opacity="0.07" filter="url(#glow-1)">
-    {J_PARTS.format(glyph=glyph, sw=24)}
+    {j_outline(glyph, 24)}
   </g>
   <g transform="translate(-64,-237) scale(0.85)" opacity="0.08" filter="url(#glow-2)">
-    {J_PARTS.format(glyph=glyph, sw=22)}
+    {j_outline(glyph, 22)}
   </g>
   <g transform="translate(448,-135) scale(0.65)" opacity="0.11" filter="url(#glow-3)">
-    {J_PARTS.format(glyph=glyph, sw=18)}
+    {j_outline(glyph, 18)}
   </g>
   <g transform="translate(817,-58) scale(0.50)" opacity="0.15" filter="url(#glow-4)">
-    {J_PARTS.format(glyph=glyph, sw=16)}
+    {j_outline(glyph, 16)}
   </g>
   <g transform="translate(1042,-7) scale(0.40)" opacity="0.20" filter="url(#glow-4)">
-    {J_PARTS.format(glyph=glyph, sw=14)}
+    {j_outline(glyph, 14)}
   </g>
   <g transform="translate(1130,24) scale(0.34)" opacity="0.18" filter="url(#mark-halo)">
-    {J_SOLID.format(glyph=glyph)}
+    {j_solid(glyph)}
   </g>
   <g transform="translate(1130,24) scale(0.34)">
-    {J_SOLID.format(glyph=glyph)}
+    {j_solid(glyph)}
   </g>
   <line x1="0" y1="0.5" x2="1584" y2="0.5" stroke="{glyph}" stroke-width="1" opacity="0.035"/>
   <line x1="0" y1="395.5" x2="1584" y2="395.5" stroke="{glyph}" stroke-width="1" opacity="0.035"/>
@@ -147,25 +160,25 @@ def light_svg(bg, glyph):
     <line x1="792" y1="0" x2="792" y2="396"/><line x1="1188" y1="0" x2="1188" y2="396"/>
   </g>
   <g transform="translate(-741,-391) scale(1.15)" opacity="0.06" filter="url(#soft-1)">
-    {J_PARTS.format(glyph=glyph, sw=24)}
+    {j_outline(glyph, 24)}
   </g>
   <g transform="translate(-64,-237) scale(0.85)" opacity="0.07" filter="url(#soft-2)">
-    {J_PARTS.format(glyph=glyph, sw=22)}
+    {j_outline(glyph, 22)}
   </g>
   <g transform="translate(448,-135) scale(0.65)" opacity="0.09" filter="url(#soft-3)">
-    {J_PARTS.format(glyph=glyph, sw=18)}
+    {j_outline(glyph, 18)}
   </g>
   <g transform="translate(817,-58) scale(0.50)" opacity="0.12" filter="url(#soft-4)">
-    {J_PARTS.format(glyph=glyph, sw=16)}
+    {j_outline(glyph, 16)}
   </g>
   <g transform="translate(1042,-7) scale(0.40)" opacity="0.16" filter="url(#soft-4)">
-    {J_PARTS.format(glyph=glyph, sw=14)}
+    {j_outline(glyph, 14)}
   </g>
   <g transform="translate(1130,24) scale(0.34)" opacity="0.08" filter="url(#mark-shadow)">
-    {J_SOLID.format(glyph=glyph)}
+    {j_solid(glyph)}
   </g>
   <g transform="translate(1130,24) scale(0.34)">
-    {J_SOLID.format(glyph=glyph)}
+    {j_solid(glyph)}
   </g>
   <line x1="0" y1="0.5" x2="1584" y2="0.5" stroke="{glyph}" stroke-width="1" opacity="0.06"/>
   <line x1="0" y1="395.5" x2="1584" y2="395.5" stroke="{glyph}" stroke-width="1" opacity="0.06"/>
@@ -179,34 +192,36 @@ def html_wrap(svg):
 </head><body>{svg}</body></html>"""
 
 
-def render_png(html_path, png_path):
-    chrome = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+def render_png(chrome, html_path, png_path):
     subprocess.run([
         chrome, "--headless", "--disable-gpu",
         f"--screenshot={png_path}",
         "--window-size=1584,396",
         f"file://{html_path}",
-    ], capture_output=True, timeout=15)
+    ], capture_output=True, timeout=30)
+    if not Path(png_path).exists() or Path(png_path).stat().st_size == 0:
+        raise SystemExit(f"Chrome produced no output for {png_path}")
 
 
 def main():
-    out = Path("linkedin-banners")
+    chrome = find_chrome()
+    out = REPO / "linkedin-banners"   # anchored to the repo, not the CWD
     out.mkdir(exist_ok=True)
     tmp = out / "_tmp.html"
 
     manifest = []
 
-    for name, modes in PALETTES.items():
-        for mode in ("dark", "light"):
-            colors = modes[mode]
-            bg, glyph = colors["bg"], colors["glyph"]
+    for name in PALETTES:
+        for mode in modes_for(name):
+            colors = PALETTES[name][mode]
+            bg, glyph = colors["background"], colors["glyph"]
 
             svg = dark_svg(bg, glyph) if mode == "dark" else light_svg(bg, glyph)
             tmp.write_text(html_wrap(svg), encoding="utf-8")
 
             png_name = f"linkedin-{name}-{mode}.png"
             png_path = out / png_name
-            render_png(str(tmp.resolve()), str(png_path.resolve()))
+            render_png(chrome, str(tmp.resolve()), str(png_path.resolve()))
 
             manifest.append({"palette": name, "mode": mode, "file": png_name, "bg": bg, "glyph": glyph})
             print(f"  {png_name}")
