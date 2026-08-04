@@ -153,7 +153,7 @@ describes is the one to watch for.
 
 ### What was wrong
 
-Audited 2026-08-01 against `jeffols.github.io` at commit `1a5ee0e`.
+Audited 2026-08-01 against `jeffols.github.io` at commit `eff81c2`.
 
 `index.html` inlined the mark geometry in **three** places, not two:
 
